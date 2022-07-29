@@ -1,14 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Record {
-  int userId;
-  int fieldId;
-  String type;
-  String data;
+  late int userId;
+  late int fieldId;
+  late String type;
+  late String data;
 
   Record(this.userId, this.fieldId, this.type, this.data);
+  Record.empty();
+  Record.fromFocumentSnapshot(DocumentSnapshot snapshot) {
+    userId = snapshot['userId'];
+    fieldId = snapshot['fieldId'];
+    type = snapshot['type'];
+    data = snapshot['data'];
+  }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap(int highestUserId) {
     return {
-      'userId': userId,
+      'userId': highestUserId,
       'fieldId': fieldId,
       'type': type,
       'data': data,
