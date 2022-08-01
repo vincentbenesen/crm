@@ -1,7 +1,5 @@
-import 'package:crm/Controllers/record_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
 
 import '../Models/record.dart';
 
@@ -15,7 +13,6 @@ class CustomTextField extends StatelessWidget {
   final int maxLength;
   final List<Record> records;
   final TextEditingController controller;
-  // final int highestUserId;
 
   const CustomTextField({
     Key? key,
@@ -49,6 +46,41 @@ class CustomTextField extends StatelessWidget {
         switch (fieldType) {
           case "address2":
             return null;
+          case "phoneNumber":
+          case "mobileNumber":
+            if (value.toString().isEmpty) {
+              return "This field is required";
+            }
+
+            // Check if the phone number is valid or not
+            // Matches:
+            //  +1 (555) 555-5555
+            //  +1 555-555-5555
+            //  +1 555 555 5555
+            //  +1 555 555 5555 x1234
+            //  555-555-5555
+            //  555 555 5555
+            //  5555555555
+            //  5555555555 x1234
+            //  1 555 555 5555
+            if (!RegExp(
+                    r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
+                .hasMatch(value.toString())) {
+              return "Please enter a valid phone number";
+            }
+            break;
+          case "email":
+            // Check if the email is empty
+            if (value.toString().isEmpty) {
+              return "This field is required";
+            }
+            // Check if the email is valid or not
+            if (!RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                .hasMatch(value.toString())) {
+              return "Please enter a valid email";
+            }
+            break;
           default:
             if (value.toString().isEmpty) {
               return "This field is required";

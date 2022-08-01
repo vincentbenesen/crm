@@ -7,13 +7,6 @@ class Record {
   late String data;
 
   Record(this.userId, this.fieldId, this.type, this.data);
-  Record.empty();
-  Record.fromFocumentSnapshot(DocumentSnapshot snapshot) {
-    userId = snapshot['userId'];
-    fieldId = snapshot['fieldId'];
-    type = snapshot['type'];
-    data = snapshot['data'];
-  }
 
   Map<String, dynamic> toMap(int highestUserId) {
     return {

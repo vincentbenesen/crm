@@ -8,162 +8,13 @@ import '../Models/record.dart';
 import 'package:crm/Controllers/record_controller.dart';
 
 class Panel extends StatelessWidget {
-  late List<Record> recordsToInsert = [];
-  // Key of the form. Used for validation if the user enters the required fields
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // Keys of each fields
-  final _firstNameTextFormKey = GlobalKey<FormFieldState>();
-  final GlobalKey<FormFieldState> _lastNameTextFormKey =
-      GlobalKey<FormFieldState>();
-  final GlobalKey<FormFieldState> _addressTextFormKey =
-      GlobalKey<FormFieldState>();
-  final GlobalKey<FormFieldState> _address2TextFormKey =
-      GlobalKey<FormFieldState>();
-  final GlobalKey<FormFieldState> _cityTextFormKey =
-      GlobalKey<FormFieldState>();
-  final GlobalKey<FormFieldState> _provinceTextFormKey =
-      GlobalKey<FormFieldState>();
-  final GlobalKey<FormFieldState> _postalTextFormKey =
-      GlobalKey<FormFieldState>();
-
-  // FocusNodes of each fields
-  final FocusNode _firstNameFocusNode = FocusNode();
-  final FocusNode _lastNameFocusNode = FocusNode();
-  final FocusNode _addressFocusNode = FocusNode();
-  final FocusNode _address2FocusNode = FocusNode();
-  final FocusNode _cityFocusNode = FocusNode();
-  final FocusNode _provinceFocusNode = FocusNode();
-  final FocusNode _postalFocusNode = FocusNode();
-
-  Widget _addressTextFormField(List<Record> recordsToInsert) {
-    return TextFormField(
-      key: _addressTextFormKey,
-      focusNode: _addressFocusNode,
-      decoration: InputDecoration(
-        labelText: "Street Address *",
-        labelStyle: GoogleFonts.rubik(fontSize: 20),
-        hintText: "1130 rue Sherbrooke Ouest, Suite 700",
-        hintStyle: GoogleFonts.rubik(fontSize: 20),
-        errorStyle: GoogleFonts.rubik(fontSize: 20),
-      ),
-      maxLength: 60,
-      validator: (String? value) {
-        if (value.toString().isEmpty) {
-          return "This field is required";
-        }
-      },
-      onSaved: (value) {
-        // Record newRecord = Record(1, 1, 'address', value.toString());
-        // recordsToInsert.add(newRecord);
-      },
-    );
-  }
-
-  Widget _address2TextFormField(List<Record> recordsToInsert) {
-    return TextFormField(
-      key: _address2TextFormKey,
-      focusNode: _address2FocusNode,
-      decoration: InputDecoration(
-        labelText: "Street Address Line 2",
-        labelStyle: GoogleFonts.rubik(fontSize: 20),
-        hintText: "1130 rue Sherbrooke Ouest, Suite 700",
-        hintStyle: GoogleFonts.rubik(fontSize: 20),
-        errorStyle: GoogleFonts.rubik(fontSize: 20),
-      ),
-      maxLength: 60,
-      validator: (String? value) {
-        if (value.toString().isEmpty) {
-          return "This field is required";
-        }
-      },
-      onSaved: (value) {
-        // Record newRecord = Record(1, 1, 'address2', value.toString());
-        // recordsToInsert.add(newRecord);
-      },
-    );
-  }
-
-  Widget _cityTextFormField(List<Record> recordsToInsert) {
-    return TextFormField(
-      key: _cityTextFormKey,
-      focusNode: _cityFocusNode,
-      decoration: InputDecoration(
-        labelText: "City *",
-        labelStyle: GoogleFonts.rubik(fontSize: 20),
-        hintText: "Montreal",
-        hintStyle: GoogleFonts.rubik(fontSize: 20),
-        errorStyle: GoogleFonts.rubik(fontSize: 20),
-      ),
-      maxLength: 40,
-      validator: (String? value) {
-        if (value.toString().isEmpty) {
-          return "This field is required";
-        }
-      },
-      onSaved: (value) {
-        // Record newRecord = Record(1, 1, 'city', value.toString());
-        // recordsToInsert.add(newRecord);
-      },
-    );
-  }
-
-  Widget _provinceTextFormField(List<Record> recordsToInsert) {
-    return TextFormField(
-      key: _provinceTextFormKey,
-      focusNode: _provinceFocusNode,
-      decoration: InputDecoration(
-        labelText: "State/Province *",
-        labelStyle: GoogleFonts.rubik(fontSize: 20),
-        hintText: "Quebec",
-        hintStyle: GoogleFonts.rubik(fontSize: 20),
-        errorStyle: GoogleFonts.rubik(fontSize: 20),
-      ),
-      maxLength: 40,
-      validator: (String? value) {
-        if (value.toString().isEmpty) {
-          return "This field is required";
-        }
-      },
-      onSaved: (value) {
-        // Record newRecord = Record(1, 1, 'province', value.toString());
-        // recordsToInsert.add(newRecord);
-      },
-    );
-  }
-
-  Widget _postalTextFormField(List<Record> recordsToInsert) {
-    return TextFormField(
-      key: _postalTextFormKey,
-      focusNode: _postalFocusNode,
-      decoration: InputDecoration(
-        labelText: "Postal/ Zip Code *",
-        labelStyle: GoogleFonts.rubik(fontSize: 20),
-        hintText: "H3A 2M8",
-        hintStyle: GoogleFonts.rubik(fontSize: 20),
-        errorStyle: GoogleFonts.rubik(fontSize: 20),
-      ),
-      maxLength: 6,
-      validator: (String? value) {
-        if (value.toString().isEmpty) {
-          return "This field is required";
-        }
-      },
-      onSaved: (value) {
-        // Record newRecord = Record(1, 1, 'postalcode', value.toString());
-        // recordsToInsert.add(newRecord);
-      },
-    );
-  }
+  const Panel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(RecordController());
-    late List<Record> recordsToInsert = [];
-
     return Scaffold(
       body: Form(
-        key: controller.formKey,
+        key: Get.find<RecordController>().formKey,
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: double.infinity,
@@ -199,8 +50,10 @@ class Panel extends StatelessWidget {
                             fieldType: "firstName",
                             fieldId: 1,
                             maxLength: 40,
-                            records: recordsToInsert,
-                            controller: controller.firstNameController,
+                            records:
+                                Get.find<RecordController>().recordsToInsert,
+                            controller: Get.find<RecordController>()
+                                .firstNameController,
                           )),
                           const SizedBox(
                             width: 30,
@@ -212,8 +65,10 @@ class Panel extends StatelessWidget {
                             fieldType: "lastName",
                             fieldId: 2,
                             maxLength: 40,
-                            records: recordsToInsert,
-                            controller: controller.lastNameController,
+                            records:
+                                Get.find<RecordController>().recordsToInsert,
+                            controller:
+                                Get.find<RecordController>().lastNameController,
                           )),
                         ],
                       ),
@@ -243,8 +98,9 @@ class Panel extends StatelessWidget {
                         fieldType: "address1",
                         fieldId: 3,
                         maxLength: 40,
-                        records: recordsToInsert,
-                        controller: controller.address1Controller,
+                        records: Get.find<RecordController>().recordsToInsert,
+                        controller:
+                            Get.find<RecordController>().address1Controller,
                       ),
                       CustomTextField(
                         labelText: "Street Address Line 2",
@@ -252,8 +108,9 @@ class Panel extends StatelessWidget {
                         fieldType: "address2",
                         fieldId: 4,
                         maxLength: 40,
-                        records: recordsToInsert,
-                        controller: controller.address2Controller,
+                        records: Get.find<RecordController>().recordsToInsert,
+                        controller:
+                            Get.find<RecordController>().address2Controller,
                       ),
                       Row(
                         children: [
@@ -264,8 +121,10 @@ class Panel extends StatelessWidget {
                               fieldType: "city",
                               fieldId: 5,
                               maxLength: 40,
-                              records: recordsToInsert,
-                              controller: controller.cityController,
+                              records:
+                                  Get.find<RecordController>().recordsToInsert,
+                              controller:
+                                  Get.find<RecordController>().cityController,
                             ),
                           ),
                           const SizedBox(
@@ -278,8 +137,10 @@ class Panel extends StatelessWidget {
                               fieldType: "Province",
                               fieldId: 6,
                               maxLength: 40,
-                              records: recordsToInsert,
-                              controller: controller.provinceController,
+                              records:
+                                  Get.find<RecordController>().recordsToInsert,
+                              controller: Get.find<RecordController>()
+                                  .provinceController,
                             ),
                           ),
                         ],
@@ -290,15 +151,112 @@ class Panel extends StatelessWidget {
                         fieldType: "postal",
                         fieldId: 7,
                         maxLength: 40,
-                        records: recordsToInsert,
-                        controller: controller.postalCodeController,
+                        records: Get.find<RecordController>().recordsToInsert,
+                        controller:
+                            Get.find<RecordController>().postalCodeController,
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(height: 40),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Contact Information",
+                        style: GoogleFonts.rubik(fontSize: 30),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextField(
+                              labelText: "Phone",
+                              hintText: "123456789",
+                              fieldType: "phoneNumber",
+                              fieldId: 8,
+                              maxLength: 10,
+                              records:
+                                  Get.find<RecordController>().recordsToInsert,
+                              controller: Get.find<RecordController>()
+                                  .phoneNumberController,
+                            ),
+                          ),
+                          const SizedBox(width: 30),
+                          Expanded(
+                            child: CustomTextField(
+                              labelText: "Email",
+                              hintText: "123@yahoo.com",
+                              fieldType: "email",
+                              fieldId: 9,
+                              maxLength: 100,
+                              records:
+                                  Get.find<RecordController>().recordsToInsert,
+                              controller:
+                                  Get.find<RecordController>().emailController,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 780,
+                        child: CustomTextField(
+                          labelText: "Mobile",
+                          hintText: "123456789",
+                          fieldType: "mobileNumner",
+                          fieldId: 8,
+                          maxLength: 10,
+                          records: Get.find<RecordController>().recordsToInsert,
+                          controller: Get.find<RecordController>()
+                              .mobileNumberController,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 40),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Additional Information",
+                        style: GoogleFonts.rubik(fontSize: 30),
+                      ),
+                      Obx(
+                        () => ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: Get.find<RecordController>()
+                              .numberOfNewFields
+                              .value,
+                          itemBuilder: (context, index) {
+                            return Get.find<RecordController>().newField(
+                                Get.find<RecordController>().typeField.value);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 40),
                 RaisedButton(onPressed: () {
-                  controller.addRecords(recordsToInsert);
-                  controller.getHighestUserId();
+                  // Get.find<RecordController>()
+                  //     .addRecords(Get.find<RecordController>().recordsToInsert);
+                  // Get.find<RecordController>().getHighestUserId();
+                  Get.find<RecordController>().addNewCustomField(context);
+                  // Get.find<RecordController>().incrementNumberOfNewFields();
                 })
               ],
             ),
