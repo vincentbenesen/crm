@@ -75,6 +75,12 @@ class RecordController extends GetxController {
     });
   }
 
+  void validateTextField() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState?.save();
+    }
+  }
+
   // Adds the records in Firestore
   void addRecords(List<Record> records) async {
     int highestId = await getHighestUserId();
@@ -104,6 +110,7 @@ class RecordController extends GetxController {
         return (querySnapshot.docs.first['userId']);
       });
     } catch (e) {
+      // If there are no records in the database, then the userId is 0.
       return Future<int>.value(0);
     }
   }
