@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:crm/Widgets/Text_Field.dart';
+import 'package:crm/Widgets/navbar.dart';
+import 'package:crm/Widgets/text_Field.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../Models/record.dart';
 import 'package:crm/Controllers/record_controller.dart';
 
 class Panel extends StatelessWidget {
@@ -26,6 +26,8 @@ class Panel extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Navbar(),
+                const SizedBox(height: 20),
                 // Fields for the name of the user
                 Container(
                   height: 180,
@@ -229,7 +231,7 @@ class Panel extends StatelessWidget {
                     color: Colors.white,
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "Additional Information",
@@ -243,7 +245,9 @@ class Panel extends StatelessWidget {
                               .value,
                           itemBuilder: (context, index) {
                             return Get.find<RecordController>().newField(
-                                Get.find<RecordController>().typeField.value);
+                                index,
+                                Get.find<RecordController>().fieldtypes[index],
+                                context);
                           },
                         ),
                       ),
@@ -252,11 +256,8 @@ class Panel extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
                 RaisedButton(onPressed: () {
-                  // Get.find<RecordController>()
-                  //     .addRecords(Get.find<RecordController>().recordsToInsert);
-                  // Get.find<RecordController>().getHighestUserId();
-                  Get.find<RecordController>().addNewCustomField(context);
-                  // Get.find<RecordController>().incrementNumberOfNewFields();
+                  Get.find<RecordController>()
+                      .addRecords(Get.find<RecordController>().recordsToInsert);
                 })
               ],
             ),

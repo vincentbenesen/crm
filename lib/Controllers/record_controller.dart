@@ -1,4 +1,4 @@
-import 'package:crm/Widgets/Text_Field.dart';
+import 'package:crm/Widgets/text_Field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +31,9 @@ class RecordController extends GetxController {
   // This record is for adding the records in the firebase.
   final recordsToInsert = <Record>[].obs;
 
-  RxString typeField = "".obs;
+  // These variables are used for fields that are added by the user.
+  final fieldName = ''.obs;
+  final fieldtypes = <String?>[].obs;
   RxInt numberOfNewFields = 1.obs;
 
   @override
@@ -49,6 +51,18 @@ class RecordController extends GetxController {
     emailController = TextEditingController();
 
     collectionReference = firestore.collection('records');
+
+    fieldtypes.add('Other');
+  }
+
+  // Increment the number of new fields by 1. It starts from 0.
+  void incrementNumberOfNewFields() {
+    numberOfNewFields.value++;
+  }
+
+  // Decrement the number of new fields by 1.
+  void decrementtNumberOfNewFields() {
+    numberOfNewFields.value--;
   }
 
   // This function is used to fetch all the records from the database.
@@ -69,7 +83,6 @@ class RecordController extends GetxController {
       formKey.currentState?.save();
 
       // Removes the records with empty data from the list. This is to avoid adding empty records to the firebase.
-      // This is specifically for address2 field.
       records.removeWhere((thisRecord) => thisRecord.data.isEmpty);
 
       for (var record in records) {
@@ -78,10 +91,6 @@ class RecordController extends GetxController {
       records.clear();
       formKey.currentState?.reset();
     }
-  }
-
-  void incrementNumberOfNewFields() {
-    numberOfNewFields.value++;
   }
 
   // Returns the highest userId from Firestore
@@ -104,17 +113,17 @@ class RecordController extends GetxController {
         context: context,
         builder: (context) => AlertDialog(
           title: Text(
-            "Type Of Information",
+            "Type of information",
             style: GoogleFonts.rubik(fontSize: 20),
           ),
           content: TextField(
             autofocus: true,
             decoration: InputDecoration(
-              hintText: 'Please Enter The Type Of Field',
+              hintText: 'Please enter the type of field',
               hintStyle: GoogleFonts.rubik(fontSize: 20),
             ),
             onChanged: (value) {
-              typeField.value = value;
+              fieldName.value = value;
             },
           ),
           actions: [
@@ -134,6 +143,8 @@ class RecordController extends GetxController {
               ),
               onPressed: () {
                 incrementNumberOfNewFields();
+                fieldtypes.add(fieldName.value);
+
                 Navigator.of(context).pop();
               },
             ),
@@ -141,24 +152,62 @@ class RecordController extends GetxController {
         ),
       );
 
-  Widget newField(String fieldType) {
-    return CustomTextField(
-        labelText: fieldType,
-        hintText: 'Enter',
-        fieldType: fieldType,
-        fieldId: 0,
-        maxLength: 40,
-        records: recordsToInsert,
-        controller: TextEditingController());
-  }
-
-  ListView customRecords(String fieldType, int count) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: count,
-      itemBuilder: (context, index) {
-        return newField(fieldType);
-      },
+  // This function is used to add the new field to the list of fields.
+  Widget newField(int index, String? fieldType, BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          width: 1400,
+          child: CustomTextField(
+            labelText: fieldType.toString(),
+            hintText: 'Enter the information',
+            fieldType: (fieldType?.camelCase).toString(),
+            fieldId: 0,
+            maxLength: 40,
+            records: recordsToInsert,
+            controller: TextEditingController(),
+          ),
+        ),
+        // Add button
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Visibility(
+              visible: index == fieldtypes.length - 1 ? true : false,
+              child: SizedBox(
+                width: 20,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.add_circle,
+                    color: Colors.green,
+                  ),
+                  onPressed: () {
+                    addNewCustomField(context);
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(width: 20),
+            Visibility(
+              visible:
+                  (index == fieldtypes.length - 1 && index >= 1) ? true : false,
+              child: SizedBox(
+                width: 20,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.remove_circle,
+                    color: Colors.red,
+                  ),
+                  onPressed: () {
+                    fieldtypes.removeAt(index);
+                    decrementtNumberOfNewFields();
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

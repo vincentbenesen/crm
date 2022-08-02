@@ -81,6 +81,8 @@ class CustomTextField extends StatelessWidget {
               return "Please enter a valid email";
             }
             break;
+          case "other":
+            return null;
           default:
             if (value.toString().isEmpty) {
               return "This field is required";
