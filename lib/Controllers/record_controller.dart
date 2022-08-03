@@ -13,7 +13,11 @@ class RecordController extends GetxController {
   late CollectionReference collectionReference;
 
   // These are the variables used to manipulate the data in the textfields.
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> nameFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> contactFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> otherInfoFormKey = GlobalKey<FormState>();
+
   late TextEditingController firstNameController,
       lastNameController,
       address1Controller,
@@ -29,7 +33,8 @@ class RecordController extends GetxController {
   final recordList = <Record>[].obs;
 
   // This record is for adding the records in the firebase.
-  final recordsToInsert = <Record>[].obs;
+  // final recordsToInsert = <Record>[].obs;
+  final Map<String, Record> recordToInsert = <String, Record>{}.obs;
 
   // These variables are used for fields that are added by the user.
   final fieldName = ''.obs;
@@ -75,28 +80,29 @@ class RecordController extends GetxController {
     });
   }
 
-  void validateTextField() {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState?.save();
+  bool validateTextField(GlobalKey<FormState> key) {
+    if (key.currentState!.validate()) {
+      key.currentState?.save();
+      return true;
     }
+    return false;
   }
 
   // Adds the records in Firestore
-  void addRecords(List<Record> records) async {
+  void addRecords(Map<String, Record> records) async {
     int highestId = await getHighestUserId();
     highestId++;
-    if (formKey.currentState!.validate()) {
-      formKey.currentState?.save();
 
-      // Removes the records with empty data from the list. This is to avoid adding empty records to the firebase.
-      records.removeWhere((thisRecord) => thisRecord.data.isEmpty);
+    // Removes the records with empty data from the list. This is to avoid adding empty records to the firebase.
+    records.removeWhere((key, value) => value.data.isEmpty);
 
-      for (var record in records) {
-        collectionReference.add(record.toMap(highestId));
-      }
-      records.clear();
-      formKey.currentState?.reset();
-    }
+    // Inserts the records in the firebase.
+    records.forEach((key, value) {
+      collectionReference.add(value.toMap(highestId));
+    });
+
+    // Clears all the records from the map after inserting it in firebase .
+    records.clear();
   }
 
   // Returns the highest userId from Firestore
@@ -171,7 +177,7 @@ class RecordController extends GetxController {
             fieldType: (fieldType?.camelCase).toString(),
             fieldId: 0,
             maxLength: 40,
-            records: recordsToInsert,
+            records: recordToInsert,
             controller: TextEditingController(),
           ),
         ),

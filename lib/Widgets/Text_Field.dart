@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
   final String fieldType;
   final int fieldId;
   final int maxLength;
-  final List<Record> records;
+  final Map<String, Record> records;
   final TextEditingController controller;
 
   const CustomTextField({
@@ -90,8 +90,44 @@ class CustomTextField extends StatelessWidget {
         }
       },
       onSaved: (value) {
-        Record newRecord = Record(3, fieldId, fieldType, value.toString());
-        records.add(newRecord);
+        Record newRecord = Record(1, fieldId, fieldType, value.toString());
+        switch (fieldType) {
+          case "firstName":
+            records["firstName"] = newRecord;
+            break;
+          case "lastName":
+            records["lastName"] = newRecord;
+            break;
+          case "address1":
+            records["address1"] = newRecord;
+            break;
+          case "address2":
+            records["address2"] = newRecord;
+            break;
+          case "city":
+            records["city"] = newRecord;
+            break;
+          case "province":
+            records["province"] = newRecord;
+            break;
+          case "postal":
+            records["postal"] = newRecord;
+            break;
+          case "phoneNumber":
+            records["phoneNumber"] = newRecord;
+            break;
+          case "mobileNumber":
+            records["mobileNumber"] = newRecord;
+            break;
+          case "email":
+            records["email"] = newRecord;
+            break;
+          default:
+            records[fieldType] = newRecord;
+            break;
+        }
+
+        controller.clear();
       },
     );
   }
