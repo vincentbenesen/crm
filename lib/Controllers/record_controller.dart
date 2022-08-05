@@ -71,12 +71,35 @@ class RecordController extends GetxController {
   }
 
   // This function is used to fetch all the records from the database.
-  Future<void> fetchRecords() async {
-    QuerySnapshot records = await collectionReference.orderBy('userId').get();
+  Future<List<Record>> fetchRecords() async {
+    QuerySnapshot records = await collectionReference.get();
 
     records.docs.forEach((record) {
       recordList.add(Record(
           record['userId'], record['fieldId'], record['type'], record['data']));
+    });
+
+    return recordList;
+  }
+
+  // This record is used to retrieve the records from the database based on the given userId. This is used to display the records in the table.
+  Future<List<Record>> getRecordsById(int userId) async {
+    QuerySnapshot records =
+        await collectionReference.where('userId', isEqualTo: userId).get();
+
+    records.docs.forEach((record) {
+      recordList.add(Record(
+          record['userId'], record['fieldId'], record['type'], record['data']));
+    });
+
+    return recordList;
+  }
+
+  // This function is used to retrieve the records from the database based on the given fieldType.
+  Future<Record> getRecordByFieldType(
+      String fieldType, Future<List<Record>> records) async {
+    return await records.then((records) {
+      return records.firstWhere((record) => record.type == fieldType);
     });
   }
 
