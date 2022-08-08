@@ -1,11 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:crm/Controllers/record_controller.dart';
 import 'package:crm/Controllers/table_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../Models/record.dart';
 
 class Leads extends StatelessWidget {
@@ -22,11 +21,70 @@ class Leads extends StatelessWidget {
                 child: Column(
                   children: [
                     Navbar(),
-                    Get.find<TableController>().dataTable(
-                      Get.find<TableController>()
-                          .getColumns(Get.find<TableController>().leadsColumns),
-                      snapshot.data as List<Record>,
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.group),
+                                  const SizedBox(width: 5),
+                                  Text("Leads",
+                                      style: GoogleFonts.rubik(fontSize: 20))
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  RaisedButton(
+                                    onPressed: () {
+                                      Get.offAllNamed("/Panel");
+                                    },
+                                    color: Colors.white,
+                                    child: Text(
+                                      "Add new lead",
+                                      style: GoogleFonts.rubik(
+                                        fontSize: 15,
+                                        color: const Color.fromARGB(
+                                            255, 56, 91, 133),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
                     ),
+                    // Get.find<TableController>().dataTable(
+                    //   Get.find<TableController>()
+                    //       .getColumns(Get.find<TableController>().leadsColumns),
+                    //   snapshot.data as List<Record>,
+                    // ),
+
+                    // Checks if the data is null. If it is, it will display a
+                    snapshot.data.isNull
+                        ? Container(
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                value: 10,
+                              ),
+                            ),
+                          )
+                        : Obx(
+                            () => DataTable(
+                              columns: Get.find<TableController>().getColumns(
+                                  Get.find<TableController>().leadsColumns),
+                              rows: Get.find<TableController>()
+                                  .getRows(snapshot.data as List<Record>),
+                              sortColumnIndex:
+                                  Get.find<TableController>().index?.value,
+                            ),
+                          ),
                   ],
                 ),
               ),

@@ -11,15 +11,13 @@ class TableController extends GetxController {
   final recordList = <Record>[].obs;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference collectionReference;
+  RxInt index = 0.obs;
+  RxBool isAscending = false.obs;
 
   @override
   onInit() {
     super.onInit();
     collectionReference = firestore.collection('records');
-  }
-
-  void populateList(List<Record> records) {
-    recordList.value = records;
   }
 
   // This record is used to retrieve the records from the database based on the given userId. This is used to display the records in the table.
@@ -35,8 +33,8 @@ class TableController extends GetxController {
   // This function is used to get all the columns for the table
   List<DataColumn> getColumns(List<String> columns) {
     return columns
-        .map((column) =>
-            DataColumn(label: SizedBox(width: 350, child: Text(column))))
+        .map((column) => DataColumn(
+            onSort: onSort, label: SizedBox(width: 350, child: Text(column))))
         .toList();
   }
 
@@ -54,13 +52,11 @@ class TableController extends GetxController {
         .map((row) => DataRow(
                 cells: getCells([
               // Since I have the length of the list I can get the index of the record. I can now get the data based on their userId and fieldType
-              getRecordByFieldType(
-                      'firstName', getRecordsById(records, row.userId))
-                  .data,
-              getRecordByFieldType(
+              "${getRecordByFieldType('firstName', getRecordsById(records, row.userId)).data} ${getRecordByFieldType('lastName', getRecordsById(records, row.userId)).data}",
+              "${getRecordByFieldType(
                 'address1',
                 getRecordsById(records, row.userId),
-              ).data,
+              ).data} ${getRecordByFieldType('city', getRecordsById(records, row.userId)).data}, ${getRecordByFieldType('province', getRecordsById(records, row.userId)).data}, ${getRecordByFieldType('postal', getRecordsById(records, row.userId)).data}",
               getRecordByFieldType(
                       'phoneNumber', getRecordsById(records, row.userId))
                   .data,
@@ -73,10 +69,22 @@ class TableController extends GetxController {
         .toList();
   }
 
+  // Returns the table with the given columns and rows. It is used to display the records.
   Widget dataTable(
     List<DataColumn> columns,
     List<Record> records,
   ) {
-    return DataTable(columns: getColumns(leadsColumns), rows: getRows(records));
+    return Obx(
+      () => DataTable(
+        columns: getColumns(leadsColumns),
+        rows: getRows(records),
+        // sortColumnIndex: index,
+      ),
+    );
+  }
+
+  void onSort(int columnIndex, bool ascending) {
+    index.value = columnIndex;
+    isAscending.value = ascending;
   }
 }

@@ -35,7 +35,7 @@ class Panel extends StatelessWidget {
                   child: Obx(
                     () => Theme(
                       data: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.light(
+                          colorScheme: const ColorScheme.light(
                               primary: Color.fromARGB(255, 56, 91, 133))),
                       child: Stepper(
                         type: StepperType.horizontal,

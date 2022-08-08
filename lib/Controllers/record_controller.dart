@@ -13,10 +13,10 @@ class RecordController extends GetxController {
   late CollectionReference collectionReference;
 
   // These are the variables used to manipulate the data in the textfields.
-  final GlobalKey<FormState> nameFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> contactFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> otherInfoFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> nameFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> contactFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> otherInfoFormKey = GlobalKey<FormState>();
 
   late TextEditingController firstNameController,
       lastNameController,

@@ -1,3 +1,4 @@
+import 'package:crm/Views/leads.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,13 +26,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Panel(),
+      initialRoute: "/Leads",
       initialBinding: ControllerBinding(),
+      getPages: [
+        GetPage(
+            name: "/Leads",
+            page: () => const Leads(),
+            binding: ControllerBinding(),
+            transition: Transition.fade),
+        GetPage(
+            name: "/Panel",
+            page: () => const Panel(),
+            binding: ControllerBinding(),
+            transition: Transition.fade)
+      ],
     );
   }
 }

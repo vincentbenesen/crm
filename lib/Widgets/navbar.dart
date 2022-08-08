@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Controllers/table_controller.dart';
+
 class Navbar extends StatelessWidget {
   Navbar({Key? key}) : super(key: key);
   List<String> pages = ["Leads", "Assets"];
@@ -51,7 +53,9 @@ class Navbar extends StatelessWidget {
               ),
               RaisedButton(
                 onPressed: () {
-                  Get.to(() => Leads(), binding: ControllerBinding());
+                  if (Get.currentRoute != "/Leads") {
+                    Get.offAllNamed("/Leads");
+                  }
                 },
                 color: Colors.white,
                 child: Text(
@@ -62,7 +66,9 @@ class Navbar extends StatelessWidget {
                 ),
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(Get.find<TableController>().index);
+                },
                 color: Colors.white,
                 child: Text(
                   "Assets",
