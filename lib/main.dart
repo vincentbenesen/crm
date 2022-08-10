@@ -1,9 +1,11 @@
-import 'package:crm/Views/leads.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'Models/record.dart';
+import 'Views/edit_leads.dart';
 import 'Views/panel.dart';
+import 'package:crm/Views/leads.dart';
 import 'Bindings/controller_binding.dart';
 
 void main() async {
@@ -38,6 +40,11 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: "/Panel",
             page: () => const Panel(),
+            binding: ControllerBinding(),
+            transition: Transition.fade),
+        GetPage(
+            name: "/EditLeads",
+            page: () => EditLeads(),
             binding: ControllerBinding(),
             transition: Transition.fade)
       ],

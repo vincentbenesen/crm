@@ -30,17 +30,43 @@ class TableController extends GetxController {
     return records.firstWhere((record) => record.type == fieldType);
   }
 
+  // This function is used to retrieve the id of the record from the database based on the given fieldType and Data.
+  int getUserIdByFieldTypeAndData(
+      String fieldType, String data, List<Record> records) {
+    return records
+        .firstWhere((record) => record.type == fieldType && record.data == data)
+        .userId;
+  }
+
   // This function is used to get all the columns for the table
-  List<DataColumn> getColumns(List<String> columns) {
+  List<DataColumn> getColumns(List<String> columns, List<Record> records) {
     return columns
         .map((column) => DataColumn(
-            onSort: onSort, label: SizedBox(width: 350, child: Text(column))))
+            onSort: ((columnIndex, ascending) {
+              onSort(columnIndex, columnIndex > 0 ? false : ascending, records);
+            }),
+            label: SizedBox(width: 315, child: Text(column))))
         .toList();
   }
 
   // This function is used to get all the cells that will be inserted in a row for the table
-  List<DataCell> getCells(List<dynamic> cells) {
-    return cells.map((data) => DataCell(Text(data.toString()))).toList();
+  List<DataCell> getCells(List<dynamic> cells, List<Record> records) {
+    return cells
+        .map((data) => DataCell(InkWell(
+            onTap: () {
+              if (!data.toString().contains(new RegExp(r'[0-9-\@]'))) {
+                // print(data.toString().split(" ").first);
+
+                Get.offAllNamed('/EditLeads', arguments: {
+                  'records': getRecordsById(
+                      records,
+                      getUserIdByFieldTypeAndData("firstName",
+                          data.toString().split(" ").first, records)),
+                });
+              }
+            },
+            child: Text(data.toString()))))
+        .toList();
   }
 
   // This function is used to get all the rows for the table
@@ -65,25 +91,52 @@ class TableController extends GetxController {
                   .data,
               getRecordByFieldType('email', getRecordsById(records, row.userId))
                   .data
-            ])))
+            ], records)))
         .toList();
   }
 
   // Returns the table with the given columns and rows. It is used to display the records.
-  Widget dataTable(
-    List<DataColumn> columns,
-    List<Record> records,
-  ) {
-    return Obx(
-      () => DataTable(
-        columns: getColumns(leadsColumns),
-        rows: getRows(records),
-        // sortColumnIndex: index,
-      ),
-    );
+  // Widget dataTable(
+  //   List<DataColumn> columns,
+  //   List<Record> records,
+  // ) {
+  //   return Obx(
+  //     () => DataTable(
+  //       columns: getColumns(leadsColumns),
+  //       rows: getRows(records),
+  //     ),
+  //   );
+  // }
+
+  int compareString(String a, String b, bool ascending) {
+    return ascending ? a.compareTo(b) : b.compareTo(a);
   }
 
-  void onSort(int columnIndex, bool ascending) {
+  void onSort(int columnIndex, bool ascending, List<Record> records) {
+    switch (columnIndex) {
+      case 0:
+        // records.sort((a, b) => compareString(a.data, b.data, ascending));
+        records
+            // .where((record) => record.type == "firstName")
+            // .toList()
+            .sort((a, b) => compareString(a.data, b.data, ascending));
+        break;
+      // case 1:
+      // records.sort((a, b) => compareString(
+      //     (a.type == "address1" ? a.data : continueWithAddress(a.data)),
+      //     (b.type == "address1" ? b.data : ""),
+      //     ascending));
+      // break;
+      // case 2:
+      //   records.sort((a, b) => a.data.compareTo(b.data));
+      //   break;
+      // case 3:
+      //   records.sort((a, b) => a.data.compareTo(b.data));
+      //   break;
+      // case 4:
+      //   records.sort((a, b) => a.data.compareTo(b.data));
+      //   break;
+    }
     index.value = columnIndex;
     isAscending.value = ascending;
   }
