@@ -62,6 +62,7 @@ class EditLeads extends StatelessWidget {
                                     ),
                                     Text(
                                       "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                                      // '',
                                       style: GoogleFonts.rubik(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
@@ -140,10 +141,8 @@ class EditLeads extends StatelessWidget {
                             Text("Account Name",
                                 style: GoogleFonts.rubik(fontSize: 15)),
                             Text(
-                              // '${Get.find<TableController>().getRecordByFieldType("lastName", records).data}',
                               "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                              // Get.find<TableController>().id.value.toString(),
-
+                              // '',
                               style: GoogleFonts.rubik(
                                 fontSize: 15,
                                 color: const Color.fromARGB(255, 56, 91, 133),
@@ -162,6 +161,7 @@ class EditLeads extends StatelessWidget {
                                   .getRecordByFieldType(
                                       "phoneNumber", Get.arguments['records'])
                                   .data,
+                              // '',
                               style: GoogleFonts.rubik(
                                 fontSize: 15,
                                 color: const Color.fromARGB(255, 56, 91, 133),
@@ -180,6 +180,7 @@ class EditLeads extends StatelessWidget {
                                   .getRecordByFieldType(
                                       "email", Get.arguments['records'])
                                   .data,
+                              // '',
                               style: GoogleFonts.rubik(
                                 fontSize: 15,
                                 color: const Color.fromARGB(255, 56, 91, 133),
@@ -192,6 +193,368 @@ class EditLeads extends StatelessWidget {
                   )
                 ],
               ),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 10),
+                Container(
+                  width: MediaQuery.of(context).size.width - 600,
+                  height: MediaQuery.of(context).size.height - 330,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        readOnly: true,
+                        initialValue:
+                            "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                        // '',
+                        decoration: InputDecoration(
+                          labelText: "Name",
+                          labelStyle: GoogleFonts.rubik(fontSize: 15),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Contact Information
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 219, 217, 217),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (Get.find<TableController>()
+                                            .showContactInfo
+                                            .value ==
+                                        false) {
+                                      Get.find<TableController>().setToTrue(
+                                          Get.find<TableController>()
+                                              .showContactInfo);
+                                    } else {
+                                      Get.find<TableController>().setToFalse(
+                                          Get.find<TableController>()
+                                              .showContactInfo);
+                                    }
+                                  },
+                                  child: const Icon(Icons.keyboard_arrow_down),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  "Contact Information",
+                                  style: GoogleFonts.rubik(fontSize: 15),
+                                ),
+                              ]),
+                            ),
+                            Obx(() => Get.find<TableController>()
+                                        .showContactInfo
+                                        .value ==
+                                    true
+                                ? Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextFormField(
+                                            readOnly: true,
+                                            initialValue: 'English',
+                                            decoration: InputDecoration(
+                                              labelText: "Language",
+                                              labelStyle: GoogleFonts.rubik(
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 30),
+                                        Expanded(
+                                          child: TextFormField(
+                                            readOnly: true,
+                                            initialValue:
+                                                "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                                            // '',
+                                            decoration: InputDecoration(
+                                              labelText: "Account Name",
+                                              labelStyle: GoogleFonts.rubik(
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container())
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Phone and Email
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 219, 217, 217),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (Get.find<TableController>()
+                                            .showPhoneandEmail
+                                            .value ==
+                                        false) {
+                                      Get.find<TableController>().setToTrue(
+                                          Get.find<TableController>()
+                                              .showPhoneandEmail);
+                                    } else {
+                                      Get.find<TableController>().setToFalse(
+                                          Get.find<TableController>()
+                                              .showPhoneandEmail);
+                                    }
+                                  },
+                                  child: const Icon(Icons.keyboard_arrow_down),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  "Phone / Email",
+                                  style: GoogleFonts.rubik(fontSize: 15),
+                                ),
+                              ]),
+                            ),
+                            Obx(() => Get.find<TableController>()
+                                        .showPhoneandEmail
+                                        .value ==
+                                    true
+                                ? Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 120,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: TextFormField(
+                                                readOnly: true,
+                                                initialValue:
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "phoneNumber",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data,
+                                                decoration: InputDecoration(
+                                                  labelText: "Phone",
+                                                  labelStyle: GoogleFonts.rubik(
+                                                      fontSize: 15),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 30),
+                                            Expanded(
+                                              child: TextFormField(
+                                                readOnly: true,
+                                                initialValue:
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "email",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data,
+                                                decoration: InputDecoration(
+                                                  labelText: "Email",
+                                                  labelStyle: GoogleFonts.rubik(
+                                                      fontSize: 15),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: 605,
+                                          child: TextFormField(
+                                            readOnly: true,
+                                            initialValue: Get.find<
+                                                    TableController>()
+                                                .getRecordByFieldType(
+                                                    "mobileNumber",
+                                                    Get.arguments['records'])
+                                                .data,
+                                            decoration: InputDecoration(
+                                              labelText: "Mobile",
+                                              labelStyle: GoogleFonts.rubik(
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container())
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Address Information
+                      Container(
+                        child: Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 219, 217, 217),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (Get.find<TableController>()
+                                            .showAddressInfo
+                                            .value ==
+                                        false) {
+                                      Get.find<TableController>().setToTrue(
+                                          Get.find<TableController>()
+                                              .showAddressInfo);
+                                    } else {
+                                      Get.find<TableController>().setToFalse(
+                                          Get.find<TableController>()
+                                              .showAddressInfo);
+                                    }
+                                  },
+                                  child: const Icon(Icons.keyboard_arrow_down),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  "Address Information",
+                                  style: GoogleFonts.rubik(fontSize: 15),
+                                ),
+                              ]),
+                            ),
+                            Obx(() => Get.find<TableController>()
+                                        .showAddressInfo
+                                        .value ==
+                                    true
+                                ? Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 260,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          readOnly: true,
+                                          initialValue:
+                                              Get.find<TableController>()
+                                                  .getRecordByFieldType(
+                                                      "address1",
+                                                      Get.arguments['records'])
+                                                  .data,
+                                          decoration: InputDecoration(
+                                            labelText: "Street Address 2",
+                                            labelStyle:
+                                                GoogleFonts.rubik(fontSize: 15),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: TextFormField(
+                                                readOnly: true,
+                                                initialValue:
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "city",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data,
+                                                decoration: InputDecoration(
+                                                  labelText: "City",
+                                                  labelStyle: GoogleFonts.rubik(
+                                                      fontSize: 15),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 30),
+                                            Expanded(
+                                              child: TextFormField(
+                                                readOnly: true,
+                                                initialValue:
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "province",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data,
+                                                decoration: InputDecoration(
+                                                  labelText: "Province",
+                                                  labelStyle: GoogleFonts.rubik(
+                                                      fontSize: 15),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: 605,
+                                          child: TextFormField(
+                                            readOnly: true,
+                                            initialValue: Get.find<
+                                                    TableController>()
+                                                .getRecordByFieldType("postal",
+                                                    Get.arguments['records'])
+                                                .data,
+                                            decoration: InputDecoration(
+                                              labelText: "Postal Code",
+                                              labelStyle: GoogleFonts.rubik(
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container())
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             )
           ],
         ),

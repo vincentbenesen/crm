@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: "/EditLeads",
             page: () => EditLeads(),
+            arguments: [],
             binding: ControllerBinding(),
             transition: Transition.fade)
       ],

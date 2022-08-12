@@ -11,13 +11,28 @@ class TableController extends GetxController {
   final recordList = <Record>[].obs;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference collectionReference;
+
+  // These variables are used for sorting the records.
   RxInt index = 0.obs;
   RxBool isAscending = false.obs;
+
+  // These variables are used to show the information of the user in the EditLead page.
+  RxBool showContactInfo = true.obs;
+  RxBool showPhoneandEmail = true.obs;
+  RxBool showAddressInfo = true.obs;
 
   @override
   onInit() {
     super.onInit();
     collectionReference = firestore.collection('records');
+  }
+
+  void setToTrue(RxBool bool) {
+    bool.value = true;
+  }
+
+  void setToFalse(RxBool bool) {
+    bool.value = false;
   }
 
   // This record is used to retrieve the records from the database based on the given userId. This is used to display the records in the table.

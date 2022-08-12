@@ -44,6 +44,11 @@ class Panel extends StatelessWidget {
                         onStepTapped: (value) {},
                         onStepCancel: () {
                           if (Get.find<StepperController>().currentStep.value ==
+                              0) {
+                            Get.offAllNamed("/Leads");
+                          } else if (Get.find<StepperController>()
+                                  .currentStep
+                                  .value ==
                               1) {
                             Get.find<RecordController>()
                                 .recordToInsert
