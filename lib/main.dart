@@ -1,9 +1,10 @@
+import 'package:crm/Views/edit_leads.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'Models/record.dart';
-import 'Views/edit_leads.dart';
+import 'Views/lead_details.dart';
 import 'Views/panel.dart';
 import 'package:crm/Views/leads.dart';
 import 'Bindings/controller_binding.dart';
@@ -43,9 +44,14 @@ class MyApp extends StatelessWidget {
             binding: ControllerBinding(),
             transition: Transition.fade),
         GetPage(
-            name: "/EditLeads",
-            page: () => EditLeads(),
+            name: "/LeadDetails",
+            page: () => const LeadDetails(),
             arguments: [],
+            binding: ControllerBinding(),
+            transition: Transition.fade),
+        GetPage(
+            name: "/EditLeads",
+            page: () => const EditLeads(),
             binding: ControllerBinding(),
             transition: Transition.fade)
       ],

@@ -18,6 +18,9 @@ class RecordController extends GetxController {
   GlobalKey<FormState> contactFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> otherInfoFormKey = GlobalKey<FormState>();
 
+  // This variable is used for the form that updates the record in the the edit lead page.
+  GlobalKey<FormState> updateFormKey = GlobalKey<FormState>();
+
   late TextEditingController firstNameController,
       lastNameController,
       address1Controller,
@@ -35,6 +38,9 @@ class RecordController extends GetxController {
   // This record is for adding the records in the firebase.
   // final recordsToInsert = <Record>[].obs;
   final Map<String, Record> recordToInsert = <String, Record>{}.obs;
+
+  // This record is for updating the records in the firebase.
+  final recordsToUpdate = <Record>[].obs;
 
   // These variables are used for fields that are added by the user.
   final fieldName = ''.obs;
@@ -75,8 +81,8 @@ class RecordController extends GetxController {
     QuerySnapshot records = await collectionReference.get();
 
     records.docs.forEach((record) {
-      recordList.add(Record(
-          record['userId'], record['fieldId'], record['type'], record['data']));
+      recordList.add(Record(record['userId'], record['fieldId'], record['type'],
+          record['data'], record['documentId']));
     });
 
     return recordList;
@@ -103,6 +109,20 @@ class RecordController extends GetxController {
     });
   }
 
+  // This function is used to update the records from the database based on the given docId.
+  void updateRecord() {
+    recordsToUpdate.forEach((element) {
+      collectionReference.doc(element.documentId).update({
+        'userId': element.userId,
+        'fieldId': element.fieldId,
+        'type': element.type,
+        'data': element.data,
+      });
+    });
+
+    recordsToUpdate.clear();
+  }
+
   bool validateTextField(GlobalKey<FormState> key) {
     if (key.currentState!.validate()) {
       key.currentState?.save();
@@ -121,7 +141,8 @@ class RecordController extends GetxController {
 
     // Inserts the records in the firebase.
     records.forEach((key, value) {
-      collectionReference.add(value.toMap(highestId));
+      value.documentId = collectionReference.doc().id;
+      collectionReference.doc(value.documentId).set(value.toMap(highestId));
     });
 
     // Clears all the records from the map after inserting it in firebase .

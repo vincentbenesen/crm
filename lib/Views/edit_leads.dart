@@ -1,227 +1,41 @@
-import 'package:crm/Widgets/navbar.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
 
-import '../Controllers/table_controller.dart';
+import 'package:crm/Controllers/record_controller.dart';
+import 'package:crm/Controllers/table_controller.dart';
+import 'package:crm/Widgets/navbar.dart';
+
 import '../Models/record.dart';
 
 class EditLeads extends StatelessWidget {
-  // final List<Record> records;
-  const EditLeads({
-    Key? key,
-  }) : super(key: key);
+  const EditLeads({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 56, 91, 133),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Navbar(),
-            const SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width - 20,
-              height: 110,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 219, 217, 217),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.contact_mail_rounded,
-                                  color: Color.fromARGB(255, 56, 91, 133),
-                                  size: 30,
-                                ),
-                                const SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Contact",
-                                      style: GoogleFonts.rubik(fontSize: 15),
-                                    ),
-                                    Text(
-                                      "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                                      // '',
-                                      style: GoogleFonts.rubik(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                RaisedButton(
-                                  onPressed: () {},
-                                  color: Colors.white,
-                                  child: Text(
-                                    "Edit",
-                                    style: GoogleFonts.rubik(
-                                      fontSize: 15,
-                                      color: const Color.fromARGB(
-                                          255, 56, 91, 133),
-                                    ),
-                                  ),
-                                ),
-                                RaisedButton(
-                                  onPressed: () {},
-                                  color: Colors.white,
-                                  child: Text(
-                                    "Delete",
-                                    style: GoogleFonts.rubik(
-                                      fontSize: 15,
-                                      color: const Color.fromARGB(
-                                          255, 56, 91, 133),
-                                    ),
-                                  ),
-                                ),
-                                RaisedButton(
-                                  onPressed: () {
-                                    Get.offAllNamed("/Leads");
-                                  },
-                                  color: Colors.white,
-                                  child: Text(
-                                    "Go Back",
-                                    style: GoogleFonts.rubik(
-                                      fontSize: 15,
-                                      color: const Color.fromARGB(
-                                          255, 56, 91, 133),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ]),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+      body: Form(
+        key: Get.find<RecordController>().updateFormKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Navbar(),
+              const SizedBox(height: 20),
+              Container(
+                width: MediaQuery.of(context).size.width - 20,
+                height: 650,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                decoration: BoxDecoration(
                     color: Colors.white,
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text("Title",
-                                style: GoogleFonts.rubik(fontSize: 15)),
-                            const SizedBox(height: 18),
-                          ],
-                        ),
-                        // RaisedButton(onPressed: () {
-                        //   print(Get.arguments['userId']);
-                        // }),
-                        const SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Account Name",
-                                style: GoogleFonts.rubik(fontSize: 15)),
-                            Text(
-                              "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                              // '',
-                              style: GoogleFonts.rubik(
-                                fontSize: 15,
-                                color: const Color.fromARGB(255, 56, 91, 133),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Phone",
-                                style: GoogleFonts.rubik(fontSize: 15)),
-                            Text(
-                              Get.find<TableController>()
-                                  .getRecordByFieldType(
-                                      "phoneNumber", Get.arguments['records'])
-                                  .data,
-                              // '',
-                              style: GoogleFonts.rubik(
-                                fontSize: 15,
-                                color: const Color.fromARGB(255, 56, 91, 133),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Email",
-                                style: GoogleFonts.rubik(fontSize: 15)),
-                            Text(
-                              Get.find<TableController>()
-                                  .getRecordByFieldType(
-                                      "email", Get.arguments['records'])
-                                  .data,
-                              // '',
-                              style: GoogleFonts.rubik(
-                                fontSize: 15,
-                                color: const Color.fromARGB(255, 56, 91, 133),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(width: 10),
-                Container(
-                  width: MediaQuery.of(context).size.width - 600,
-                  height: MediaQuery.of(context).size.height - 330,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Container(
                   child: Column(
                     children: [
-                      TextFormField(
-                        readOnly: true,
-                        initialValue:
-                            "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                        // '',
-                        decoration: InputDecoration(
-                          labelText: "Name",
-                          labelStyle: GoogleFonts.rubik(fontSize: 15),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      // Contact Information
+                      // Details
                       Container(
                         child: Column(
                           children: [
@@ -252,7 +66,7 @@ class EditLeads extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 10),
                                 Text(
-                                  "Contact Information",
+                                  "Details",
                                   style: GoogleFonts.rubik(fontSize: 15),
                                 ),
                               ]),
@@ -263,7 +77,7 @@ class EditLeads extends StatelessWidget {
                                     true
                                 ? Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: 50,
+                                    height: 70,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20),
                                     decoration: BoxDecoration(
@@ -274,27 +88,102 @@ class EditLeads extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: TextFormField(
-                                            readOnly: true,
-                                            initialValue: 'English',
+                                            initialValue: Get.find<
+                                                    TableController>()
+                                                .getRecordByFieldType(
+                                                    "firstName",
+                                                    Get.arguments['records'])
+                                                .data,
                                             decoration: InputDecoration(
-                                              labelText: "Language",
+                                              labelText: "First Name",
                                               labelStyle: GoogleFonts.rubik(
                                                   fontSize: 15),
                                             ),
+                                            validator: (String? value) {
+                                              if (value.toString().isEmpty) {
+                                                return 'This field is required';
+                                              }
+                                              return null;
+                                            },
+                                            onSaved: (value) {
+                                              // Check is the data has changed before updating the database
+                                              if (Get.find<TableController>()
+                                                      .getRecordByFieldType(
+                                                          "firstName",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data !=
+                                                  value.toString()) {
+                                                // Change the data of the record based on the given field type
+                                                Get.find<TableController>()
+                                                    .getRecordByFieldType(
+                                                        "firstName",
+                                                        Get.arguments[
+                                                            'records'])
+                                                    .data = value.toString();
+
+                                                // Add the updated record to the list of updated records
+                                                Get.find<RecordController>()
+                                                    .recordsToUpdate
+                                                    .add(Get.find<
+                                                            TableController>()
+                                                        .getRecordByFieldType(
+                                                            "firstName",
+                                                            Get.arguments[
+                                                                'records']));
+                                              }
+                                            },
                                           ),
                                         ),
                                         const SizedBox(width: 30),
                                         Expanded(
                                           child: TextFormField(
-                                            readOnly: true,
-                                            initialValue:
-                                                "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                                            initialValue: Get.find<
+                                                    TableController>()
+                                                .getRecordByFieldType(
+                                                    "lastName",
+                                                    Get.arguments['records'])
+                                                .data,
                                             // '',
                                             decoration: InputDecoration(
-                                              labelText: "Account Name",
+                                              labelText: "Last Name",
                                               labelStyle: GoogleFonts.rubik(
                                                   fontSize: 15),
                                             ),
+                                            validator: (String? value) {
+                                              if (value.toString().isEmpty) {
+                                                return 'This field is required';
+                                              }
+                                              return null;
+                                            },
+                                            onSaved: (value) {
+                                              // Check is the data has changed before updating the database
+                                              if (Get.find<TableController>()
+                                                      .getRecordByFieldType(
+                                                          "lastName",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data !=
+                                                  value.toString()) {
+                                                // Change the data of the record based on the given field type
+                                                Get.find<TableController>()
+                                                    .getRecordByFieldType(
+                                                        "lastName",
+                                                        Get.arguments[
+                                                            'records'])
+                                                    .data = value.toString();
+
+                                                // Add the updated record to the list of updated records
+                                                Get.find<RecordController>()
+                                                    .recordsToUpdate
+                                                    .add(Get.find<
+                                                            TableController>()
+                                                        .getRecordByFieldType(
+                                                            "lastName",
+                                                            Get.arguments[
+                                                                'records']));
+                                              }
+                                            },
                                           ),
                                         ),
                                       ],
@@ -305,7 +194,7 @@ class EditLeads extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      // Phone and Email
+                      // Contact Information
                       Container(
                         child: Column(
                           children: [
@@ -336,7 +225,7 @@ class EditLeads extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 10),
                                 Text(
-                                  "Phone / Email",
+                                  "Contact Information",
                                   style: GoogleFonts.rubik(fontSize: 15),
                                 ),
                               ]),
@@ -347,7 +236,7 @@ class EditLeads extends StatelessWidget {
                                     true
                                 ? Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: 120,
+                                    height: 150,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20),
                                     decoration: BoxDecoration(
@@ -362,7 +251,6 @@ class EditLeads extends StatelessWidget {
                                           children: [
                                             Expanded(
                                               child: TextFormField(
-                                                readOnly: true,
                                                 initialValue:
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -375,12 +263,54 @@ class EditLeads extends StatelessWidget {
                                                   labelStyle: GoogleFonts.rubik(
                                                       fontSize: 15),
                                                 ),
+                                                validator: (String? value) {
+                                                  if (value
+                                                      .toString()
+                                                      .isEmpty) {
+                                                    return 'This field is required';
+                                                  }
+                                                  if (!RegExp(
+                                                          r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
+                                                      .hasMatch(
+                                                          value.toString())) {
+                                                    return "Please enter a valid phone number";
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (value) {
+                                                  // Check is the data has changed before updating the database
+                                                  if (Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "phoneNumber",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data !=
+                                                      value.toString()) {
+                                                    // Change the data of the record based on the given field type
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "phoneNumber",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data = value.toString();
+
+                                                    // Add the updated record to the list of updated records
+                                                    Get.find<RecordController>()
+                                                        .recordsToUpdate
+                                                        .add(Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "phoneNumber",
+                                                                Get.arguments[
+                                                                    'records']));
+                                                  }
+                                                },
                                               ),
                                             ),
                                             const SizedBox(width: 30),
                                             Expanded(
                                               child: TextFormField(
-                                                readOnly: true,
                                                 initialValue:
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -393,14 +323,58 @@ class EditLeads extends StatelessWidget {
                                                   labelStyle: GoogleFonts.rubik(
                                                       fontSize: 15),
                                                 ),
+                                                validator: (String? value) {
+                                                  if (value
+                                                      .toString()
+                                                      .isEmpty) {
+                                                    return 'This field is required';
+                                                  }
+
+                                                  if (!RegExp(
+                                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                                      .hasMatch(
+                                                          value.toString())) {
+                                                    return "Please enter a valid email";
+                                                  }
+
+                                                  return null;
+                                                },
+                                                onSaved: (value) {
+                                                  // Check is the data has changed before updating the database
+                                                  if (Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "email",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data !=
+                                                      value.toString()) {
+                                                    // Change the data of the record based on the given field type
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "email",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data = value.toString();
+
+                                                    // Add the updated record to the list of updated records
+                                                    Get.find<RecordController>()
+                                                        .recordsToUpdate
+                                                        .add(Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "email",
+                                                                Get.arguments[
+                                                                    'records']));
+                                                  }
+                                                },
                                               ),
                                             ),
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 605,
+                                          width: 895,
                                           child: TextFormField(
-                                            readOnly: true,
                                             initialValue: Get.find<
                                                     TableController>()
                                                 .getRecordByFieldType(
@@ -412,6 +386,46 @@ class EditLeads extends StatelessWidget {
                                               labelStyle: GoogleFonts.rubik(
                                                   fontSize: 15),
                                             ),
+                                            validator: (String? value) {
+                                              if (value.toString().isEmpty) {
+                                                return 'This field is required';
+                                              }
+
+                                              if (!RegExp(
+                                                      r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
+                                                  .hasMatch(value.toString())) {
+                                                return "Please enter a valid phone number";
+                                              }
+                                              return null;
+                                            },
+                                            onSaved: (value) {
+                                              // Check is the data has changed before updating the database
+                                              if (Get.find<TableController>()
+                                                      .getRecordByFieldType(
+                                                          "mobileNumber",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data !=
+                                                  value.toString()) {
+                                                // Change the data of the record based on the given field type
+                                                Get.find<TableController>()
+                                                    .getRecordByFieldType(
+                                                        "mobileNumber",
+                                                        Get.arguments[
+                                                            'records'])
+                                                    .data = value.toString();
+
+                                                // Add the updated record to the list of updated records
+                                                Get.find<RecordController>()
+                                                    .recordsToUpdate
+                                                    .add(Get.find<
+                                                            TableController>()
+                                                        .getRecordByFieldType(
+                                                            "mobileNumber",
+                                                            Get.arguments[
+                                                                'records']));
+                                              }
+                                            },
                                           ),
                                         ),
                                       ],
@@ -464,7 +478,7 @@ class EditLeads extends StatelessWidget {
                                     true
                                 ? Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: 260,
+                                    height: 225,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20),
                                     decoration: BoxDecoration(
@@ -476,7 +490,6 @@ class EditLeads extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         TextFormField(
-                                          readOnly: true,
                                           initialValue:
                                               Get.find<TableController>()
                                                   .getRecordByFieldType(
@@ -484,16 +497,48 @@ class EditLeads extends StatelessWidget {
                                                       Get.arguments['records'])
                                                   .data,
                                           decoration: InputDecoration(
-                                            labelText: "Street Address 2",
+                                            labelText: "Street Address 1",
                                             labelStyle:
                                                 GoogleFonts.rubik(fontSize: 15),
                                           ),
+                                          validator: (String? value) {
+                                            if (value.toString().isEmpty) {
+                                              return 'This field is required';
+                                            }
+                                            return null;
+                                          },
+                                          onSaved: (value) {
+                                            // Check is the data has changed before updating the database
+                                            if (Get.find<TableController>()
+                                                    .getRecordByFieldType(
+                                                        "address1",
+                                                        Get.arguments[
+                                                            'records'])
+                                                    .data !=
+                                                value.toString()) {
+                                              // Change the data of the record based on the given field type
+                                              Get.find<TableController>()
+                                                  .getRecordByFieldType(
+                                                      "address1",
+                                                      Get.arguments['records'])
+                                                  .data = value.toString();
+
+                                              // Add the updated record to the list of updated records
+                                              Get.find<RecordController>()
+                                                  .recordsToUpdate
+                                                  .add(Get.find<
+                                                          TableController>()
+                                                      .getRecordByFieldType(
+                                                          "address1",
+                                                          Get.arguments[
+                                                              'records']));
+                                            }
+                                          },
                                         ),
                                         Row(
                                           children: [
                                             Expanded(
                                               child: TextFormField(
-                                                readOnly: true,
                                                 initialValue:
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -506,12 +551,48 @@ class EditLeads extends StatelessWidget {
                                                   labelStyle: GoogleFonts.rubik(
                                                       fontSize: 15),
                                                 ),
+                                                validator: (String? value) {
+                                                  if (value
+                                                      .toString()
+                                                      .isEmpty) {
+                                                    return 'This field is required';
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (value) {
+                                                  // Check is the data has changed before updating the database
+                                                  if (Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "city",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data !=
+                                                      value.toString()) {
+                                                    // Change the data of the record based on the given field type
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "city",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data = value.toString();
+
+                                                    // Add the updated record to the list of updated records
+                                                    Get.find<RecordController>()
+                                                        .recordsToUpdate
+                                                        .add(Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "city",
+                                                                Get.arguments[
+                                                                    'records']));
+                                                  }
+                                                },
                                               ),
                                             ),
                                             const SizedBox(width: 30),
                                             Expanded(
                                               child: TextFormField(
-                                                readOnly: true,
                                                 initialValue:
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -524,14 +605,50 @@ class EditLeads extends StatelessWidget {
                                                   labelStyle: GoogleFonts.rubik(
                                                       fontSize: 15),
                                                 ),
+                                                validator: (String? value) {
+                                                  if (value
+                                                      .toString()
+                                                      .isEmpty) {
+                                                    return 'This field is required';
+                                                  }
+                                                  return null;
+                                                },
+                                                onSaved: (value) {
+                                                  // Check is the data has changed before updating the database
+                                                  if (Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "province",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data !=
+                                                      value.toString()) {
+                                                    // Change the data of the record based on the given field type
+                                                    Get.find<TableController>()
+                                                        .getRecordByFieldType(
+                                                            "province",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data = value.toString();
+
+                                                    // Add the updated record to the list of updated records
+                                                    Get.find<RecordController>()
+                                                        .recordsToUpdate
+                                                        .add(Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "province",
+                                                                Get.arguments[
+                                                                    'records']));
+                                                  }
+                                                },
                                               ),
                                             ),
                                           ],
                                         ),
                                         SizedBox(
-                                          width: 605,
+                                          width: 895,
                                           child: TextFormField(
-                                            readOnly: true,
                                             initialValue: Get.find<
                                                     TableController>()
                                                 .getRecordByFieldType("postal",
@@ -542,6 +659,40 @@ class EditLeads extends StatelessWidget {
                                               labelStyle: GoogleFonts.rubik(
                                                   fontSize: 15),
                                             ),
+                                            validator: (String? value) {
+                                              if (value.toString().isEmpty) {
+                                                return 'This field is required';
+                                              }
+                                              return null;
+                                            },
+                                            onSaved: (value) {
+                                              // Check is the data has changed before updating the database
+                                              if (Get.find<TableController>()
+                                                      .getRecordByFieldType(
+                                                          "postal",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data !=
+                                                  value.toString()) {
+                                                // Change the data of the record based on the given field type
+                                                Get.find<TableController>()
+                                                    .getRecordByFieldType(
+                                                        "postal",
+                                                        Get.arguments[
+                                                            'records'])
+                                                    .data = value.toString();
+
+                                                // Add the updated record to the list of updated records
+                                                Get.find<RecordController>()
+                                                    .recordsToUpdate
+                                                    .add(Get.find<
+                                                            TableController>()
+                                                        .getRecordByFieldType(
+                                                            "postal",
+                                                            Get.arguments[
+                                                                'records']));
+                                              }
+                                            },
                                           ),
                                         ),
                                       ],
@@ -550,13 +701,52 @@ class EditLeads extends StatelessWidget {
                                 : Container())
                           ],
                         ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                            onPressed: () {
+                              Get.offAllNamed("/LeadDetails", arguments: {
+                                'records': Get.arguments['records'],
+                              });
+                            },
+                            color: Colors.white,
+                            child: Text(
+                              "Cancel",
+                              style: GoogleFonts.rubik(
+                                  fontSize: 20,
+                                  color:
+                                      const Color.fromARGB(255, 56, 91, 133)),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          RaisedButton(
+                            onPressed: () {
+                              if (Get.find<RecordController>()
+                                  .validateTextField(
+                                      Get.find<RecordController>()
+                                          .updateFormKey)) {
+                                Get.find<RecordController>().updateRecord();
+                                // print(Get.find<RecordController>()
+                                //     .recordsToUpdate
+                                //     .toString());
+                                Get.offAllNamed("/Leads");
+                              }
+                            },
+                            color: const Color.fromARGB(255, 56, 91, 133),
+                            child: Text("Save",
+                                style: GoogleFonts.rubik(
+                                    fontSize: 20, color: Colors.white)),
+                          )
+                        ],
                       )
                     ],
                   ),
                 ),
-              ],
-            )
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

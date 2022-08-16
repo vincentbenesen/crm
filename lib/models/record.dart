@@ -5,8 +5,10 @@ class Record {
   late int fieldId;
   late String type;
   late String data;
+  late String documentId;
 
-  Record(this.userId, this.fieldId, this.type, this.data);
+  Record(this.userId, this.fieldId, this.type, this.data,
+      [this.documentId = '']);
 
   Map<String, dynamic> toMap(int highestUserId) {
     return {
@@ -14,6 +16,7 @@ class Record {
       'fieldId': fieldId,
       'type': type,
       'data': data,
+      'documentId': documentId,
     };
   }
 
@@ -24,6 +27,6 @@ class Record {
   @override
   String toString() {
     // TODO: implement toString
-    return 'Record{userId: $userId, fieldId: $fieldId, type: $type, data: $data}';
+    return 'Record{userId: $userId, fieldId: $fieldId, type: $type, data: $data, documentId: $documentId}';
   }
 }

@@ -72,7 +72,7 @@ class TableController extends GetxController {
               if (!data.toString().contains(new RegExp(r'[0-9-\@]'))) {
                 // print(data.toString().split(" ").first);
 
-                Get.offAllNamed('/EditLeads', arguments: {
+                Get.offAllNamed('/LeadDetails', arguments: {
                   'records': getRecordsById(
                       records,
                       getUserIdByFieldTypeAndData("firstName",
