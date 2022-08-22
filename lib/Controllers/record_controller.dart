@@ -123,6 +123,13 @@ class RecordController extends GetxController {
     recordsToUpdate.clear();
   }
 
+  // This function is used to delete the records from the database based on the given docId.
+  void deleteRecord(List<Record> records) {
+    records.forEach((record) {
+      collectionReference.doc(record.documentId).delete();
+    });
+  }
+
   bool validateTextField(GlobalKey<FormState> key) {
     if (key.currentState!.validate()) {
       key.currentState?.save();

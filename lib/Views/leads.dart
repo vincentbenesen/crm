@@ -43,6 +43,7 @@ class Leads extends StatelessWidget {
                               children: [
                                 RaisedButton(
                                   onPressed: () {
+                                    print(snapshot.data);
                                     Get.offAllNamed("/Panel");
                                   },
                                   color: Colors.white,
@@ -60,7 +61,7 @@ class Leads extends StatelessWidget {
                           ),
                         ]),
                   ),
-                  snapshot.data.isNull
+                  snapshot.data == null
                       ? Container(
                           child: const Center(
                             child: CircularProgressIndicator(
