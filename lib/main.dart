@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:crm/routes/routes.dart';
+import 'package:crm/constant.dart';
 import 'Models/record.dart';
 import 'Views/lead_details.dart';
 import 'Views/panel.dart';
@@ -13,12 +15,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyAipwchueYRMQhdswHq-HvbnQOXWIf5DN8",
-          authDomain: "fir-flutter-479eb.firebaseapp.com",
-          projectId: "fir-flutter-479eb",
-          storageBucket: "fir-flutter-479eb.appspot.com",
-          messagingSenderId: "985079857939",
-          appId: "1:985079857939:web:e3106b184d8d5affc450e6"));
+          apiKey: kApiKey,
+          authDomain: kAuthDomain,
+          projectId: kProjectId,
+          storageBucket: kStorageBucket,
+          messagingSenderId: kMessagingSenderId,
+          appId: kAppId));
   runApp(const MyApp());
 }
 
@@ -29,32 +31,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/Leads",
-      initialBinding: ControllerBinding(),
-      getPages: [
-        GetPage(
-            name: "/Leads",
-            page: () => const Leads(),
-            binding: ControllerBinding(),
-            transition: Transition.fade),
-        GetPage(
-            name: "/Panel",
-            page: () => const Panel(),
-            binding: ControllerBinding(),
-            transition: Transition.fade),
-        GetPage(
-            name: "/LeadDetails",
-            page: () => const LeadDetails(),
-            arguments: [],
-            binding: ControllerBinding(),
-            transition: Transition.fade),
-        GetPage(
-            name: "/EditLeads",
-            page: () => const EditLeads(),
-            binding: ControllerBinding(),
-            transition: Transition.fade)
-      ],
-    );
+        debugShowCheckedModeBanner: false,
+        initialRoute: Routes.getInitialRoute(),
+        initialBinding: ControllerBinding(),
+        getPages: Routes.routes);
   }
 }

@@ -4,11 +4,10 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:crm/constant.dart';
 import 'package:crm/Controllers/record_controller.dart';
 import 'package:crm/Controllers/table_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
-
-import '../Models/record.dart';
 
 class EditLeads extends StatelessWidget {
   const EditLeads({Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class EditLeads extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 56, 91, 133),
+      backgroundColor: kColorDarkBlue,
       body: Form(
         key: Get.find<RecordController>().updateFormKey,
         child: SingleChildScrollView(
@@ -26,7 +25,7 @@ class EditLeads extends StatelessWidget {
               const SizedBox(height: 20),
               Container(
                 width: MediaQuery.of(context).size.width - 20,
-                height: 650,
+                height: 690,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 decoration: BoxDecoration(
@@ -43,7 +42,7 @@ class EditLeads extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               height: 30,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 219, 217, 217),
+                                color: kColorPearlWhite,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Row(children: [
@@ -67,7 +66,7 @@ class EditLeads extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 Text(
                                   "Details",
-                                  style: GoogleFonts.rubik(fontSize: 15),
+                                  style: kEditLeadTextH1,
                                 ),
                               ]),
                             ),
@@ -95,9 +94,10 @@ class EditLeads extends StatelessWidget {
                                                     Get.arguments['records'])
                                                 .data,
                                             decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.all(0),
                                               labelText: "First Name",
-                                              labelStyle: GoogleFonts.rubik(
-                                                  fontSize: 15),
+                                              labelStyle: kEditLeadTextH2,
                                             ),
                                             validator: (String? value) {
                                               if (value.toString().isEmpty) {
@@ -146,9 +146,10 @@ class EditLeads extends StatelessWidget {
                                                 .data,
                                             // '',
                                             decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.all(0),
                                               labelText: "Last Name",
-                                              labelStyle: GoogleFonts.rubik(
-                                                  fontSize: 15),
+                                              labelStyle: kEditLeadTextH2,
                                             ),
                                             validator: (String? value) {
                                               if (value.toString().isEmpty) {
@@ -202,7 +203,7 @@ class EditLeads extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               height: 30,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 219, 217, 217),
+                                color: kColorPearlWhite,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Row(children: [
@@ -226,7 +227,7 @@ class EditLeads extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 Text(
                                   "Contact Information",
-                                  style: GoogleFonts.rubik(fontSize: 15),
+                                  style: kEditLeadTextH1,
                                 ),
                               ]),
                             ),
@@ -236,9 +237,9 @@ class EditLeads extends StatelessWidget {
                                     true
                                 ? Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: 150,
+                                    height: 180,
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                        horizontal: 20, vertical: 10),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(5),
@@ -259,9 +260,10 @@ class EditLeads extends StatelessWidget {
                                                                 'records'])
                                                         .data,
                                                 decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets.all(0),
                                                   labelText: "Phone",
-                                                  labelStyle: GoogleFonts.rubik(
-                                                      fontSize: 15),
+                                                  labelStyle: kEditLeadTextH2,
                                                 ),
                                                 validator: (String? value) {
                                                   if (value
@@ -319,9 +321,10 @@ class EditLeads extends StatelessWidget {
                                                                 'records'])
                                                         .data,
                                                 decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets.all(0),
                                                   labelText: "Email",
-                                                  labelStyle: GoogleFonts.rubik(
-                                                      fontSize: 15),
+                                                  labelStyle: kEditLeadTextH2,
                                                 ),
                                                 validator: (String? value) {
                                                   if (value
@@ -372,6 +375,7 @@ class EditLeads extends StatelessWidget {
                                             ),
                                           ],
                                         ),
+                                        const SizedBox(height: 10),
                                         SizedBox(
                                           width: 895,
                                           child: TextFormField(
@@ -382,9 +386,10 @@ class EditLeads extends StatelessWidget {
                                                     Get.arguments['records'])
                                                 .data,
                                             decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.all(0),
                                               labelText: "Mobile",
-                                              labelStyle: GoogleFonts.rubik(
-                                                  fontSize: 15),
+                                              labelStyle: kEditLeadTextH2,
                                             ),
                                             validator: (String? value) {
                                               if (value.toString().isEmpty) {
@@ -435,16 +440,16 @@ class EditLeads extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
                       // Address Information
                       Container(
                         child: Column(
                           children: [
+                            const SizedBox(height: 10),
                             Container(
                               width: MediaQuery.of(context).size.width,
                               height: 30,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 219, 217, 217),
+                                color: kColorPearlWhite,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Row(children: [
@@ -465,10 +470,9 @@ class EditLeads extends StatelessWidget {
                                   },
                                   child: const Icon(Icons.keyboard_arrow_down),
                                 ),
-                                const SizedBox(width: 10),
                                 Text(
                                   "Address Information",
-                                  style: GoogleFonts.rubik(fontSize: 15),
+                                  style: kEditLeadTextH1,
                                 ),
                               ]),
                             ),
@@ -478,7 +482,7 @@ class EditLeads extends StatelessWidget {
                                     true
                                 ? Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: 225,
+                                    height: 245,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20),
                                     decoration: BoxDecoration(
@@ -489,6 +493,7 @@ class EditLeads extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        const SizedBox(height: 10),
                                         TextFormField(
                                           initialValue:
                                               Get.find<TableController>()
@@ -497,9 +502,10 @@ class EditLeads extends StatelessWidget {
                                                       Get.arguments['records'])
                                                   .data,
                                           decoration: InputDecoration(
+                                            contentPadding:
+                                                const EdgeInsets.all(0),
                                             labelText: "Street Address 1",
-                                            labelStyle:
-                                                GoogleFonts.rubik(fontSize: 15),
+                                            labelStyle: kEditLeadTextH2,
                                           ),
                                           validator: (String? value) {
                                             if (value.toString().isEmpty) {
@@ -535,6 +541,7 @@ class EditLeads extends StatelessWidget {
                                             }
                                           },
                                         ),
+                                        const SizedBox(height: 10),
                                         Row(
                                           children: [
                                             Expanded(
@@ -547,9 +554,10 @@ class EditLeads extends StatelessWidget {
                                                                 'records'])
                                                         .data,
                                                 decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets.all(0),
                                                   labelText: "City",
-                                                  labelStyle: GoogleFonts.rubik(
-                                                      fontSize: 15),
+                                                  labelStyle: kEditLeadTextH2,
                                                 ),
                                                 validator: (String? value) {
                                                   if (value
@@ -601,9 +609,10 @@ class EditLeads extends StatelessWidget {
                                                                 'records'])
                                                         .data,
                                                 decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets.all(0),
                                                   labelText: "Province",
-                                                  labelStyle: GoogleFonts.rubik(
-                                                      fontSize: 15),
+                                                  labelStyle: kEditLeadTextH2,
                                                 ),
                                                 validator: (String? value) {
                                                   if (value
@@ -646,6 +655,7 @@ class EditLeads extends StatelessWidget {
                                             ),
                                           ],
                                         ),
+                                        const SizedBox(height: 10),
                                         SizedBox(
                                           width: 895,
                                           child: TextFormField(
@@ -655,9 +665,10 @@ class EditLeads extends StatelessWidget {
                                                     Get.arguments['records'])
                                                 .data,
                                             decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.all(0),
                                               labelText: "Postal Code",
-                                              labelStyle: GoogleFonts.rubik(
-                                                  fontSize: 15),
+                                              labelStyle: kEditLeadTextH2,
                                             ),
                                             validator: (String? value) {
                                               if (value.toString().isEmpty) {
@@ -712,13 +723,7 @@ class EditLeads extends StatelessWidget {
                               });
                             },
                             color: Colors.white,
-                            child: Text(
-                              "Cancel",
-                              style: GoogleFonts.rubik(
-                                  fontSize: 20,
-                                  color:
-                                      const Color.fromARGB(255, 56, 91, 133)),
-                            ),
+                            child: Text("Cancel", style: kButtonText2),
                           ),
                           const SizedBox(width: 10),
                           RaisedButton(
@@ -734,10 +739,8 @@ class EditLeads extends StatelessWidget {
                                 Get.offAllNamed("/Leads");
                               }
                             },
-                            color: const Color.fromARGB(255, 56, 91, 133),
-                            child: Text("Save",
-                                style: GoogleFonts.rubik(
-                                    fontSize: 20, color: Colors.white)),
+                            color: kColorDarkBlue,
+                            child: Text("Save", style: kButtonText3),
                           )
                         ],
                       )

@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import '../Models/record.dart';
 
 class TableController extends GetxController {
-  final leadsColumns =
-      ["Name", "Address", "Telephone Number", "Mobile Number", "Email"].obs;
+  final leadsColumns = ["Name", "Address", "Telephone", "Mobile", "Email"].obs;
 
   final recordList = <Record>[].obs;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -54,13 +53,14 @@ class TableController extends GetxController {
   }
 
   // This function is used to get all the columns for the table
-  List<DataColumn> getColumns(List<String> columns, List<Record> records) {
+  List<DataColumn> getColumns(
+      List<String> columns, List<Record> records, BuildContext context) {
     return columns
         .map((column) => DataColumn(
             onSort: ((columnIndex, ascending) {
               onSort(columnIndex, columnIndex > 0 ? false : ascending, records);
             }),
-            label: SizedBox(width: 315, child: Text(column))))
+            label: Flexible(child: Text(column))))
         .toList();
   }
 

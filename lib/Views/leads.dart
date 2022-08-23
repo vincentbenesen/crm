@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:crm/constant.dart';
 import 'package:crm/Controllers/record_controller.dart';
 import 'package:crm/Controllers/table_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
@@ -33,8 +34,7 @@ class Leads extends StatelessWidget {
                               children: [
                                 const Icon(Icons.group),
                                 const SizedBox(width: 5),
-                                Text("Leads",
-                                    style: GoogleFonts.rubik(fontSize: 20))
+                                Text("Leads", style: kTextTitle)
                               ],
                             ),
                           ),
@@ -47,14 +47,8 @@ class Leads extends StatelessWidget {
                                     Get.offAllNamed("/Panel");
                                   },
                                   color: Colors.white,
-                                  child: Text(
-                                    "Add new lead",
-                                    style: GoogleFonts.rubik(
-                                      fontSize: 15,
-                                      color: const Color.fromARGB(
-                                          255, 56, 91, 133),
-                                    ),
-                                  ),
+                                  child:
+                                      Text("Add new lead", style: kButtonText1),
                                 ),
                               ],
                             ),
@@ -70,15 +64,21 @@ class Leads extends StatelessWidget {
                           ),
                         )
                       : Obx(
-                          () => DataTable(
-                            columns: Get.find<TableController>().getColumns(
-                                Get.find<TableController>().leadsColumns,
-                                snapshot.data as List<Record>),
-                            rows: Get.find<TableController>()
-                                .getRows(snapshot.data as List<Record>),
-                            sortColumnIndex: 0,
-                            sortAscending:
-                                Get.find<TableController>().isAscending.value,
+                          () => Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: DataTable(
+                              columnSpacing: 10,
+                              dataRowHeight: 80,
+                              columns: Get.find<TableController>().getColumns(
+                                  Get.find<TableController>().leadsColumns,
+                                  snapshot.data as List<Record>,
+                                  context),
+                              rows: Get.find<TableController>()
+                                  .getRows(snapshot.data as List<Record>),
+                              sortColumnIndex: 0,
+                              sortAscending:
+                                  Get.find<TableController>().isAscending.value,
+                            ),
                           ),
                         ),
                 ],

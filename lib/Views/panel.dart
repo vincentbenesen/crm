@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:crm/Controllers/stepper_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/Widgets/text_Field.dart';
+import 'package:crm/constant.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -148,25 +149,20 @@ class Panel extends StatelessWidget {
                               children: [
                                 FlatButton(
                                   onPressed: controls.onStepCancel,
-                                  color: Color.fromARGB(255, 56, 91, 133),
+                                  color: kColorDarkBlue,
                                   height: 50,
                                   minWidth: 130,
-                                  child: Text(
-                                    "Cancel",
-                                    style: GoogleFonts.rubik(
-                                        fontSize: 20, color: Colors.white),
-                                  ),
+                                  child: Text("Cancel", style: kButtonText3),
                                 ),
                                 const SizedBox(width: 20),
                                 FlatButton(
                                   onPressed: controls.onStepContinue,
-                                  color: Color.fromARGB(255, 56, 91, 133),
+                                  color: kColorDarkBlue,
                                   height: 50,
                                   minWidth: 130,
                                   child: Text(
                                     "Continue",
-                                    style: GoogleFonts.rubik(
-                                        fontSize: 20, color: Colors.white),
+                                    style: kButtonText3,
                                   ),
                                 ),
                               ],
@@ -189,7 +185,7 @@ class Panel extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Full Name",
-                                    style: GoogleFonts.rubik(fontSize: 30),
+                                    style: kPanelTextH1,
                                   ),
                                   Row(
                                     children: [
@@ -242,7 +238,7 @@ class Panel extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Address",
-                                    style: GoogleFonts.rubik(fontSize: 30),
+                                    style: kPanelTextH1,
                                   ),
                                   CustomTextField(
                                     labelText: "Street Address *",
@@ -333,7 +329,7 @@ class Panel extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Contact Information",
-                                    style: GoogleFonts.rubik(fontSize: 30),
+                                    style: kPanelTextH1,
                                   ),
                                   Row(
                                     children: [
@@ -401,7 +397,7 @@ class Panel extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Additional Information",
-                                    style: GoogleFonts.rubik(fontSize: 30),
+                                    style: kPanelTextH1,
                                   ),
                                   Obx(
                                     () => ListView.builder(
