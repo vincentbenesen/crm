@@ -1,4 +1,5 @@
 import 'package:crm/Controllers/log_controller.dart';
+import 'package:crm/Controllers/recordUpdate_controller.dart';
 import 'package:crm/Controllers/stepper_controller.dart';
 import 'package:crm/Controllers/table_controller.dart';
 import 'package:get/get.dart';
@@ -12,5 +13,6 @@ class ControllerBinding extends Bindings {
     Get.lazyPut<StepperController>(() => StepperController());
     Get.lazyPut<TableController>(() => TableController());
     Get.lazyPut<LogController>(() => LogController());
+    Get.lazyPut<RecordUpdateController>(() => RecordUpdateController());
   }
 }

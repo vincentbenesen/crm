@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -7,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:crm/constant.dart';
 import 'package:crm/Controllers/record_controller.dart';
 import 'package:crm/Controllers/table_controller.dart';
+import 'package:crm/Controllers/recordUpdate_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
 
 class EditLeads extends StatelessWidget {
@@ -106,7 +108,7 @@ class EditLeads extends StatelessWidget {
                                               return null;
                                             },
                                             onSaved: (value) {
-                                              // Check is the data has changed before updating the database
+                                              // Check if the data has changed before updating the database
                                               if (Get.find<TableController>()
                                                       .getRecordByFieldType(
                                                           "firstName",
@@ -114,6 +116,34 @@ class EditLeads extends StatelessWidget {
                                                               'records'])
                                                       .data !=
                                                   value.toString()) {
+                                                // Adds an RecordUpdate in the the list of updates
+                                                // RecordUpdate class allows us to track the changes we did in the user's information
+                                                Get.find<
+                                                        RecordUpdateController>()
+                                                    .createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "firstName",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "firstName",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "firstName",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                 // Change the data of the record based on the given field type
                                                 Get.find<TableController>()
                                                     .getRecordByFieldType(
@@ -158,7 +188,7 @@ class EditLeads extends StatelessWidget {
                                               return null;
                                             },
                                             onSaved: (value) {
-                                              // Check is the data has changed before updating the database
+                                              // Check if the data has changed before updating the database
                                               if (Get.find<TableController>()
                                                       .getRecordByFieldType(
                                                           "lastName",
@@ -166,6 +196,34 @@ class EditLeads extends StatelessWidget {
                                                               'records'])
                                                       .data !=
                                                   value.toString()) {
+                                                // Adds an RecordUpdate in the the list of updates
+                                                // RecordUpdate class allows us to track the changes we did in the user's information
+                                                Get.find<
+                                                        RecordUpdateController>()
+                                                    .createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "lastName",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "lastName",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "lastName",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                 // Change the data of the record based on the given field type
                                                 Get.find<TableController>()
                                                     .getRecordByFieldType(
@@ -280,7 +338,7 @@ class EditLeads extends StatelessWidget {
                                                   return null;
                                                 },
                                                 onSaved: (value) {
-                                                  // Check is the data has changed before updating the database
+                                                  // Check if the data has changed before updating the database
                                                   if (Get.find<
                                                               TableController>()
                                                           .getRecordByFieldType(
@@ -289,6 +347,32 @@ class EditLeads extends StatelessWidget {
                                                                   'records'])
                                                           .data !=
                                                       value.toString()) {
+                                                    // Adds an RecordUpdate in the the list of updates
+                                                    // RecordUpdate class allows us to track the changes we did in the user's information
+                                                    Get.find<RecordUpdateController>().createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "phoneNumber",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "phoneNumber",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "phoneNumber",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                     // Change the data of the record based on the given field type
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -343,7 +427,7 @@ class EditLeads extends StatelessWidget {
                                                   return null;
                                                 },
                                                 onSaved: (value) {
-                                                  // Check is the data has changed before updating the database
+                                                  // Check if the data has changed before updating the database
                                                   if (Get.find<
                                                               TableController>()
                                                           .getRecordByFieldType(
@@ -352,6 +436,32 @@ class EditLeads extends StatelessWidget {
                                                                   'records'])
                                                           .data !=
                                                       value.toString()) {
+                                                    // Adds an RecordUpdate in the the list of updates
+                                                    // RecordUpdate class allows us to track the changes we did in the user's information
+                                                    Get.find<RecordUpdateController>().createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "email",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "email",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "email",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                     // Change the data of the record based on the given field type
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -404,7 +514,7 @@ class EditLeads extends StatelessWidget {
                                               return null;
                                             },
                                             onSaved: (value) {
-                                              // Check is the data has changed before updating the database
+                                              // Check if the data has changed before updating the database
                                               if (Get.find<TableController>()
                                                       .getRecordByFieldType(
                                                           "mobileNumber",
@@ -412,6 +522,34 @@ class EditLeads extends StatelessWidget {
                                                               'records'])
                                                       .data !=
                                                   value.toString()) {
+                                                // Adds an RecordUpdate in the the list of updates
+                                                // RecordUpdate class allows us to track the changes we did in the user's information
+                                                Get.find<
+                                                        RecordUpdateController>()
+                                                    .createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "mobileNumber",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "mobileNumber",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "mobileNumber",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                 // Change the data of the record based on the given field type
                                                 Get.find<TableController>()
                                                     .getRecordByFieldType(
@@ -514,7 +652,7 @@ class EditLeads extends StatelessWidget {
                                             return null;
                                           },
                                           onSaved: (value) {
-                                            // Check is the data has changed before updating the database
+                                            // Check if the data has changed before updating the database
                                             if (Get.find<TableController>()
                                                     .getRecordByFieldType(
                                                         "address1",
@@ -522,6 +660,33 @@ class EditLeads extends StatelessWidget {
                                                             'records'])
                                                     .data !=
                                                 value.toString()) {
+                                              // Adds an RecordUpdate in the the list of updates
+                                              // RecordUpdate class allows us to track the changes we did in the user's information
+                                              Get.find<RecordUpdateController>()
+                                                  .createRecordUpdate(
+                                                      Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "address1",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .userId,
+                                                      Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "address1",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .type,
+                                                      Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "address1",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data,
+                                                      value.toString());
+
                                               // Change the data of the record based on the given field type
                                               Get.find<TableController>()
                                                   .getRecordByFieldType(
@@ -577,6 +742,32 @@ class EditLeads extends StatelessWidget {
                                                                   'records'])
                                                           .data !=
                                                       value.toString()) {
+                                                    // Adds an RecordUpdate in the the list of updates
+                                                    // RecordUpdate class allows us to track the changes we did in the user's information
+                                                    Get.find<RecordUpdateController>().createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "city",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "city",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "city",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                     // Change the data of the record based on the given field type
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -623,7 +814,7 @@ class EditLeads extends StatelessWidget {
                                                   return null;
                                                 },
                                                 onSaved: (value) {
-                                                  // Check is the data has changed before updating the database
+                                                  // Check if the data has changed before updating the database
                                                   if (Get.find<
                                                               TableController>()
                                                           .getRecordByFieldType(
@@ -632,6 +823,32 @@ class EditLeads extends StatelessWidget {
                                                                   'records'])
                                                           .data !=
                                                       value.toString()) {
+                                                    // Adds an RecordUpdate in the the list of updates
+                                                    // RecordUpdate class allows us to track the changes we did in the user's information
+                                                    Get.find<RecordUpdateController>().createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "province",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "province",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "province",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                     // Change the data of the record based on the given field type
                                                     Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -677,7 +894,7 @@ class EditLeads extends StatelessWidget {
                                               return null;
                                             },
                                             onSaved: (value) {
-                                              // Check is the data has changed before updating the database
+                                              // Check if the data has changed before updating the database
                                               if (Get.find<TableController>()
                                                       .getRecordByFieldType(
                                                           "postal",
@@ -685,6 +902,34 @@ class EditLeads extends StatelessWidget {
                                                               'records'])
                                                       .data !=
                                                   value.toString()) {
+                                                // Adds an RecordUpdate in the the list of updates
+                                                // RecordUpdate class allows us to track the changes we did in the user's information
+                                                Get.find<
+                                                        RecordUpdateController>()
+                                                    .createRecordUpdate(
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "postal",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .userId,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "postal",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .type,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .getRecordByFieldType(
+                                                                "postal",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data,
+                                                        value.toString());
+
                                                 // Change the data of the record based on the given field type
                                                 Get.find<TableController>()
                                                     .getRecordByFieldType(
@@ -732,11 +977,27 @@ class EditLeads extends StatelessWidget {
                                   .validateTextField(
                                       Get.find<RecordController>()
                                           .updateFormKey)) {
+                                // Update all the records
                                 Get.find<RecordController>().updateRecord();
-                                // print(Get.find<RecordController>()
-                                //     .recordsToUpdate
-                                //     .toString());
-                                Get.offAllNamed("/Leads");
+
+                                // Insert all the updates in the database to keep track of all the changes
+                                Get.find<RecordUpdateController>()
+                                    .insertAllUdpates();
+
+                                AwesomeDialog(
+                                  context: context,
+                                  width: 370,
+                                  animType: AnimType.SCALE,
+                                  headerAnimationLoop: false,
+                                  dialogType: DialogType.SUCCES,
+                                  title: 'Record Updated Successfully',
+                                  btnOkOnPress: () {
+                                    // Go back to Lead page
+                                    Get.offAllNamed("/Leads");
+                                  },
+                                  btnOkIcon: Icons.check_circle,
+                                  onDissmissCallback: (type) {},
+                                ).show();
                               }
                             },
                             color: kColorDarkBlue,

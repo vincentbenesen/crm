@@ -1,4 +1,5 @@
 import 'package:crm/Controllers/record_controller.dart';
+import 'package:crm/constant.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,27 +28,25 @@ class StepperController extends GetxController {
         state: currentStep.value > 0 ? StepState.complete : StepState.indexed,
         title: Text(
           'Full Name',
-          style: GoogleFonts.rubik(fontSize: 20),
+          style: kStepperTextH1,
         ),
         content: nameContainer,
         isActive: currentStep.value >= 0,
       ),
       Step(
         state: currentStep.value > 1 ? StepState.complete : StepState.indexed,
-        title: Text('Address', style: GoogleFonts.rubik(fontSize: 20)),
+        title: Text('Address', style: kStepperTextH1),
         content: addressContainer,
         isActive: currentStep.value >= 1,
       ),
       Step(
         state: currentStep.value > 2 ? StepState.complete : StepState.indexed,
-        title:
-            Text('Contact Information', style: GoogleFonts.rubik(fontSize: 20)),
+        title: Text('Contact', style: kStepperTextH1),
         content: contactContainer,
         isActive: currentStep.value >= 2,
       ),
       Step(
-        title: Text('Additional Information',
-            style: GoogleFonts.rubik(fontSize: 20)),
+        title: Text('Other', style: kStepperTextH1),
         content: additionalInfoContainer,
         isActive: currentStep.value >= 3,
       ),

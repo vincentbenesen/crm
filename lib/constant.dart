@@ -24,12 +24,23 @@ var kLeadDetailsTextH4 = GoogleFonts.rubik(
   fontSize: 15,
   color: kColorDarkBlue,
 );
+var kLeadDetailsTextH5 = GoogleFonts.rubik(fontSize: 12, color: Colors.black);
+var kLeadDetailsTextH6 = GoogleFonts.rubik(
+  fontSize: 12,
+  color: kColorDarkBlue,
+);
 
 var kEditLeadTextH1 = GoogleFonts.rubik(fontSize: 25, color: Colors.black);
 var kEditLeadTextH2 = GoogleFonts.rubik(fontSize: 18, color: Colors.black);
 
 var kPanelTextH1 = GoogleFonts.rubik(fontSize: 30, color: Colors.black);
 
+var kStepperTextH1 = GoogleFonts.rubik(fontSize: 20);
+
 var kButtonText1 = GoogleFonts.rubik(fontSize: 15, color: kColorDarkBlue);
 var kButtonText2 = GoogleFonts.rubik(fontSize: 20, color: kColorDarkBlue);
 var kButtonText3 = GoogleFonts.rubik(fontSize: 20, color: Colors.white);
+var kButtonText4 = GoogleFonts.rubik(fontSize: 12, color: kColorDarkBlue);
+
+double kDefaultButtonSize = 80;
+double kSmallerButtonSize = 65;
