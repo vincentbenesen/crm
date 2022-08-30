@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:crm/Controllers/stepper_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/Widgets/text_Field.dart';
@@ -134,9 +135,20 @@ class Panel extends StatelessWidget {
                                     Get.find<RecordController>()
                                         .recordToInsert);
 
-                                Get.find<StepperController>()
-                                    .currentStep
-                                    .value = 0;
+                                AwesomeDialog(
+                                  context: context,
+                                  width: 370,
+                                  animType: AnimType.SCALE,
+                                  headerAnimationLoop: false,
+                                  dialogType: DialogType.SUCCES,
+                                  title: 'Record Inserted',
+                                  btnOkOnPress: () {
+                                    // Go back to Lead page
+                                    Get.offAllNamed("/Leads");
+                                  },
+                                  btnOkIcon: Icons.check_circle,
+                                  onDissmissCallback: (type) {},
+                                ).show();
                               }
                               break;
                           }

@@ -15,6 +15,7 @@ const kColorDarkBlue = Color.fromARGB(255, 56, 91, 133);
 const kColorPearlWhite = Color.fromARGB(255, 219, 217, 217);
 var kTextTitle = GoogleFonts.rubik(
     fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold);
+var kTextSubTitle = GoogleFonts.rubik(fontSize: 20, color: Colors.black);
 var kLeadDetailsTextH1 =
     GoogleFonts.rubik(fontSize: 25, fontWeight: FontWeight.bold);
 var kLeadDetailsTextH2 = GoogleFonts.rubik(
@@ -24,9 +25,9 @@ var kLeadDetailsTextH4 = GoogleFonts.rubik(
   fontSize: 15,
   color: kColorDarkBlue,
 );
-var kLeadDetailsTextH5 = GoogleFonts.rubik(fontSize: 12, color: Colors.black);
+var kLeadDetailsTextH5 = GoogleFonts.rubik(fontSize: 11, color: Colors.black);
 var kLeadDetailsTextH6 = GoogleFonts.rubik(
-  fontSize: 12,
+  fontSize: 11,
   color: kColorDarkBlue,
 );
 
