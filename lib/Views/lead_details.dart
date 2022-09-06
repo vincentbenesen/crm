@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:crm/Controllers/mail_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/constant.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -556,10 +557,7 @@ class LeadDetails extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       child: Container(
-                        width:
-                            //     Get.find<LogController>().isPressCompossedEmail.value
-                            //         ? (MediaQuery.of(context).size.width / 2) + 308
-                            MediaQuery.of(context).size.width,
+                        width: MediaQuery.of(context).size.width,
                         height: 700,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -1017,179 +1015,288 @@ class LeadDetails extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     // Container for message box
-
                     Get.find<LogController>().isPressCompossedEmail.value
                         ? Flexible(
                             flex: 1,
-                            child: Container(
-                              width:
-                                  (MediaQuery.of(context).size.width / 3) - 28,
-                              height: 700,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 8),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                        color: kColorDarkBlue,
-                                        width: 5,
-                                      )),
+                            child: Form(
+                              key: Get.find<MailController>().mailFormKey,
+                              child: Container(
+                                width: (MediaQuery.of(context).size.width / 3) -
+                                    28,
+                                height: 700,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                          color: kColorDarkBlue,
+                                          width: 5,
+                                        )),
+                                      ),
+                                      child: Text(
+                                        "Contact",
+                                        style: kLeadDetailsTextH1,
+                                      ),
                                     ),
-                                    child: Text(
-                                      "Contact",
-                                      style: kLeadDetailsTextH1,
-                                    ),
-                                  ),
 
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "Name",
-                                    style: kTextSubTitle,
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: TextFormField(
-                                          decoration: InputDecoration(
-                                            labelText: 'First Name',
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: kColorDarkBlue),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "Name",
+                                      style: kTextSubTitle,
+                                    ),
+                                    const SizedBox(height: 3),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue: Get.find<
+                                                    TableController>()
+                                                .getRecordByFieldType(
+                                                    "firstName",
+                                                    Get.arguments['records'])
+                                                .data,
+                                            enabled: false,
+                                            decoration: InputDecoration(
+                                              labelText: 'First Name',
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 1,
+                                                    color: kColorDarkBlue),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              disabledBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 1,
+                                                    color: kColorDarkBlue),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 1,
+                                                    color: kColorDarkBlue),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
                                             ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: kColorDarkBlue),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
+                                            onSaved: (value) {
+                                              Get.find<MailController>()
+                                                  .message
+                                                  .value
+                                                  .firstName = value.toString();
+                                            },
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Expanded(
-                                        child: TextFormField(
-                                          decoration: InputDecoration(
-                                            labelText: 'Last Name',
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: kColorDarkBlue),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
+                                        const SizedBox(width: 5),
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue: Get.find<
+                                                    TableController>()
+                                                .getRecordByFieldType(
+                                                    "lastName",
+                                                    Get.arguments['records'])
+                                                .data,
+                                            enabled: false,
+                                            decoration: InputDecoration(
+                                              labelText: 'Last Name',
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 1,
+                                                    color: kColorDarkBlue),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              disabledBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 1,
+                                                    color: kColorDarkBlue),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 1,
+                                                    color: kColorDarkBlue),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
                                             ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  width: 1,
-                                                  color: kColorDarkBlue),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
+                                            onSaved: (value) {
+                                              Get.find<MailController>()
+                                                  .message
+                                                  .value
+                                                  .lastName = value.toString();
+                                            },
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    "Email",
-                                    style: kTextSubTitle,
-                                  ),
-                                  const SizedBox(height: 3),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                      labelText: 'First Name',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: kColorDarkBlue),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: kColorDarkBlue),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    "Subject",
-                                    style: kTextSubTitle,
-                                  ),
-                                  const SizedBox(height: 3),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                      labelText: 'First Name',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: kColorDarkBlue),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: kColorDarkBlue),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      "Email",
+                                      style: kTextSubTitle,
                                     ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    "Message",
-                                    style: kTextSubTitle,
-                                  ),
-                                  const SizedBox(height: 3),
-                                  TextFormField(
-                                    maxLines: 12,
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: kColorDarkBlue),
-                                        borderRadius: BorderRadius.circular(5),
+                                    const SizedBox(height: 3),
+                                    TextFormField(
+                                      initialValue: Get.find<TableController>()
+                                          .getRecordByFieldType(
+                                              "email", Get.arguments['records'])
+                                          .data,
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        labelText: 'Email',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kColorDarkBlue),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kColorDarkBlue),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kColorDarkBlue),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
                                       ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: kColorDarkBlue),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
+                                      onSaved: (value) {
+                                        Get.find<MailController>()
+                                            .message
+                                            .value
+                                            .email = value.toString();
+                                      },
                                     ),
-                                  ),
-                                  // Cancel and Send Button
-                                  const SizedBox(height: 35),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      RaisedButton(
-                                        onPressed: () {
-                                          Get.find<LogController>()
-                                              .isPressCompossedEmail
-                                              .value = false;
-                                        },
-                                        color: Colors.white,
-                                        child:
-                                            Text("Cancel", style: kButtonText2),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      "Subject",
+                                      style: kTextSubTitle,
+                                    ),
+                                    const SizedBox(height: 3),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: 'Subject',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kColorDarkBlue),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kColorDarkBlue),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
                                       ),
-                                      const SizedBox(width: 10),
-                                      RaisedButton(
-                                        onPressed: () {},
-                                        color: kColorDarkBlue,
-                                        child:
-                                            Text("Send", style: kButtonText3),
-                                      )
-                                    ],
-                                  )
-                                ],
+                                      onSaved: (value) {
+                                        Get.find<MailController>()
+                                            .message
+                                            .value
+                                            .subject = value.toString();
+                                      },
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      "Message",
+                                      style: kTextSubTitle,
+                                    ),
+                                    const SizedBox(height: 3),
+                                    TextFormField(
+                                      maxLines: 12,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kColorDarkBlue),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kColorDarkBlue),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      onSaved: (value) {
+                                        Get.find<MailController>()
+                                            .message
+                                            .value
+                                            .message = value.toString();
+                                      },
+                                    ),
+                                    // Cancel and Send Button
+                                    const SizedBox(height: 35),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        RaisedButton(
+                                          onPressed: () {
+                                            Get.find<LogController>()
+                                                .isPressCompossedEmail
+                                                .value = false;
+                                          },
+                                          color: Colors.white,
+                                          child: Text("Cancel",
+                                              style: kButtonText2),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        RaisedButton(
+                                          onPressed: () {
+                                            if (Get.find<MailController>()
+                                                .mailFormKey
+                                                .currentState!
+                                                .validate()) {
+                                              Get.find<MailController>()
+                                                  .mailFormKey
+                                                  .currentState!
+                                                  .save();
+
+                                              Get.find<MailController>()
+                                                  .sendMail();
+                                            }
+
+                                            AwesomeDialog(
+                                              context: context,
+                                              width: 370,
+                                              animType: AnimType.SCALE,
+                                              headerAnimationLoop: false,
+                                              dialogType: DialogType.SUCCES,
+                                              title: 'Email sent',
+                                              btnOkOnPress: () {
+                                                Get.find<LogController>()
+                                                    .isPressCompossedEmail
+                                                    .value = false;
+                                              },
+                                              btnOkIcon: Icons.check_circle,
+                                              onDissmissCallback: (type) {},
+                                            ).show();
+                                          },
+                                          color: kColorDarkBlue,
+                                          child:
+                                              Text("Send", style: kButtonText3),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           )

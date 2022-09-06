@@ -78,6 +78,11 @@ class TableController extends GetxController {
                       getUserIdByFieldTypeAndData("firstName",
                           data.toString().split(" ").first, records)),
                 });
+
+                // print(getRecordsById(
+                //     records,
+                //     getUserIdByFieldTypeAndData("firstName",
+                //         data.toString().split(" ").first, records)));
               }
             },
             child: Text(data.toString()))))

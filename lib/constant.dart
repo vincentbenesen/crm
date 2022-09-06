@@ -10,6 +10,13 @@ const kStorageBucket = "fir-flutter-479eb.appspot.com";
 const kMessagingSenderId = "985079857939";
 const kAppId = "1:985079857939:web:e3106b184d8d5affc450e6";
 
+// These constants are used for sending email. It is used to send a post request
+const kPostUrl = 'https://api.emailjs.com/api/v1.0/email/send';
+const kContentType = 'application/json';
+const kServiceId = 'service_lce03ol';
+const kTemplateId = 'template_p3x59sr';
+const kUserId = 'dVUn9I_CeROfYzKXa';
+
 // These variable are for styling the text
 const kColorDarkBlue = Color.fromARGB(255, 56, 91, 133);
 const kColorPearlWhite = Color.fromARGB(255, 219, 217, 217);
