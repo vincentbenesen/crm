@@ -5,9 +5,11 @@ import 'package:crm/Views/edit_leads.dart';
 import 'package:crm/Views/lead_details.dart';
 import 'package:crm/Views/leads.dart';
 import 'package:crm/Views/panel.dart';
+import 'package:crm/Views/login_page.dart';
 
 class Routes {
   static String getInitialRoute() => '/Leads';
+  static String loginPage() => '/Login';
 
   static List<GetPage> routes = [
     GetPage(
@@ -30,6 +32,11 @@ class Routes {
         name: "/EditLeads",
         page: () => const EditLeads(),
         binding: ControllerBinding(),
-        transition: Transition.fade)
+        transition: Transition.fade),
+    GetPage(
+        name: "/Login",
+        page: () => const LoginPage(),
+        binding: ControllerBinding(),
+        transition: Transition.fade),
   ];
 }

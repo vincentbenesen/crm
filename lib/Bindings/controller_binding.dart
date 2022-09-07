@@ -1,3 +1,4 @@
+import 'package:crm/Controllers/auth_controller.dart';
 import 'package:get/get.dart';
 
 import 'package:crm/Controllers/log_controller.dart';
@@ -16,5 +17,6 @@ class ControllerBinding extends Bindings {
     Get.lazyPut<LogController>(() => LogController());
     Get.lazyPut<RecordUpdateController>(() => RecordUpdateController());
     Get.lazyPut<MailController>(() => MailController());
+    Get.lazyPut<AuthController>(() => AuthController());
   }
 }
