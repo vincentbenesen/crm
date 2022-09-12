@@ -1,5 +1,6 @@
 import 'package:crm/Bindings/controller_binding.dart';
 import 'package:crm/Views/leads.dart';
+import 'package:crm/services/auth_controller.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -67,11 +68,11 @@ class Navbar extends StatelessWidget {
               ),
               RaisedButton(
                 onPressed: () {
-                  print(Get.find<TableController>().index);
+                  AuthController.instance.signOut();
                 },
                 color: Colors.white,
                 child: Text(
-                  "Assets",
+                  "Logout",
                   style: GoogleFonts.rubik(
                       fontSize: 15,
                       color: const Color.fromARGB(255, 56, 91, 133)),

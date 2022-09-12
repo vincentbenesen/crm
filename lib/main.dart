@@ -1,4 +1,4 @@
-import 'package:crm/Controllers/auth_controller.dart';
+import 'package:crm/services/auth_controller.dart';
 import 'package:crm/Views/edit_leads.dart';
 import 'package:crm/Views/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Container(),
-      // initialBinding: ControllerBinding(),
+      initialBinding: ControllerBinding(),
       getPages: Routes.routes,
     );
   }

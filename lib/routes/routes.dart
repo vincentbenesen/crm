@@ -1,3 +1,4 @@
+import 'package:crm/services/routeAccess.dart';
 import 'package:get/get.dart';
 
 import 'package:crm/Bindings/controller_binding.dart';
@@ -16,27 +17,31 @@ class Routes {
         name: "/Leads",
         page: () => const Leads(),
         binding: ControllerBinding(),
-        transition: Transition.fade),
+        transition: Transition.fade,
+        middlewares: [RouteAccess()]),
     GetPage(
         name: "/Panel",
         page: () => const Panel(),
         binding: ControllerBinding(),
-        transition: Transition.fade),
+        transition: Transition.fade,
+        middlewares: [RouteAccess()]),
     GetPage(
         name: "/LeadDetails",
         page: () => const LeadDetails(),
         arguments: [],
         binding: ControllerBinding(),
-        transition: Transition.fade),
+        transition: Transition.fade,
+        middlewares: [RouteAccess()]),
     GetPage(
         name: "/EditLeads",
         page: () => const EditLeads(),
         binding: ControllerBinding(),
-        transition: Transition.fade),
+        transition: Transition.fade,
+        middlewares: [RouteAccess()]),
     GetPage(
-        name: "/Login",
-        page: () => const LoginPage(),
-        binding: ControllerBinding(),
-        transition: Transition.fade),
+      name: "/Login",
+      page: () => const LoginPage(),
+      binding: ControllerBinding(),
+    ),
   ];
 }

@@ -1,4 +1,4 @@
-import 'package:crm/Controllers/auth_controller.dart';
+import 'package:crm/services/auth_controller.dart';
 import 'package:get/get.dart';
 
 import 'package:crm/Controllers/log_controller.dart';
