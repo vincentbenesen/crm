@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:crm/Controllers/mail_controller.dart';
+import 'package:crm/Widgets/custom_AppBar.dart';
 import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/constant.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -20,14 +21,14 @@ class LeadDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
     return Scaffold(
+      appBar: CustomAppbar(),
+      drawer: Navbar(),
       backgroundColor: kColorDarkBlue,
       body: SingleChildScrollView(
         child: LayoutBuilder(builder: (context, constraints) {
           return Column(
             children: [
-              Navbar(),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +88,7 @@ class LeadDetails extends StatelessWidget {
                                       Container(
                                         child: Row(
                                           children: [
-                                            RaisedButton(
+                                            TextButton(
                                               onPressed: () {
                                                 Get.offAllNamed("/EditLeads",
                                                     arguments: {
@@ -95,11 +96,13 @@ class LeadDetails extends StatelessWidget {
                                                           .arguments['records'],
                                                     });
                                               },
-                                              color: Colors.white,
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.white),
                                               child: Text("Edit",
                                                   style: kButtonText1),
                                             ),
-                                            RaisedButton(
+                                            TextButton(
                                               onPressed: () {
                                                 AwesomeDialog(
                                                   context: context,
@@ -127,17 +130,21 @@ class LeadDetails extends StatelessWidget {
                                                   },
                                                 ).show();
                                               },
-                                              color: Colors.white,
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.white),
                                               child: Text(
                                                 "Delete",
                                                 style: kButtonText1,
                                               ),
                                             ),
-                                            RaisedButton(
+                                            TextButton(
                                               onPressed: () {
                                                 Get.offAllNamed("/Leads");
                                               },
-                                              color: Colors.white,
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor:
+                                                      Colors.white),
                                               child: Text("Go Back",
                                                   style: kButtonText1),
                                             ),
@@ -185,7 +192,7 @@ class LeadDetails extends StatelessWidget {
                                           width: constraints.maxWidth >= 590
                                               ? kDefaultButtonSize
                                               : kSmallerButtonSize,
-                                          child: RaisedButton(
+                                          child: TextButton(
                                             onPressed: () {
                                               Get.offAllNamed("/EditLeads",
                                                   arguments: {
@@ -193,7 +200,8 @@ class LeadDetails extends StatelessWidget {
                                                         .arguments['records'],
                                                   });
                                             },
-                                            color: Colors.white,
+                                            style: TextButton.styleFrom(
+                                                backgroundColor: Colors.white),
                                             child: Text(
                                               "Edit",
                                               style: constraints.maxWidth >= 590
@@ -206,7 +214,7 @@ class LeadDetails extends StatelessWidget {
                                           width: constraints.maxWidth >= 590
                                               ? kDefaultButtonSize
                                               : kSmallerButtonSize,
-                                          child: RaisedButton(
+                                          child: TextButton(
                                             onPressed: () {
                                               Get.find<RecordController>()
                                                   .deleteRecord(
@@ -214,7 +222,8 @@ class LeadDetails extends StatelessWidget {
 
                                               Get.offAllNamed("/Leads");
                                             },
-                                            color: Colors.white,
+                                            style: TextButton.styleFrom(
+                                                backgroundColor: Colors.white),
                                             child: Text(
                                               "Delete",
                                               style: constraints.maxWidth >= 590
@@ -227,11 +236,12 @@ class LeadDetails extends StatelessWidget {
                                           width: constraints.maxWidth >= 590
                                               ? kDefaultButtonSize
                                               : kSmallerButtonSize,
-                                          child: RaisedButton(
+                                          child: TextButton(
                                             onPressed: () {
                                               Get.offAllNamed("/Leads");
                                             },
-                                            color: Colors.white,
+                                            style: TextButton.styleFrom(
+                                                backgroundColor: Colors.white),
                                             child: Text(
                                               "Go Back",
                                               style: constraints.maxWidth >= 590
@@ -418,19 +428,31 @@ class LeadDetails extends StatelessWidget {
                                   () => SizedBox(
                                     width:
                                         constraints.maxWidth >= 880 ? 130 : 70,
-                                    child: FlatButton(
+                                    child: TextButton(
                                       onPressed: () {
                                         Get.find<LogController>()
                                             .currentSection
                                             .value = "call";
                                       },
-                                      color: Get.find<LogController>()
-                                                  .currentSection
-                                                  .value ==
-                                              'call'
-                                          ? Colors.white
-                                          : kColorPearlWhite,
-                                      height: 40,
+                                      // color: Get.find<LogController>()
+                                      //             .currentSection
+                                      //             .value ==
+                                      //         'call'
+                                      //     ? Colors.white
+                                      //     : kColorPearlWhite,
+                                      // height: 40,
+                                      style: TextButton.styleFrom(
+                                          fixedSize: Size.fromHeight(50),
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(4))),
+                                          backgroundColor:
+                                              Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'call'
+                                                  ? Colors.white
+                                                  : kColorPearlWhite),
                                       child: Text(
                                         "Log a call",
                                         style: constraints.maxWidth >= 880
@@ -454,19 +476,31 @@ class LeadDetails extends StatelessWidget {
                                   () => SizedBox(
                                     width:
                                         constraints.maxWidth >= 880 ? 130 : 70,
-                                    child: FlatButton(
+                                    child: TextButton(
                                       onPressed: () {
                                         Get.find<LogController>()
                                             .currentSection
                                             .value = "meeting";
                                       },
-                                      color: Get.find<LogController>()
-                                                  .currentSection
-                                                  .value ==
-                                              'meeting'
-                                          ? Colors.white
-                                          : kColorPearlWhite,
-                                      height: 40,
+                                      // color: Get.find<LogController>()
+                                      //             .currentSection
+                                      //             .value ==
+                                      //         'meeting'
+                                      //     ? Colors.white
+                                      //     : kColorPearlWhite,
+                                      // height: 40,
+                                      style: TextButton.styleFrom(
+                                          fixedSize: Size.fromHeight(50),
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.zero)),
+                                          backgroundColor:
+                                              Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'meeting'
+                                                  ? Colors.white
+                                                  : kColorPearlWhite),
                                       child: Text(
                                         "Log a meeting",
                                         style: constraints.maxWidth >= 880
@@ -490,19 +524,31 @@ class LeadDetails extends StatelessWidget {
                                   () => SizedBox(
                                     width:
                                         constraints.maxWidth >= 880 ? 130 : 62,
-                                    child: FlatButton(
+                                    child: TextButton(
                                       onPressed: () {
                                         Get.find<LogController>()
                                             .currentSection
                                             .value = "email";
                                       },
-                                      color: Get.find<LogController>()
-                                                  .currentSection
-                                                  .value ==
-                                              'email'
-                                          ? Colors.white
-                                          : kColorPearlWhite,
-                                      height: 40,
+                                      // color: Get.find<LogController>()
+                                      //             .currentSection
+                                      //             .value ==
+                                      //         'email'
+                                      //     ? Colors.white
+                                      //     : kColorPearlWhite,
+                                      // height: 40,
+                                      style: TextButton.styleFrom(
+                                          fixedSize: Size.fromHeight(50),
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.zero)),
+                                          backgroundColor:
+                                              Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'email'
+                                                  ? Colors.white
+                                                  : kColorPearlWhite),
                                       child: Text(
                                         "email",
                                         style: constraints.maxWidth >= 880
@@ -598,13 +644,14 @@ class LeadDetails extends StatelessWidget {
                                 //         fontSize: 25, fontWeight: FontWeight.bold),
                                 //   ),
                                 // ),
-                                RaisedButton(
+                                ElevatedButton(
                                   onPressed: () {
                                     Get.find<LogController>()
                                         .isPressCompossedEmail
                                         .value = true;
                                   },
-                                  color: Colors.white,
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white),
                                   child: Text(
                                     'Send an email',
                                     style: kButtonText2,
@@ -619,7 +666,6 @@ class LeadDetails extends StatelessWidget {
                                     readOnly: true,
                                     initialValue:
                                         "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                                    // '',
                                     decoration: InputDecoration(
                                       labelText: "Name",
                                       labelStyle: kLeadDetailsTextH3,
@@ -704,7 +750,6 @@ class LeadDetails extends StatelessWidget {
                                                         readOnly: true,
                                                         initialValue:
                                                             "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                                                        // '',
                                                         decoration:
                                                             InputDecoration(
                                                           labelText:
@@ -1014,7 +1059,7 @@ class LeadDetails extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    // Container for message box
+                    // Container for Email box
                     Get.find<LogController>().isPressCompossedEmail.value
                         ? Flexible(
                             flex: 1,
@@ -1247,18 +1292,19 @@ class LeadDetails extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        RaisedButton(
+                                        ElevatedButton(
                                           onPressed: () {
                                             Get.find<LogController>()
                                                 .isPressCompossedEmail
                                                 .value = false;
                                           },
-                                          color: Colors.white,
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.white),
                                           child: Text("Cancel",
                                               style: kButtonText2),
                                         ),
                                         const SizedBox(width: 10),
-                                        RaisedButton(
+                                        ElevatedButton(
                                           onPressed: () {
                                             if (Get.find<MailController>()
                                                 .mailFormKey
@@ -1289,7 +1335,8 @@ class LeadDetails extends StatelessWidget {
                                               onDissmissCallback: (type) {},
                                             ).show();
                                           },
-                                          color: kColorDarkBlue,
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: kColorDarkBlue),
                                           child:
                                               Text("Send", style: kButtonText3),
                                         )

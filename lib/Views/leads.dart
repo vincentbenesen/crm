@@ -1,4 +1,3 @@
-import 'package:crm/services/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +6,8 @@ import 'package:crm/constant.dart';
 import 'package:crm/Controllers/record_controller.dart';
 import 'package:crm/Controllers/table_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
+import 'package:crm/services/auth_service.dart';
+import 'package:crm/Widgets/custom_AppBar.dart';
 import '../Models/record.dart';
 
 class Leads extends StatelessWidget {
@@ -19,10 +20,11 @@ class Leads extends StatelessWidget {
       builder: ((context, snapshot) {
         try {
           return Scaffold(
+            drawer: Navbar(),
+            appBar: CustomAppbar(),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Navbar(),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 50,
@@ -42,12 +44,14 @@ class Leads extends StatelessWidget {
                           Container(
                             child: Row(
                               children: [
-                                RaisedButton(
+                                ElevatedButton(
                                   onPressed: () {
                                     print(snapshot.data);
                                     Get.offAllNamed("/Panel");
                                   },
-                                  color: Colors.white,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                  ),
                                   child:
                                       Text("Add new lead", style: kButtonText1),
                                 ),

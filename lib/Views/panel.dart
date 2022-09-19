@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:crm/Controllers/stepper_controller.dart';
+import 'package:crm/Widgets/custom_AppBar.dart';
 import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/Widgets/text_Field.dart';
 import 'package:crm/constant.dart';
@@ -16,6 +17,8 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppbar(),
+      drawer: Navbar(),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: double.infinity,
@@ -27,7 +30,6 @@ class Panel extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Navbar(),
               const SizedBox(height: 10),
               // Fields for the name of the user
               Expanded(
@@ -159,19 +161,19 @@ class Panel extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                FlatButton(
+                                ElevatedButton(
                                   onPressed: controls.onStepCancel,
-                                  color: kColorDarkBlue,
-                                  height: 50,
-                                  minWidth: 130,
+                                  // color: kColorDarkBlue,
+                                  // height: 50,
+                                  // minWidth: 130,
                                   child: Text("Cancel", style: kButtonText3),
                                 ),
                                 const SizedBox(width: 20),
-                                FlatButton(
+                                ElevatedButton(
                                   onPressed: controls.onStepContinue,
-                                  color: kColorDarkBlue,
-                                  height: 50,
-                                  minWidth: 130,
+                                  // color: kColorDarkBlue,
+                                  // height: 50,
+                                  // minWidth: 130,
                                   child: Text(
                                     "Continue",
                                     style: kButtonText3,

@@ -191,7 +191,7 @@ class RecordController extends GetxController {
             },
           ),
           actions: [
-            FlatButton(
+            ElevatedButton(
               child: Text(
                 'Cancel',
                 style: GoogleFonts.rubik(fontSize: 20),
@@ -200,7 +200,7 @@ class RecordController extends GetxController {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            ElevatedButton(
               child: Text(
                 'Add',
                 style: GoogleFonts.rubik(fontSize: 20),

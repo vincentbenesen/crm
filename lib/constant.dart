@@ -42,12 +42,11 @@ var kLeadDetailsTextH6 = GoogleFonts.rubik(
   fontSize: 11,
   color: kColorDarkBlue,
 );
-
 var kEditLeadTextH1 = GoogleFonts.rubik(fontSize: 25, color: Colors.black);
 var kEditLeadTextH2 = GoogleFonts.rubik(fontSize: 18, color: Colors.black);
-
 var kPanelTextH1 = GoogleFonts.rubik(fontSize: 30, color: Colors.black);
-
+var kNavigationText = GoogleFonts.rubik(fontSize: 18, color: kColorDarkBlue);
+var kUserText = GoogleFonts.rubik(fontSize: 14, color: kColorDarkBlue);
 var kStepperTextH1 = GoogleFonts.rubik(fontSize: 20);
 
 var kButtonText1 = GoogleFonts.rubik(fontSize: 15, color: kColorDarkBlue);

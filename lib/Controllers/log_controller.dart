@@ -27,37 +27,11 @@ class LogController extends GetxController {
   Widget showLogContent(List<Record> records) {
     switch (currentSection.value) {
       case 'call':
-        return Text('data');
+        return Text('');
       case 'meeting':
-        return Text('meeting');
+        return Text('');
       case 'email':
-        return isPressCompossedEmail.value == true
-            ? Form(
-                key: emailFormKey,
-                child: Column(
-                  children: [
-                    // TextFormField(
-                    //   decoration: InputDecoration(
-                    //     hintText: 'Write a message...',
-                    //     hintStyle: kLeadDetailsTextH3,
-                    //     enabledBorder: const OutlineInputBorder(
-                    //         borderSide:
-                    //             BorderSide(width: 1, color: kColorPearlWhite)),
-                    //   ),
-                    // ),
-                  ],
-                ),
-              )
-            : RaisedButton(
-                onPressed: () {
-                  isPressCompossedEmail.value = true;
-                },
-                color: kColorDarkBlue,
-                child: Text(
-                  'Compose a message',
-                  style: kButtonText3,
-                ),
-              );
+        return Text('');
 
       default:
         return Text('hi');

@@ -1,17 +1,13 @@
-import 'package:crm/services/auth_controller.dart';
-import 'package:crm/Views/edit_leads.dart';
-import 'package:crm/Views/login_page.dart';
+import 'package:crm/services/apiService.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:http/http.dart' as http;
+
+import 'package:crm/services/auth_service.dart';
 import 'package:crm/routes/routes.dart';
 import 'package:crm/constant.dart';
-import 'Models/record.dart';
-import 'Views/lead_details.dart';
-import 'Views/panel.dart';
-import 'package:crm/Views/leads.dart';
 import 'Bindings/controller_binding.dart';
 
 void main() async {
@@ -24,7 +20,10 @@ void main() async {
               storageBucket: kStorageBucket,
               messagingSenderId: kMessagingSenderId,
               appId: kAppId))
-      .then((value) => Get.put(AuthController()));
+      .then((value) => Get.put(AuthService()));
+
+  final service = ApiService();
+
   runApp(const MyApp());
 }
 

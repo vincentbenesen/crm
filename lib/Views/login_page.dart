@@ -1,9 +1,10 @@
-import 'package:crm/services/auth_controller.dart';
-import 'package:crm/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+
+import 'package:crm/constant.dart';
+import 'package:crm/services/auth_service.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -47,7 +48,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 // Email text form field
                 TextFormField(
-                  controller: Get.find<AuthController>().emailTextController,
+                  controller: Get.find<AuthService>().emailTextController,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -63,7 +64,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 // Password text form field
                 TextFormField(
-                  controller: Get.find<AuthController>().passwordTextController,
+                  controller: Get.find<AuthService>().passwordTextController,
                   obscureText: true,
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -79,11 +80,13 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 // Log in button
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
-                    Get.find<AuthController>().signIn();
+                    Get.find<AuthService>().signIn();
                   },
-                  color: Colors.white,
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                  // color: Colors.white,
                   child: Text("Login", style: kButtonText2),
                 )
               ],

@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class AuthController extends GetxController {
-  static AuthController instance = Get.find();
+class AuthService extends GetxController {
+  static AuthService instance = Get.find();
   FirebaseAuth auth = FirebaseAuth.instance;
   late Rx<User?> user = Rx<User?>(auth.currentUser);
 
