@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:crm/Widgets/text_Field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,8 +49,12 @@ class RecordController extends GetxController {
   final fieldtypes = <String?>[].obs;
   RxInt numberOfNewFields = 1.obs;
 
+  RxInt highestUserId = 0.obs;
+
+  final list = <Record>[].obs;
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
@@ -64,6 +70,8 @@ class RecordController extends GetxController {
     collectionReference = firestore.collection('records');
 
     fieldtypes.add('Other');
+
+    highestUserId.value = await getHighestUserId();
   }
 
   // Increment the number of new fields by 1. It starts from 0.
@@ -107,6 +115,20 @@ class RecordController extends GetxController {
     return await records.then((records) {
       return records.firstWhere((record) => record.type == fieldType);
     });
+  }
+
+  Future<List<Record>> getRecordByName() async {
+    QuerySnapshot records =
+        await collectionReference.where('data', isEqualTo: 'Lisa').get();
+
+    records.docs.forEach((record) {
+      recordList.add(Record(record['userId'], record['fieldId'], record['type'],
+          record['data'], record['documentId']));
+    });
+
+    print(recordList);
+
+    return recordList;
   }
 
   // This function is used to update the records from the database based on the given docId.

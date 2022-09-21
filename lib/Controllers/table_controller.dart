@@ -20,6 +20,11 @@ class TableController extends GetxController {
   RxBool showPhoneandEmail = true.obs;
   RxBool showAddressInfo = true.obs;
 
+  final mapss = (Map<int, List<Record>>).obs;
+  RxInt numOfMatches = 0.obs;
+  RxString name = ''.obs;
+  final searchController = TextEditingController();
+
   @override
   onInit() {
     super.onInit();
@@ -34,9 +39,38 @@ class TableController extends GetxController {
     bool.value = false;
   }
 
+  List<Record> matches(List<Record> records, String name) {
+    return records.where((record) => record.data.startsWith(name)).toList();
+  }
+
+  List<Record> result(List<Record> records, List<Record> names) {
+    List<Record> results = <Record>[];
+    for (var names in names) {
+      for (var record in records) {
+        if (names.userId == record.userId) {
+          results.add(record);
+        }
+      }
+    }
+
+    return results;
+  }
+
+  // This record is used to retrieve the records from the database based on the given userId. This is used to display the records in the table.
+  // This is used specifically in the ListView in the leads.dart file
+  List<Record> getRecordsByIndex(List<Record> records, int index) {
+    index++;
+    return records.where((record) => record.userId == index).toList();
+  }
+
   // This record is used to retrieve the records from the database based on the given userId. This is used to display the records in the table.
   List<Record> getRecordsById(List<Record> records, int userId) {
     return records.where((record) => record.userId == userId).toList();
+  }
+
+  // This record is used to retrieve the records from the database based on the given userId. This is used to display the records in the table.
+  List<Record> getRecordsByName(List<Record> records, String name) {
+    return records.where((record) => record.data == name).toList();
   }
 
   // This function is used to retrieve the records from the database based on the given fieldType.
@@ -78,16 +112,17 @@ class TableController extends GetxController {
                       getUserIdByFieldTypeAndData("firstName",
                           data.toString().split(" ").first, records)),
                 });
-
-                // print(getRecordsById(
-                //     records,
-                //     getUserIdByFieldTypeAndData("firstName",
-                //         data.toString().split(" ").first, records)));
               }
             },
             child: Text(data.toString()))))
         .toList();
   }
+
+  // Map<int, List<Record>> getName(List<Record> records) {
+  //   if ((mapss.value as Map<int, List<Record>>).keys.last == records. )
+
+  //   return mapss.value as Map<int, List<Record>>;
+  // }
 
   // This function is used to get all the rows for the table
   List<DataRow> getRows(List<Record> records) {
@@ -114,19 +149,6 @@ class TableController extends GetxController {
             ], records)))
         .toList();
   }
-
-  // Returns the table with the given columns and rows. It is used to display the records.
-  // Widget dataTable(
-  //   List<DataColumn> columns,
-  //   List<Record> records,
-  // ) {
-  //   return Obx(
-  //     () => DataTable(
-  //       columns: getColumns(leadsColumns),
-  //       rows: getRows(records),
-  //     ),
-  //   );
-  // }
 
   int compareString(String a, String b, bool ascending) {
     return ascending ? a.compareTo(b) : b.compareTo(a);
