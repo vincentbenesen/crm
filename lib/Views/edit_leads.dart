@@ -312,12 +312,21 @@ class EditLeads extends StatelessWidget {
                                               Expanded(
                                                 child: TextFormField(
                                                   initialValue: Get.find<
-                                                          TableController>()
-                                                      .getRecordByFieldType(
-                                                          "phoneNumber",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data,
+                                                                  TableController>()
+                                                              .getRecordByFieldType(
+                                                                  "phoneNumber",
+                                                                  Get.arguments[
+                                                                      'records'])
+                                                              .data ==
+                                                          'null'
+                                                      ? 'N/A'
+                                                      : Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "phoneNumber",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data,
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -401,12 +410,21 @@ class EditLeads extends StatelessWidget {
                                               Expanded(
                                                 child: TextFormField(
                                                   initialValue: Get.find<
-                                                          TableController>()
-                                                      .getRecordByFieldType(
-                                                          "email",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data,
+                                                                  TableController>()
+                                                              .getRecordByFieldType(
+                                                                  "email",
+                                                                  Get.arguments[
+                                                                      'records'])
+                                                              .data ==
+                                                          'null'
+                                                      ? 'N/A'
+                                                      : Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "email",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data,
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -495,11 +513,20 @@ class EditLeads extends StatelessWidget {
                                             width: 895,
                                             child: TextFormField(
                                               initialValue: Get.find<
-                                                      TableController>()
-                                                  .getRecordByFieldType(
-                                                      "mobileNumber",
-                                                      Get.arguments['records'])
-                                                  .data,
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "mobileNumber",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data ==
+                                                      'null'
+                                                  ? 'N/A'
+                                                  : Get.find<TableController>()
+                                                      .getRecordByFieldType(
+                                                          "mobileNumber",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data,
                                               decoration: InputDecoration(
                                                 contentPadding:
                                                     const EdgeInsets.all(0),
@@ -639,11 +666,20 @@ class EditLeads extends StatelessWidget {
                                           const SizedBox(height: 10),
                                           TextFormField(
                                             initialValue: Get.find<
-                                                    TableController>()
-                                                .getRecordByFieldType(
-                                                    "address1",
-                                                    Get.arguments['records'])
-                                                .data,
+                                                            TableController>()
+                                                        .getRecordByFieldType(
+                                                            "address1",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data ==
+                                                    'null'
+                                                ? 'N/A'
+                                                : Get.find<TableController>()
+                                                    .getRecordByFieldType(
+                                                        "address1",
+                                                        Get.arguments[
+                                                            'records'])
+                                                    .data,
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.all(0),
@@ -719,12 +755,21 @@ class EditLeads extends StatelessWidget {
                                               Expanded(
                                                 child: TextFormField(
                                                   initialValue: Get.find<
-                                                          TableController>()
-                                                      .getRecordByFieldType(
-                                                          "city",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data,
+                                                                  TableController>()
+                                                              .getRecordByFieldType(
+                                                                  "city",
+                                                                  Get.arguments[
+                                                                      'records'])
+                                                              .data ==
+                                                          'null'
+                                                      ? 'N/A'
+                                                      : Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "city",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data,
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -802,12 +847,21 @@ class EditLeads extends StatelessWidget {
                                               Expanded(
                                                 child: TextFormField(
                                                   initialValue: Get.find<
-                                                          TableController>()
-                                                      .getRecordByFieldType(
-                                                          "province",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data,
+                                                                  TableController>()
+                                                              .getRecordByFieldType(
+                                                                  "province",
+                                                                  Get.arguments[
+                                                                      'records'])
+                                                              .data ==
+                                                          'null'
+                                                      ? 'N/A'
+                                                      : Get.find<
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "province",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data,
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -888,11 +942,20 @@ class EditLeads extends StatelessWidget {
                                             width: 895,
                                             child: TextFormField(
                                               initialValue: Get.find<
-                                                      TableController>()
-                                                  .getRecordByFieldType(
-                                                      "postal",
-                                                      Get.arguments['records'])
-                                                  .data,
+                                                              TableController>()
+                                                          .getRecordByFieldType(
+                                                              "postal",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data ==
+                                                      'null'
+                                                  ? 'N/A'
+                                                  : Get.find<TableController>()
+                                                      .getRecordByFieldType(
+                                                          "postal",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data,
                                               decoration: InputDecoration(
                                                 contentPadding:
                                                     const EdgeInsets.all(0),

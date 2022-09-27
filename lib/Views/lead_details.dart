@@ -291,10 +291,18 @@ class LeadDetails extends StatelessWidget {
                                             style: kLeadDetailsTextH3),
                                         Text(
                                           Get.find<TableController>()
-                                              .getRecordByFieldType(
-                                                  "phoneNumber",
-                                                  Get.arguments['records'])
-                                              .data,
+                                                      .getRecordByFieldType(
+                                                          "phoneNumber",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data ==
+                                                  'null'
+                                              ? "N/A"
+                                              : Get.find<TableController>()
+                                                  .getRecordByFieldType(
+                                                      "phoneNumber",
+                                                      Get.arguments['records'])
+                                                  .data,
                                           style: kLeadDetailsTextH4,
                                         ),
                                       ],
@@ -308,9 +316,19 @@ class LeadDetails extends StatelessWidget {
                                             style: kLeadDetailsTextH3),
                                         Text(
                                             Get.find<TableController>()
-                                                .getRecordByFieldType("email",
-                                                    Get.arguments['records'])
-                                                .data,
+                                                        .getRecordByFieldType(
+                                                            "email",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data ==
+                                                    'null'
+                                                ? 'N/A'
+                                                : Get.find<TableController>()
+                                                    .getRecordByFieldType(
+                                                        "email",
+                                                        Get.arguments[
+                                                            'records'])
+                                                    .data,
                                             style: kLeadDetailsTextH4),
                                       ],
                                     )
@@ -348,10 +366,19 @@ class LeadDetails extends StatelessWidget {
                                                 style: kLeadDetailsTextH5),
                                             Text(
                                               Get.find<TableController>()
-                                                  .getRecordByFieldType(
-                                                      "phoneNumber",
-                                                      Get.arguments['records'])
-                                                  .data,
+                                                          .getRecordByFieldType(
+                                                              "phoneNumber",
+                                                              Get.arguments[
+                                                                  'records'])
+                                                          .data ==
+                                                      'null'
+                                                  ? 'N/A'
+                                                  : Get.find<TableController>()
+                                                      .getRecordByFieldType(
+                                                          "phoneNumber",
+                                                          Get.arguments[
+                                                              'records'])
+                                                      .data,
                                               style: kLeadDetailsTextH6,
                                             ),
                                           ],
@@ -371,11 +398,20 @@ class LeadDetails extends StatelessWidget {
                                                 style: kLeadDetailsTextH5),
                                             Text(
                                                 Get.find<TableController>()
-                                                    .getRecordByFieldType(
-                                                        "email",
-                                                        Get.arguments[
-                                                            'records'])
-                                                    .data,
+                                                            .getRecordByFieldType(
+                                                                "email",
+                                                                Get.arguments[
+                                                                    'records'])
+                                                            .data ==
+                                                        'null'
+                                                    ? 'N/A'
+                                                    : Get.find<
+                                                            TableController>()
+                                                        .getRecordByFieldType(
+                                                            "email",
+                                                            Get.arguments[
+                                                                'records'])
+                                                        .data,
                                                 style: kLeadDetailsTextH6),
                                           ],
                                         ),
@@ -808,94 +844,114 @@ class LeadDetails extends StatelessWidget {
                                             ),
                                           ]),
                                         ),
-                                        Obx(() => Get.find<TableController>()
-                                                    .showPhoneandEmail
-                                                    .value ==
-                                                true
-                                            ? Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: 120,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: TextFormField(
-                                                            readOnly: true,
-                                                            initialValue: Get.find<
-                                                                    TableController>()
-                                                                .getRecordByFieldType(
-                                                                    "phoneNumber",
-                                                                    Get.arguments[
-                                                                        'records'])
-                                                                .data,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              labelText:
-                                                                  "Phone",
-                                                              labelStyle:
-                                                                  kLeadDetailsTextH3,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 30),
-                                                        Expanded(
-                                                          child: TextFormField(
-                                                            readOnly: true,
-                                                            initialValue: Get.find<
-                                                                    TableController>()
-                                                                .getRecordByFieldType(
-                                                                    "email",
-                                                                    Get.arguments[
-                                                                        'records'])
-                                                                .data,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              labelText:
-                                                                  "Email",
-                                                              labelStyle:
-                                                                  kLeadDetailsTextH3,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      width: 605,
-                                                      child: TextFormField(
-                                                        readOnly: true,
-                                                        initialValue: Get.find<
-                                                                TableController>()
-                                                            .getRecordByFieldType(
-                                                                "mobileNumber",
-                                                                Get.arguments[
-                                                                    'records'])
-                                                            .data,
+                                        Obx(
+                                            () =>
+                                                Get.find<TableController>()
+                                                            .showPhoneandEmail
+                                                            .value ==
+                                                        true
+                                                    ? Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 120,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 20),
                                                         decoration:
-                                                            InputDecoration(
-                                                          labelText: "Mobile",
-                                                          labelStyle:
-                                                              kLeadDetailsTextH3,
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : Container())
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child:
+                                                                      TextFormField(
+                                                                    readOnly:
+                                                                        true,
+                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("phoneNumber", Get.arguments['records']).data ==
+                                                                            'null'
+                                                                        ? 'N/A'
+                                                                        : Get.find<TableController>()
+                                                                            .getRecordByFieldType("phoneNumber",
+                                                                                Get.arguments['records'])
+                                                                            .data,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      labelText:
+                                                                          "Phone",
+                                                                      labelStyle:
+                                                                          kLeadDetailsTextH3,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                    width: 30),
+                                                                Expanded(
+                                                                  child:
+                                                                      TextFormField(
+                                                                    readOnly:
+                                                                        true,
+                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("email", Get.arguments['records']).data ==
+                                                                            'null'
+                                                                        ? 'N/A'
+                                                                        : Get.find<TableController>()
+                                                                            .getRecordByFieldType("email",
+                                                                                Get.arguments['records'])
+                                                                            .data,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      labelText:
+                                                                          "Email",
+                                                                      labelStyle:
+                                                                          kLeadDetailsTextH3,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              width: 605,
+                                                              child:
+                                                                  TextFormField(
+                                                                readOnly: true,
+                                                                initialValue: Get.find<TableController>()
+                                                                            .getRecordByFieldType(
+                                                                                "mobileNumber",
+                                                                                Get.arguments[
+                                                                                    'records'])
+                                                                            .data ==
+                                                                        'null'
+                                                                    ? 'N/A'
+                                                                    : Get.find<
+                                                                            TableController>()
+                                                                        .getRecordByFieldType(
+                                                                            "mobileNumber",
+                                                                            Get.arguments['records'])
+                                                                        .data,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  labelText:
+                                                                      "Mobile",
+                                                                  labelStyle:
+                                                                      kLeadDetailsTextH3,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : Container())
                                       ],
                                     ),
                                   ),
@@ -941,113 +997,141 @@ class LeadDetails extends StatelessWidget {
                                             ),
                                           ]),
                                         ),
-                                        Obx(() => Get.find<TableController>()
-                                                    .showAddressInfo
-                                                    .value ==
-                                                true
-                                            ? Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: 190,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    TextFormField(
-                                                      readOnly: true,
-                                                      initialValue: Get.find<
-                                                              TableController>()
-                                                          .getRecordByFieldType(
-                                                              "address1",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelText:
-                                                            "Street Address 2",
-                                                        labelStyle:
-                                                            kLeadDetailsTextH3,
-                                                      ),
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: TextFormField(
-                                                            readOnly: true,
-                                                            initialValue: Get.find<
-                                                                    TableController>()
-                                                                .getRecordByFieldType(
-                                                                    "city",
-                                                                    Get.arguments[
-                                                                        'records'])
-                                                                .data,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              labelText: "City",
-                                                              labelStyle:
-                                                                  GoogleFonts.rubik(
-                                                                      fontSize:
-                                                                          15),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 30),
-                                                        Expanded(
-                                                          child: TextFormField(
-                                                            readOnly: true,
-                                                            initialValue: Get.find<
-                                                                    TableController>()
-                                                                .getRecordByFieldType(
-                                                                    "province",
-                                                                    Get.arguments[
-                                                                        'records'])
-                                                                .data,
-                                                            decoration:
-                                                                InputDecoration(
-                                                              labelText:
-                                                                  "Province",
-                                                              labelStyle:
-                                                                  kLeadDetailsTextH3,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      width: 605,
-                                                      child: TextFormField(
-                                                        readOnly: true,
-                                                        initialValue: Get.find<
-                                                                TableController>()
-                                                            .getRecordByFieldType(
-                                                                "postal",
-                                                                Get.arguments[
-                                                                    'records'])
-                                                            .data,
+                                        Obx(
+                                            () =>
+                                                Get.find<TableController>()
+                                                            .showAddressInfo
+                                                            .value ==
+                                                        true
+                                                    ? Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 190,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 20),
                                                         decoration:
-                                                            InputDecoration(
-                                                          labelText:
-                                                              "Postal Code",
-                                                          labelStyle:
-                                                              kLeadDetailsTextH3,
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            : Container())
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            TextFormField(
+                                                              readOnly: true,
+                                                              initialValue: Get.find<
+                                                                              TableController>()
+                                                                          .getRecordByFieldType(
+                                                                              "address1",
+                                                                              Get.arguments[
+                                                                                  'records'])
+                                                                          .data ==
+                                                                      'null'
+                                                                  ? 'N/A'
+                                                                  : Get.find<
+                                                                          TableController>()
+                                                                      .getRecordByFieldType(
+                                                                          "address1",
+                                                                          Get.arguments[
+                                                                              'records'])
+                                                                      .data,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                labelText:
+                                                                    "Street Address 1",
+                                                                labelStyle:
+                                                                    kLeadDetailsTextH3,
+                                                              ),
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  child:
+                                                                      TextFormField(
+                                                                    readOnly:
+                                                                        true,
+                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("city", Get.arguments['records']).data ==
+                                                                            'null'
+                                                                        ? 'N/A'
+                                                                        : Get.find<TableController>()
+                                                                            .getRecordByFieldType("city",
+                                                                                Get.arguments['records'])
+                                                                            .data,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      labelText:
+                                                                          "City",
+                                                                      labelStyle:
+                                                                          GoogleFonts.rubik(
+                                                                              fontSize: 15),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                    width: 30),
+                                                                Expanded(
+                                                                  child:
+                                                                      TextFormField(
+                                                                    readOnly:
+                                                                        true,
+                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("province", Get.arguments['records']).data ==
+                                                                            'null'
+                                                                        ? 'N/A'
+                                                                        : Get.find<TableController>()
+                                                                            .getRecordByFieldType("province",
+                                                                                Get.arguments['records'])
+                                                                            .data,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      labelText:
+                                                                          "Province",
+                                                                      labelStyle:
+                                                                          kLeadDetailsTextH3,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              width: 605,
+                                                              child:
+                                                                  TextFormField(
+                                                                readOnly: true,
+                                                                initialValue: Get.find<TableController>()
+                                                                            .getRecordByFieldType(
+                                                                                "postal",
+                                                                                Get.arguments[
+                                                                                    'records'])
+                                                                            .data ==
+                                                                        'null'
+                                                                    ? "N/A"
+                                                                    : Get.find<
+                                                                            TableController>()
+                                                                        .getRecordByFieldType(
+                                                                            "postal",
+                                                                            Get.arguments['records'])
+                                                                        .data,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  labelText:
+                                                                      "Postal Code",
+                                                                  labelStyle:
+                                                                      kLeadDetailsTextH3,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : Container())
                                       ],
                                     ),
                                   ),
