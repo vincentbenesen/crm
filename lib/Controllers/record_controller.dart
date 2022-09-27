@@ -1,13 +1,15 @@
 import 'dart:convert';
-
-import 'package:crm/Widgets/text_Field.dart';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:excel_dart/excel_dart.dart';
 
 import '../Models/record.dart';
+import 'package:crm/Widgets/text_Field.dart';
 
 class RecordController extends GetxController {
   // To access the records from the database.
@@ -295,5 +297,128 @@ class RecordController extends GetxController {
         ),
       ],
     );
+  }
+
+  void importFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['xls', 'xlsx', 'csv']);
+    int maxRow = 0;
+    int maxColumn = 0;
+    final recordsMap = <int, List<String>>{};
+
+    if (result != null) {
+      var bytes = result.files.single.bytes;
+      var excel = Excel.decodeBytes(bytes!);
+      for (var table in excel.tables.keys) {
+        maxColumn = excel.tables[table]!.maxCols;
+        maxRow = excel.tables[table]!.maxRows;
+        for (var i = 1; i < maxRow; i++) {
+          for (var j = 0; j < maxColumn; j++) {
+            try {
+              if (recordsMap.containsKey(i)) {
+                recordsMap[i]!
+                    .add(excel.tables[table]!.rows[i][j]!.value.toString());
+              } else {
+                recordsMap.addEntries([
+                  MapEntry(
+                      i, [excel.tables[table]!.rows[i][j]!.value.toString()])
+                ]);
+              }
+            } catch (Exception) {
+              if (recordsMap.containsKey(i)) {
+                recordsMap[i]!.add("null");
+              } else {
+                recordsMap.addEntries([
+                  MapEntry(i, ["null"])
+                ]);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    insertRecordsFromExcel(recordsMap, maxColumn);
+  }
+
+  String getTypeOfData(int column) {
+    switch (column) {
+      case 0:
+        return 'firstName';
+      case 1:
+        return 'lastName';
+      case 2:
+        return 'address1';
+      case 3:
+        return 'city';
+      case 4:
+        return 'province';
+      case 5:
+        return 'postal';
+      case 6:
+        return 'email';
+      case 7:
+        return 'mobileNumber';
+      case 8:
+        return 'phoneNumber';
+      case 9:
+        return 'busTelephone';
+      case 10:
+        return 'howFoundUs';
+      case 11:
+        return 'type';
+      case 12:
+        return 'comments';
+      default:
+        return '';
+    }
+  }
+
+  int getFieldId(int column) {
+    switch (column) {
+      case 0:
+        return 1;
+      case 1:
+        return 2;
+      case 2:
+        return 3;
+      case 3:
+        return 5;
+      case 4:
+        return 6;
+      case 5:
+        return 7;
+      case 6:
+        return 9;
+      case 7:
+        return 8;
+      case 8:
+        return 8;
+      case 9:
+        return 8;
+      case 10:
+        return 10;
+      case 11:
+        return 11;
+      case 12:
+        return 12;
+      default:
+        return 0;
+    }
+  }
+
+  void insertRecordsFromExcel(
+      Map<int, List<String>> records, int maxColumn) async {
+    int highestUserId = await getHighestUserId();
+    String documentId = '';
+    for (var record in records.values) {
+      highestUserId++;
+      for (var i = 0; i < maxColumn; i++) {
+        documentId = collectionReference.doc().id;
+        collectionReference.doc(documentId).set(
+            Record(highestUserId, getFieldId(i), getTypeOfData(i), record[i])
+                .toMap(highestUserId));
+      }
+    }
   }
 }

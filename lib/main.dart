@@ -22,8 +22,6 @@ void main() async {
               appId: kAppId))
       .then((value) => Get.put(AuthService()));
 
-  final service = ApiService();
-
   runApp(const MyApp());
 }
 

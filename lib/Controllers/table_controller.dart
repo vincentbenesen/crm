@@ -105,12 +105,12 @@ class TableController extends GetxController {
             onTap: () {
               if (!data.toString().contains(new RegExp(r'[0-9-\@]'))) {
                 // print(data.toString().split(" ").first);
-
+                print(data.toString().split(' ').last);
                 Get.offAllNamed('/LeadDetails', arguments: {
                   'records': getRecordsById(
                       records,
-                      getUserIdByFieldTypeAndData("firstName",
-                          data.toString().split(" ").first, records)),
+                      getUserIdByFieldTypeAndData("lastName",
+                          data.toString().split(" ").last, records)),
                 });
               }
             },
@@ -138,14 +138,28 @@ class TableController extends GetxController {
                 'address1',
                 getRecordsById(records, row.userId),
               ).data} ${getRecordByFieldType('city', getRecordsById(records, row.userId)).data}, ${getRecordByFieldType('province', getRecordsById(records, row.userId)).data}, ${getRecordByFieldType('postal', getRecordsById(records, row.userId)).data}",
-              getRecordByFieldType(
-                      'phoneNumber', getRecordsById(records, row.userId))
-                  .data,
-              getRecordByFieldType(
-                      'mobileNumber', getRecordsById(records, row.userId))
-                  .data,
+              getRecordByFieldType('phoneNumber',
+                              getRecordsById(records, row.userId))
+                          .data ==
+                      'null'
+                  ? 'N/A'
+                  : getRecordByFieldType(
+                      'phoneNumber', getRecordsById(records, row.userId)),
+              getRecordByFieldType('mobileNumber',
+                              getRecordsById(records, row.userId))
+                          .data ==
+                      'null'
+                  ? 'N/A'
+                  : getRecordByFieldType(
+                          'mobileNumber', getRecordsById(records, row.userId))
+                      .data,
               getRecordByFieldType('email', getRecordsById(records, row.userId))
-                  .data
+                          .data ==
+                      'null'
+                  ? 'N/A'
+                  : getRecordByFieldType(
+                          'email', getRecordsById(records, row.userId))
+                      .data
             ], records)))
         .toList();
   }

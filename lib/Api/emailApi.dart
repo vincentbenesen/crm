@@ -1,14 +1,14 @@
-import 'package:shelf/shelf.dart';
-import 'package:shelf_router/shelf_router.dart';
+// import 'package:shelf/shelf.dart';
+// import 'package:shelf_router/shelf_router.dart';
 
-class EmailApi {
-  Router get router {
-    final router = Router();
+// class EmailApi {
+//   Router get router {
+//     final router = Router();
 
-    router.get('/', (Request request) {
-      return Response.ok('HelloWorld');
-    });
+//     router.get('/', (Request request) {
+//       return Response.ok('HelloWorld');
+//     });
 
-    return router;
-  }
-}
+//     return router;
+//   }
+// }
