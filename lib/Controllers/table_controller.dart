@@ -39,10 +39,17 @@ class TableController extends GetxController {
     bool.value = false;
   }
 
-  List<Record> matches(List<Record> records, String name) {
-    return records.where((record) => record.data.startsWith(name)).toList();
+  // Checks if there are matches name from all the the leads. Get all the matching names and store it in a list
+  List<Record> matchesName(List<Record> records, String name) {
+    return records
+        .where((record) =>
+            (record.data.toLowerCase().startsWith(name.trim().toLowerCase()) &&
+                (record.type == 'firstName' || record.type == 'lastName')) &&
+            name.isNotEmpty)
+        .toList();
   }
 
+  // Get all the information of the matching names
   List<Record> result(List<Record> records, List<Record> names) {
     List<Record> results = <Record>[];
     for (var names in names) {
@@ -104,8 +111,8 @@ class TableController extends GetxController {
         .map((data) => DataCell(InkWell(
             onTap: () {
               if (!data.toString().contains(new RegExp(r'[0-9-\@]'))) {
-                // print(data.toString().split(" ").first);
-                print(data.toString().split(' ').last);
+                // Get all the records of the lead based on their last name
+                // Then send this data to LeadDetails page
                 Get.offAllNamed('/LeadDetails', arguments: {
                   'records': getRecordsById(
                       records,
@@ -117,12 +124,6 @@ class TableController extends GetxController {
             child: Text(data.toString()))))
         .toList();
   }
-
-  // Map<int, List<Record>> getName(List<Record> records) {
-  //   if ((mapss.value as Map<int, List<Record>>).keys.last == records. )
-
-  //   return mapss.value as Map<int, List<Record>>;
-  // }
 
   // This function is used to get all the rows for the table
   List<DataRow> getRows(List<Record> records) {
@@ -144,7 +145,8 @@ class TableController extends GetxController {
                       'null'
                   ? 'N/A'
                   : getRecordByFieldType(
-                      'phoneNumber', getRecordsById(records, row.userId)),
+                          'phoneNumber', getRecordsById(records, row.userId))
+                      .data,
               getRecordByFieldType('mobileNumber',
                               getRecordsById(records, row.userId))
                           .data ==

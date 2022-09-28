@@ -1,3 +1,4 @@
+import 'package:crm/Views/searched_leads.dart';
 import 'package:crm/services/routeAccess.dart';
 import 'package:get/get.dart';
 
@@ -17,14 +18,21 @@ class Routes {
       name: "/Leads",
       page: () => const Leads(),
       binding: ControllerBinding(),
-      transition: Transition.fade,
+      transition: Transition.noTransition,
+      middlewares: [RouteAccessService()],
+    ),
+    GetPage(
+      name: "/SearchedLeads",
+      page: () => const SearchedLeads(),
+      binding: ControllerBinding(),
+      transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(
       name: "/Panel",
       page: () => const Panel(),
       binding: ControllerBinding(),
-      transition: Transition.fade,
+      transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(
@@ -32,14 +40,14 @@ class Routes {
       page: () => const LeadDetails(),
       arguments: [],
       binding: ControllerBinding(),
-      transition: Transition.fade,
+      transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(
       name: "/EditLeads",
       page: () => const EditLeads(),
       binding: ControllerBinding(),
-      transition: Transition.fade,
+      transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(

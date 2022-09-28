@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,149 +19,10 @@ class Leads extends StatelessWidget {
     return Scaffold(
         drawer: Navbar(),
         appBar: CustomAppbar(),
-        body: FutureBuilder(
-          future: Get.find<RecordController>().fetchRecords(),
+        body: StreamBuilder(
+          stream:
+              Stream.fromFuture(Get.find<RecordController>().fetchRecords()),
           builder: ((context, snapshot) {
-            // if (snapshot.connectionState == ConnectionState.waiting) {
-            //   return CircularProgressIndicator();
-            // } else if (snapshot.connectionState == ConnectionState.done) {
-            //   if (snapshot.hasError) {
-            //     return const Text('Error');
-            //   } else if (snapshot.hasData) {
-            //     List<Record> list = snapshot.data as List<Record>;
-            //     // print(list.length);
-            //     // print('HI${Get.find<RecordController>().highestUserId.value}');
-
-            //     // print('${Get.find<TableController>().matches(list, 'L')}');
-            //     return Column(
-            //       children: [
-            //         Container(
-            //           width: MediaQuery.of(context).size.width,
-            //           height: 50,
-            //           padding: const EdgeInsets.symmetric(horizontal: 20),
-            //           child: Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               children: [
-            //                 Container(
-            //                   child: Row(
-            //                     children: [
-            //                       const Icon(Icons.group),
-            //                       const SizedBox(width: 5),
-            //                       Text("Leads", style: kTextTitle)
-            //                     ],
-            //                   ),
-            //                 ),
-            //                 // SearchField
-            //                 Expanded(
-            //                   child: TextField(
-            //                     controller: Get.find<TableController>()
-            //                         .searchController,
-            //                     decoration: InputDecoration(
-            //                         prefixIcon: Icon(Icons.search),
-            //                         hintText: 'Search...'),
-            //                   ),
-            //                 ),
-            //                 // SearchButton
-            //                 Container(
-            //                   child: Row(
-            //                     children: [
-            //                       ElevatedButton(
-            //                         onPressed: () {
-            //                           Get.find<TableController>().name.value =
-            //                               Get.find<TableController>()
-            //                                   .searchController
-            //                                   .text;
-
-            //                           print(Get.find<TableController>().matches(
-            //                               list,
-            //                               Get.find<TableController>()
-            //                                   .name
-            //                                   .value));
-
-            //                           Get.find<TableController>()
-            //                               .numOfMatches
-            //                               .value = Get.find<
-            //                                   TableController>()
-            //                               .result(
-            //                                   list,
-            //                                   Get.find<TableController>()
-            //                                       .matches(
-            //                                           list,
-            //                                           Get.find<
-            //                                                   TableController>()
-            //                                               .name
-            //                                               .value))
-            //                               .length;
-            //                         },
-            //                         style: ElevatedButton.styleFrom(
-            //                           backgroundColor: Colors.white,
-            //                         ),
-            //                         child: Text("Search", style: kButtonText1),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ),
-            //                 Container(
-            //                   child: Row(
-            //                     children: [
-            //                       ElevatedButton(
-            //                         onPressed: () {
-            //                           print(snapshot.data);
-            //                           Get.offAllNamed("/Panel");
-            //                         },
-            //                         style: ElevatedButton.styleFrom(
-            //                           backgroundColor: Colors.white,
-            //                         ),
-            //                         child: Text("Add new lead",
-            //                             style: kButtonText1),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ),
-            //               ]),
-            //         ),
-            //         ListView.builder(
-            //           scrollDirection: Axis.vertical,
-            //           shrinkWrap: true,
-            //           itemCount:
-            //               Get.find<RecordController>().highestUserId.value,
-            //           itemBuilder: (context, index) {
-            //             return Obx(
-            //                 (() => Get.find<TableController>().name.value == ""
-            //                     ? Table(
-            //                         children: [
-            //                           TableRow(children: [
-            //                             Text(
-            //                                 '${Get.find<TableController>().getRecordByFieldType('firstName', Get.find<TableController>().getRecordsByIndex(list, index)).data} ${Get.find<TableController>().getRecordByFieldType('lastName', Get.find<TableController>().getRecordsByIndex(list, index)).data}'),
-            //                             Text('${Get.find<TableController>().getRecordByFieldType(
-            //                                   'address1',
-            //                                   Get.find<TableController>()
-            //                                       .getRecordsByIndex(
-            //                                           list, index),
-            //                                 ).data} ${Get.find<TableController>().getRecordByFieldType('city', Get.find<TableController>().getRecordsByIndex(list, index)).data}, ${Get.find<TableController>().getRecordByFieldType('province', Get.find<TableController>().getRecordsByIndex(list, index)).data}, ${Get.find<TableController>().getRecordByFieldType('postal', Get.find<TableController>().getRecordsByIndex(list, index)).data}')
-            //                           ])
-            //                         ],
-            //                       )
-            //                     : Table(
-            //                         children: [
-            //                           TableRow(children: [
-            //                             // Text(
-            //                             //     '${Get.find<TableController>().getRecordByFieldType('firstName', Get.find<TableController>().getRecordsByIndex(Get.find<TableController>().result(list, Get.find<TableController>().matches(list, Get.find<TableController>().name.value)), 3)).data}'),
-            //                             // Text('Hi')
-            //                           ])
-            //                         ],
-            //                       )));
-            //           },
-            //         ),
-            //       ],
-            //     );
-            //   } else {
-            //     return const Text('Empty data');
-            //   }
-            // } else {
-            //   return Text('State: ${snapshot.connectionState}');
-            // }
-
             try {
               return SingleChildScrollView(
                 child: Column(
@@ -181,38 +43,90 @@ class Leads extends StatelessWidget {
                                 ],
                               ),
                             ),
+
                             Container(
-                              child: Row(
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      print(snapshot.data);
-                                      Get.offAllNamed("/Panel");
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                    ),
-                                    child: Text("Add new lead",
-                                        style: kButtonText1),
-                                  ),
-                                ],
+                              width: 500,
+                              child: TextField(
+                                controller: Get.find<TableController>()
+                                    .searchController,
+                                decoration: InputDecoration(
+                                    hoverColor: kColorDarkBlue,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 20),
+                                    suffixIcon: InkWell(
+                                        onTap: () {
+                                          // if (Get.find<TableController>()
+                                          //     .matchesName(
+                                          //         snapshot.data as List<Record>,
+                                          //         Get.find<TableController>()
+                                          //             .searchController
+                                          //             .text)
+                                          //     .isNotEmpty) {
+                                          Get.offAllNamed('/SearchedLeads',
+                                              arguments: {
+                                                'searchedResults': Get.find<
+                                                        TableController>()
+                                                    .result(
+                                                        snapshot.data
+                                                            as List<Record>,
+                                                        Get.find<
+                                                                TableController>()
+                                                            .matchesName(
+                                                                snapshot.data
+                                                                    as List<
+                                                                        Record>,
+                                                                Get.find<
+                                                                        TableController>()
+                                                                    .searchController
+                                                                    .text)),
+                                                'allLeads': snapshot.data
+                                                    as List<Record>
+                                              });
+                                          // }
+                                        },
+                                        child: Icon(Icons.search)),
+                                    hintText: 'Search...'),
                               ),
                             ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Get.find<RecordController>().importFile();
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                    ),
-                                    child: Text("Import a file",
-                                        style: kButtonText1),
+
+                            // Row for import and addlead buttons
+                            Row(
+                              children: [
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          print(snapshot.data);
+                                          Get.offAllNamed("/Panel");
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                        ),
+                                        child: Text("Add new lead",
+                                            style: kButtonText1),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Get.find<RecordController>()
+                                              .importFile();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                        ),
+                                        child: Text("Import a file",
+                                            style: kButtonText1),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ]),
                     ),
@@ -258,9 +172,6 @@ class Leads extends StatelessWidget {
               );
             }
           }),
-
-          //(This is for the listview.builder)
-          // }),
         ));
   }
 }

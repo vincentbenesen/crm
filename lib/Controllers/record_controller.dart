@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,9 +52,11 @@ class RecordController extends GetxController {
   final fieldtypes = <String?>[].obs;
   RxInt numberOfNewFields = 1.obs;
 
+  // We need this variable to update the userId for the new record in Firebase
   RxInt highestUserId = 0.obs;
 
-  final list = <Record>[].obs;
+  // Checks if the excel file is successfully imported to Firebase
+  RxBool isImported = false.obs;
 
   @override
   void onInit() async {
@@ -415,10 +418,13 @@ class RecordController extends GetxController {
       highestUserId++;
       for (var i = 0; i < maxColumn; i++) {
         documentId = collectionReference.doc().id;
-        collectionReference.doc(documentId).set(
-            Record(highestUserId, getFieldId(i), getTypeOfData(i), record[i])
-                .toMap(highestUserId));
+        collectionReference.doc(documentId).set(Record(highestUserId,
+                getFieldId(i), getTypeOfData(i), record[i], documentId)
+            .toMap(highestUserId));
       }
     }
+
+    isImported.value = true;
+    Get.offAllNamed('/Leads');
   }
 }
