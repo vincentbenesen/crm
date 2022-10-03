@@ -20,6 +20,7 @@ const kUserId = 'dVUn9I_CeROfYzKXa';
 // These variable are for styling the text
 const kColorDarkBlue = Color.fromARGB(255, 56, 91, 133);
 const kColorPearlWhite = Color.fromARGB(255, 219, 217, 217);
+const kColorStar = Colors.amber;
 var kLoginTextTitle1 = GoogleFonts.rubik(
     fontSize: 35, color: kColorDarkBlue, fontWeight: FontWeight.bold);
 var kLoginTextTitle2 = GoogleFonts.rubik(

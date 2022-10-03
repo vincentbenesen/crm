@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:crm/constant.dart';
 import 'package:crm/Controllers/record_controller.dart';
@@ -30,7 +31,7 @@ class EditLeads extends StatelessWidget {
               Center(
                 child: Container(
                   width: MediaQuery.of(context).size.width - 20,
-                  height: 690,
+                  height: 800,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   decoration: BoxDecoration(
@@ -39,6 +40,41 @@ class EditLeads extends StatelessWidget {
                   child: Container(
                     child: Column(
                       children: [
+                        //For the ratings
+                        Container(
+                          child: Column(
+                            children: [
+                              Text("Ratings", style: kTextTitle),
+                              const SizedBox(height: 5),
+                              RatingBar.builder(
+                                initialRating: double.parse(
+                                    Get.find<TableController>()
+                                        .getRecordByFieldType(
+                                            "ratings", Get.arguments['records'])
+                                        .data),
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                glow: false,
+                                itemCount: 5,
+                                itemSize: 30,
+                                itemPadding:
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => const Icon(
+                                  Icons.star,
+                                  color: kColorStar,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  Get.find<RecordController>().rating.value =
+                                      rating;
+                                  print(Get.find<RecordController>()
+                                      .rating
+                                      .value);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         // Details
                         Container(
                           child: Column(
@@ -1031,6 +1067,7 @@ class EditLeads extends StatelessWidget {
                             ],
                           ),
                         ),
+                        const SizedBox(height: 20),
                         // Cancel and save button
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -1052,6 +1089,23 @@ class EditLeads extends StatelessWidget {
                                     .validateTextField(
                                         Get.find<RecordController>()
                                             .updateFormKey)) {
+                                  // Change the value of the ratings
+                                  Get.find<TableController>()
+                                          .getRecordByFieldType("ratings",
+                                              Get.arguments['records'])
+                                          .data =
+                                      Get.find<RecordController>()
+                                          .rating
+                                          .value
+                                          .toString();
+
+                                  // Add the record with the rating to the list of records that we are updating
+                                  Get.find<RecordController>()
+                                      .recordsToUpdate
+                                      .add(Get.find<TableController>()
+                                          .getRecordByFieldType("ratings",
+                                              Get.arguments['records']));
+
                                   // Update all the records
                                   Get.find<RecordController>().updateRecord();
 

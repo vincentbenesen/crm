@@ -9,6 +9,7 @@ class MailController extends GetxController {
   final message = Mail().obs;
   GlobalKey<FormState> mailFormKey = GlobalKey<FormState>();
 
+  // This method is for sending an email to the customer
   Future sendMail() async {
     final url = Uri.parse(kPostUrl);
     final response = await http.post(

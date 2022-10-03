@@ -58,6 +58,9 @@ class RecordController extends GetxController {
   // Checks if the excel file is successfully imported to Firebase
   RxBool isImported = false.obs;
 
+  // This variable is managing the rating of a lead
+  RxDouble rating = 0.0.obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -169,6 +172,10 @@ class RecordController extends GetxController {
   void addRecords(Map<String, Record> records) async {
     int highestId = await getHighestUserId();
     highestId++;
+    Record initialRating = Record(highestId, 13, 'ratings', '0');
+
+    // This is to add a record for ratings. As a default a lead will start with 0 rating
+    records.addEntries([MapEntry('ratings', initialRating)]);
 
     // Removes the records with empty data from the list. This is to avoid adding empty records to the firebase.
     records.removeWhere((key, value) => value.data.isEmpty);
@@ -302,6 +309,8 @@ class RecordController extends GetxController {
     );
   }
 
+  // Imports the data from an Excel file to firebase
+  // This method only accept files with an extensiont of 'xls', 'xlsx', 'csv'.
   void importFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom, allowedExtensions: ['xls', 'xlsx', 'csv']);
@@ -316,7 +325,7 @@ class RecordController extends GetxController {
         maxColumn = excel.tables[table]!.maxCols;
         maxRow = excel.tables[table]!.maxRows;
         for (var i = 1; i < maxRow; i++) {
-          for (var j = 0; j < maxColumn; j++) {
+          for (var j = 0; j < maxColumn + 1; j++) {
             try {
               if (recordsMap.containsKey(i)) {
                 recordsMap[i]!
@@ -329,7 +338,12 @@ class RecordController extends GetxController {
               }
             } catch (Exception) {
               if (recordsMap.containsKey(i)) {
-                recordsMap[i]!.add("null");
+                if (j == maxColumn) {
+                  // This is the default rating for the customer which is 0
+                  recordsMap[i]!.add('0');
+                } else {
+                  recordsMap[i]!.add("null");
+                }
               } else {
                 recordsMap.addEntries([
                   MapEntry(i, ["null"])
@@ -341,9 +355,13 @@ class RecordController extends GetxController {
       }
     }
 
+    // After reading the data and inserting all the records in a map
+    // we insert those data using this method
     insertRecordsFromExcel(recordsMap, maxColumn);
   }
 
+  // Get the type of data based on the position of the column
+  // This method is used when we read the data from excel file
   String getTypeOfData(int column) {
     switch (column) {
       case 0:
@@ -372,11 +390,15 @@ class RecordController extends GetxController {
         return 'type';
       case 12:
         return 'comments';
+      case 13:
+        return 'ratings';
       default:
         return '';
     }
   }
 
+  // Get the field id based on the position of the column
+  // This method is used when we read the data from excel file
   int getFieldId(int column) {
     switch (column) {
       case 0:
@@ -405,18 +427,21 @@ class RecordController extends GetxController {
         return 11;
       case 12:
         return 12;
+      case 13:
+        return 13;
       default:
         return 0;
     }
   }
 
+  // This method allows us to insert all the records to Firebase
   void insertRecordsFromExcel(
       Map<int, List<String>> records, int maxColumn) async {
     int highestUserId = await getHighestUserId();
     String documentId = '';
     for (var record in records.values) {
       highestUserId++;
-      for (var i = 0; i < maxColumn; i++) {
+      for (var i = 0; i < maxColumn + 1; i++) {
         documentId = collectionReference.doc().id;
         collectionReference.doc(documentId).set(Record(highestUserId,
                 getFieldId(i), getTypeOfData(i), record[i], documentId)

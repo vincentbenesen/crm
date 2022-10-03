@@ -55,13 +55,9 @@ class Leads extends StatelessWidget {
                                         horizontal: 10, vertical: 20),
                                     suffixIcon: InkWell(
                                         onTap: () {
-                                          // if (Get.find<TableController>()
-                                          //     .matchesName(
-                                          //         snapshot.data as List<Record>,
-                                          //         Get.find<TableController>()
-                                          //             .searchController
-                                          //             .text)
-                                          //     .isNotEmpty) {
+                                          // Go to searchLeads page
+                                          // It also passed some data from lead to searchLeads page
+                                          // These data are the searched lead/user
                                           Get.offAllNamed('/SearchedLeads',
                                               arguments: {
                                                 'searchedResults': Get.find<
@@ -82,7 +78,6 @@ class Leads extends StatelessWidget {
                                                 'allLeads': snapshot.data
                                                     as List<Record>
                                               });
-                                          // }
                                         },
                                         child: Icon(Icons.search)),
                                     hintText: 'Search...'),
@@ -112,6 +107,7 @@ class Leads extends StatelessWidget {
                                 Container(
                                   child: Row(
                                     children: [
+                                      // This button is for importing the data from the excel to firebase
                                       ElevatedButton(
                                         onPressed: () {
                                           Get.find<RecordController>()

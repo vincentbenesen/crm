@@ -1,26 +1,27 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:crm/Controllers/mail_controller.dart';
-import 'package:crm/Widgets/custom_AppBar.dart';
-import 'package:crm/Widgets/navbar.dart';
-import 'package:crm/constant.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import 'package:crm/constant.dart';
 import '../Controllers/log_controller.dart';
 import '../Controllers/record_controller.dart';
+import 'package:crm/Controllers/mail_controller.dart';
 import '../Controllers/table_controller.dart';
+import 'package:crm/Widgets/navbar.dart';
+import 'package:crm/Widgets/custom_AppBar.dart';
 
 class LeadDetails extends StatelessWidget {
-  // final List<Record> records;
   const LeadDetails({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     return Scaffold(
       appBar: CustomAppbar(),
       drawer: Navbar(),
@@ -36,7 +37,7 @@ class LeadDetails extends StatelessWidget {
                   // This container is where all three buttons are (Edit, Delete, and Go Back) and Contact Information of the Lead
                   Container(
                     width: (MediaQuery.of(context).size.width / 2) - 15,
-                    height: constraints.maxWidth > 1030 ? 110 : 160,
+                    height: constraints.maxWidth > 1300 ? 110 : 180,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
@@ -46,14 +47,14 @@ class LeadDetails extends StatelessWidget {
                         // This container is where all three buttons are (Edit, Delete, and Go Back)
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          height: constraints.maxWidth >= 1030 ? 50 : 80,
+                          height: constraints.maxWidth >= 1300 ? 50 : 100,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 5),
                           decoration: BoxDecoration(
                             color: kColorPearlWhite,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: constraints.maxWidth >= 1030
+                          child: constraints.maxWidth >= 1300
                               ? Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -85,6 +86,34 @@ class LeadDetails extends StatelessWidget {
                                           ],
                                         ),
                                       ),
+                                      // For the ratings
+                                      Container(
+                                        child: RatingBar.builder(
+                                          initialRating: double.parse(
+                                              Get.find<TableController>()
+                                                  .getRecordByFieldType(
+                                                      "ratings",
+                                                      Get.arguments['records'])
+                                                  .data),
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemSize: 30,
+                                          itemPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 4.0),
+                                          itemBuilder: (context, _) =>
+                                              const Icon(
+                                            Icons.star,
+                                            color: kColorStar,
+                                          ),
+                                          ignoreGestures: true,
+                                          onRatingUpdate: (rating) {
+                                            print(rating);
+                                          },
+                                        ),
+                                      ),
+                                      // For Edit, Delete, and Go Back button
                                       Container(
                                         child: Row(
                                           children: [
@@ -183,6 +212,27 @@ class LeadDetails extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 3),
+                                  // For the ratings
+                                  Container(
+                                      child: RatingBar.builder(
+                                    initialRating: 3.3,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemSize: 20,
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: kColorStar,
+                                    ),
+                                    ignoreGestures: true,
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
+                                  )),
+                                  const SizedBox(height: 3),
+                                  // For Edit, Delete, and Go Back button
                                   Container(
                                     child: Row(
                                       mainAxisAlignment:
@@ -260,7 +310,7 @@ class LeadDetails extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           color: Colors.white,
-                          child: constraints.maxWidth > 1030
+                          child: constraints.maxWidth >= 1300
                               ? Row(
                                   children: [
                                     Column(
@@ -427,7 +477,7 @@ class LeadDetails extends StatelessWidget {
                   // This container is for adding the history logs. This is not yet implemented.
                   Container(
                     width: (MediaQuery.of(context).size.width / 2) - 15,
-                    height: constraints.maxWidth >= 1030 ? 110 : 160,
+                    height: constraints.maxWidth >= 1300 ? 110 : 180,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     decoration: BoxDecoration(
@@ -661,7 +711,7 @@ class LeadDetails extends StatelessWidget {
                                     )),
                                   ),
                                   child: Text(
-                                    "Details",
+                                    "Personal Information",
                                     style: kLeadDetailsTextH1,
                                   ),
                                 ),
@@ -1435,6 +1485,59 @@ class LeadDetails extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
+              // This container is for additional information like How the lead finds the company,
+              // What type of unit they want, and their comments
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // This Flexible is for the Additionall Information like how the lead find the company
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      height: 500,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                color: kColorDarkBlue,
+                                width: 5,
+                              )),
+                            ),
+                            child: Text(
+                              "Additional Information",
+                              style: kLeadDetailsTextH1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  // This Flexible is for the history of the Logs
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      height: 500,
+                      width: (MediaQuery.of(context).size.width / 3) - 28,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           );
         }),
