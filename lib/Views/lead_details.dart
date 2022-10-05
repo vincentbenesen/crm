@@ -37,7 +37,7 @@ class LeadDetails extends StatelessWidget {
                   // This container is where all three buttons are (Edit, Delete, and Go Back) and Contact Information of the Lead
                   Container(
                     width: (MediaQuery.of(context).size.width / 2) - 15,
-                    height: constraints.maxWidth > 1300 ? 110 : 180,
+                    height: constraints.maxWidth > 1600 ? 120 : 180,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(5),
@@ -47,14 +47,14 @@ class LeadDetails extends StatelessWidget {
                         // This container is where all three buttons are (Edit, Delete, and Go Back)
                         Container(
                           width: MediaQuery.of(context).size.width,
-                          height: constraints.maxWidth >= 1300 ? 50 : 100,
+                          height: constraints.maxWidth >= 1600 ? 50 : 100,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 5),
                           decoration: BoxDecoration(
                             color: kColorPearlWhite,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: constraints.maxWidth >= 1300
+                          child: constraints.maxWidth >= 1600
                               ? Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -108,9 +108,7 @@ class LeadDetails extends StatelessWidget {
                                             color: kColorStar,
                                           ),
                                           ignoreGestures: true,
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
+                                          onRatingUpdate: (rating) {},
                                         ),
                                       ),
                                       // For Edit, Delete, and Go Back button
@@ -215,7 +213,11 @@ class LeadDetails extends StatelessWidget {
                                   // For the ratings
                                   Container(
                                       child: RatingBar.builder(
-                                    initialRating: 3.3,
+                                    initialRating: double.parse(
+                                        Get.find<TableController>()
+                                            .getRecordByFieldType("ratings",
+                                                Get.arguments['records'])
+                                            .data),
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
                                     itemCount: 5,
@@ -310,7 +312,7 @@ class LeadDetails extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           color: Colors.white,
-                          child: constraints.maxWidth >= 1300
+                          child: constraints.maxWidth >= 1600
                               ? Row(
                                   children: [
                                     Column(
@@ -327,6 +329,7 @@ class LeadDetails extends StatelessWidget {
                                       children: [
                                         Text("Account Name",
                                             style: kLeadDetailsTextH3),
+                                        const SizedBox(height: 5),
                                         Text(
                                             "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
                                             style: kLeadDetailsTextH4),
@@ -339,6 +342,7 @@ class LeadDetails extends StatelessWidget {
                                       children: [
                                         Text("Phone",
                                             style: kLeadDetailsTextH3),
+                                        const SizedBox(height: 5),
                                         Text(
                                           Get.find<TableController>()
                                                       .getRecordByFieldType(
@@ -362,8 +366,44 @@ class LeadDetails extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Text("Activity Count",
+                                            style: kLeadDetailsTextH3),
+                                        RichText(
+                                          text: TextSpan(
+                                            style: kLeadDetailsTextH4,
+                                            children: const [
+                                              WidgetSpan(
+                                                child: Icon(Icons
+                                                    .vertical_align_bottom),
+                                              ),
+                                              TextSpan(text: ': 0 |'),
+                                              WidgetSpan(
+                                                child: Icon(
+                                                    Icons.vertical_align_top),
+                                              ),
+                                              TextSpan(text: ': 0 |'),
+                                              WidgetSpan(
+                                                child:
+                                                    Icon(Icons.phone_in_talk),
+                                              ),
+                                              TextSpan(text: ': 0 |'),
+                                              WidgetSpan(
+                                                child: Icon(Icons.person),
+                                              ),
+                                              TextSpan(text: ': 0'),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(width: 20),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
                                         Text("Email",
                                             style: kLeadDetailsTextH3),
+                                        const SizedBox(height: 5),
                                         Text(
                                             Get.find<TableController>()
                                                         .getRecordByFieldType(
@@ -477,7 +517,7 @@ class LeadDetails extends StatelessWidget {
                   // This container is for adding the history logs. This is not yet implemented.
                   Container(
                     width: (MediaQuery.of(context).size.width / 2) - 15,
-                    height: constraints.maxWidth >= 1300 ? 110 : 180,
+                    height: constraints.maxWidth >= 1600 ? 120 : 180,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
                     decoration: BoxDecoration(
@@ -520,13 +560,6 @@ class LeadDetails extends StatelessWidget {
                                             .currentSection
                                             .value = "call";
                                       },
-                                      // color: Get.find<LogController>()
-                                      //             .currentSection
-                                      //             .value ==
-                                      //         'call'
-                                      //     ? Colors.white
-                                      //     : kColorPearlWhite,
-                                      // height: 40,
                                       style: TextButton.styleFrom(
                                           fixedSize: Size.fromHeight(50),
                                           shape: const RoundedRectangleBorder(
@@ -539,21 +572,49 @@ class LeadDetails extends StatelessWidget {
                                                       'call'
                                                   ? Colors.white
                                                   : kColorPearlWhite),
-                                      child: Text(
-                                        "Log a call",
-                                        style: constraints.maxWidth >= 880
-                                            ? (Get.find<LogController>()
-                                                        .currentSection
-                                                        .value ==
-                                                    'call'
-                                                ? kLeadDetailsTextH4
-                                                : kLeadDetailsTextH3)
-                                            : (Get.find<LogController>()
-                                                        .currentSection
-                                                        .value ==
-                                                    'call'
-                                                ? kLeadDetailsTextH6
-                                                : kLeadDetailsTextH5),
+                                      child:
+                                          // Text(
+                                          //   "Log a call",
+                                          //   style: constraints.maxWidth >= 880
+                                          //       ? (Get.find<LogController>()
+                                          //                   .currentSection
+                                          //                   .value ==
+                                          //               'call'
+                                          //           ? kLeadDetailsTextH4
+                                          //           : kLeadDetailsTextH3)
+                                          //       : (Get.find<LogController>()
+                                          //                   .currentSection
+                                          //                   .value ==
+                                          //               'call'
+                                          //           ? kLeadDetailsTextH6
+                                          //           : kLeadDetailsTextH5),
+                                          // ),
+                                          RichText(
+                                        text: TextSpan(
+                                          style: constraints.maxWidth >= 880
+                                              ? (Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'call'
+                                                  ? kLeadDetailsTextH4
+                                                  : kLeadDetailsTextH3)
+                                              : (Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'call'
+                                                  ? kLeadDetailsTextH6
+                                                  : kLeadDetailsTextH5),
+                                          children: const [
+                                            WidgetSpan(
+                                              child: Icon(
+                                                Icons.phone,
+                                                color: Colors.black,
+                                                size: 20,
+                                              ),
+                                            ),
+                                            TextSpan(text: ' Log a call'),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -561,20 +622,13 @@ class LeadDetails extends StatelessWidget {
                                 Obx(
                                   () => SizedBox(
                                     width:
-                                        constraints.maxWidth >= 880 ? 130 : 70,
+                                        constraints.maxWidth >= 880 ? 150 : 70,
                                     child: TextButton(
                                       onPressed: () {
                                         Get.find<LogController>()
                                             .currentSection
                                             .value = "meeting";
                                       },
-                                      // color: Get.find<LogController>()
-                                      //             .currentSection
-                                      //             .value ==
-                                      //         'meeting'
-                                      //     ? Colors.white
-                                      //     : kColorPearlWhite,
-                                      // height: 40,
                                       style: TextButton.styleFrom(
                                           fixedSize: Size.fromHeight(50),
                                           shape: const RoundedRectangleBorder(
@@ -587,21 +641,49 @@ class LeadDetails extends StatelessWidget {
                                                       'meeting'
                                                   ? Colors.white
                                                   : kColorPearlWhite),
-                                      child: Text(
-                                        "Log a meeting",
-                                        style: constraints.maxWidth >= 880
-                                            ? (Get.find<LogController>()
-                                                        .currentSection
-                                                        .value ==
-                                                    'meeting'
-                                                ? kLeadDetailsTextH4
-                                                : kLeadDetailsTextH3)
-                                            : (Get.find<LogController>()
-                                                        .currentSection
-                                                        .value ==
-                                                    'meeting'
-                                                ? kLeadDetailsTextH6
-                                                : kLeadDetailsTextH5),
+                                      child:
+                                          // Text(
+                                          //   "Log a meeting",
+                                          //   style: constraints.maxWidth >= 880
+                                          //       ? (Get.find<LogController>()
+                                          //                   .currentSection
+                                          //                   .value ==
+                                          //               'meeting'
+                                          //           ? kLeadDetailsTextH4
+                                          //           : kLeadDetailsTextH3)
+                                          //       : (Get.find<LogController>()
+                                          //                   .currentSection
+                                          //                   .value ==
+                                          //               'meeting'
+                                          //           ? kLeadDetailsTextH6
+                                          //           : kLeadDetailsTextH5),
+                                          // ),
+                                          RichText(
+                                        text: TextSpan(
+                                          style: constraints.maxWidth >= 880
+                                              ? (Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'meeting'
+                                                  ? kLeadDetailsTextH4
+                                                  : kLeadDetailsTextH3)
+                                              : (Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'meeting'
+                                                  ? kLeadDetailsTextH6
+                                                  : kLeadDetailsTextH5),
+                                          children: const [
+                                            WidgetSpan(
+                                              child: Icon(
+                                                Icons.event,
+                                                color: Colors.black,
+                                                size: 20,
+                                              ),
+                                            ),
+                                            TextSpan(text: ' Log a meeting'),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -616,13 +698,6 @@ class LeadDetails extends StatelessWidget {
                                             .currentSection
                                             .value = "email";
                                       },
-                                      // color: Get.find<LogController>()
-                                      //             .currentSection
-                                      //             .value ==
-                                      //         'email'
-                                      //     ? Colors.white
-                                      //     : kColorPearlWhite,
-                                      // height: 40,
                                       style: TextButton.styleFrom(
                                           fixedSize: Size.fromHeight(50),
                                           shape: const RoundedRectangleBorder(
@@ -635,21 +710,49 @@ class LeadDetails extends StatelessWidget {
                                                       'email'
                                                   ? Colors.white
                                                   : kColorPearlWhite),
-                                      child: Text(
-                                        "email",
-                                        style: constraints.maxWidth >= 880
-                                            ? (Get.find<LogController>()
-                                                        .currentSection
-                                                        .value ==
-                                                    'email'
-                                                ? kLeadDetailsTextH4
-                                                : kLeadDetailsTextH3)
-                                            : (Get.find<LogController>()
-                                                        .currentSection
-                                                        .value ==
-                                                    'email'
-                                                ? kLeadDetailsTextH6
-                                                : kLeadDetailsTextH5),
+                                      child:
+                                          //  Text(
+                                          //   "email",
+                                          //   style: constraints.maxWidth >= 880
+                                          //       ? (Get.find<LogController>()
+                                          //                   .currentSection
+                                          //                   .value ==
+                                          //               'email'
+                                          //           ? kLeadDetailsTextH4
+                                          //           : kLeadDetailsTextH3)
+                                          //       : (Get.find<LogController>()
+                                          //                   .currentSection
+                                          //                   .value ==
+                                          //               'email'
+                                          //           ? kLeadDetailsTextH6
+                                          //           : kLeadDetailsTextH5),
+                                          // ),
+                                          RichText(
+                                        text: TextSpan(
+                                          style: constraints.maxWidth >= 880
+                                              ? (Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'email'
+                                                  ? kLeadDetailsTextH4
+                                                  : kLeadDetailsTextH3)
+                                              : (Get.find<LogController>()
+                                                          .currentSection
+                                                          .value ==
+                                                      'email'
+                                                  ? kLeadDetailsTextH6
+                                                  : kLeadDetailsTextH5),
+                                          children: const [
+                                            WidgetSpan(
+                                              child: Icon(
+                                                Icons.email,
+                                                color: Colors.black,
+                                                size: 20,
+                                              ),
+                                            ),
+                                            TextSpan(text: ' email'),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -658,13 +761,18 @@ class LeadDetails extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Obx(() => Get.find<LogController>()
-                                  .showLogContent(Get.arguments['records'])),
-                            ],
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 7),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Obx(() => Get.find<LogController>()
+                                    .showLogContent(Get.arguments['records'],
+                                        MediaQuery.of(context).size.width)),
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -1503,23 +1611,114 @@ class LeadDetails extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                color: kColorDarkBlue,
-                                width: 5,
-                              )),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Additinal Information Title
+                            Container(
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                  color: kColorDarkBlue,
+                                  width: 5,
+                                )),
+                              ),
+                              child: Text(
+                                "Additional Information",
+                                style: kLeadDetailsTextH1,
+                              ),
                             ),
-                            child: Text(
-                              "Additional Information",
-                              style: kLeadDetailsTextH1,
+                            const SizedBox(height: 20),
+                            // This is for HowFindUs and PreferredUnitType
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    initialValue: Get.find<TableController>()
+                                        .getRecordByFieldType("howFoundUs",
+                                            Get.arguments['records'])
+                                        .data,
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'How find us',
+                                      labelStyle: kEditLeadLabelStyle1,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: kColorDarkBlue),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: kColorDarkBlue),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: kColorDarkBlue),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                Expanded(
+                                  child: TextFormField(
+                                    initialValue: Get.find<TableController>()
+                                        .getRecordByFieldType(
+                                            "type", Get.arguments['records'])
+                                        .data,
+                                    readOnly: true,
+                                    decoration: InputDecoration(
+                                      labelText: 'Preffered Unit Type',
+                                      labelStyle: kEditLeadLabelStyle1,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: kColorDarkBlue),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: kColorDarkBlue),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: kColorDarkBlue),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 20),
+                            // This is for the comments of the
+                            TextFormField(
+                              readOnly: true,
+                              maxLines: 8,
+                              initialValue: Get.find<TableController>()
+                                  .getRecordByFieldType(
+                                      'comments', Get.arguments['records'])
+                                  .data,
+                              decoration: InputDecoration(
+                                labelText: 'Comments',
+                                labelStyle: kEditLeadLabelStyle1,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      width: 1, color: kColorDarkBlue),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      width: 1, color: kColorDarkBlue),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            //
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -1537,7 +1736,8 @@ class LeadDetails extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
+              const SizedBox(height: 10),
             ],
           );
         }),

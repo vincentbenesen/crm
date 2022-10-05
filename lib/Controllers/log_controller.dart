@@ -24,10 +24,83 @@ class LogController extends GetxController {
   }
 
   // Show the form depending on what type of logs (log a call, log a meeting, send an email)
-  Widget showLogContent(List<Record> records) {
+  Widget showLogContent(List<Record> records, double screenWidth) {
     switch (currentSection.value) {
       case 'call':
-        return Text('');
+        if (screenWidth >= 1600) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 2,
+                child: SizedBox(
+                  height: 35,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Recap your call...',
+                      labelStyle: kEditLeadLabelStyle2,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: kColorDarkBlue),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: kColorDarkBlue),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              SizedBox(
+                height: 35,
+                child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: kColorDarkBlue),
+                    child: Text('Add', style: kButtonText3)),
+              ),
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 35,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Recap your call...',
+                    labelStyle: kEditLeadLabelStyle2,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(width: 1, color: kColorDarkBlue),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(width: 1, color: kColorDarkBlue),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 35,
+                child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: kColorDarkBlue),
+                    child: Text('Add', style: kButtonText3)),
+              ),
+            ],
+          );
+        }
+
       case 'meeting':
         return Text('');
       case 'email':

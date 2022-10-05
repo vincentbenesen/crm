@@ -45,6 +45,9 @@ var kLeadDetailsTextH6 = GoogleFonts.rubik(
 );
 var kEditLeadTextH1 = GoogleFonts.rubik(fontSize: 25, color: Colors.black);
 var kEditLeadTextH2 = GoogleFonts.rubik(fontSize: 18, color: Colors.black);
+var kEditLeadLabelStyle1 = const TextStyle(
+    color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25);
+var kEditLeadLabelStyle2 = const TextStyle(color: Colors.black, fontSize: 15);
 var kPanelTextH1 = GoogleFonts.rubik(fontSize: 30, color: Colors.black);
 var kNavigationText = GoogleFonts.rubik(fontSize: 18, color: kColorDarkBlue);
 var kUserText = GoogleFonts.rubik(fontSize: 14, color: kColorDarkBlue);
