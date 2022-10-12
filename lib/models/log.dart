@@ -1,17 +1,25 @@
 class Log {
   late int userId;
   late DateTime date;
-  late String typeOfAction;
+  late String typeOfData;
   late String data;
+  late String docId;
 
-  Log(this.userId, this.date, this.typeOfAction, this.data);
+  Log(this.userId, this.date, this.typeOfData, this.data, [this.docId = '']);
 
   Map<String, dynamic> toMap() {
     return {
       'userId': userId,
       'date': date,
-      'typeOfAction': typeOfAction,
+      'typeOfData': typeOfData,
       'data': data,
+      'docId': docId,
     };
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'Record{userId: $userId, date: $date, type: $typeOfData, data: $data, documentId: $docId}';
   }
 }

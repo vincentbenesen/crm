@@ -43,6 +43,9 @@ var kLeadDetailsTextH6 = GoogleFonts.rubik(
   fontSize: 11,
   color: kColorDarkBlue,
 );
+var kLeadDetailsActivitiesTitle = GoogleFonts.rubik(
+    fontSize: 15, color: kColorDarkBlue, fontWeight: FontWeight.bold);
+
 var kEditLeadTextH1 = GoogleFonts.rubik(fontSize: 25, color: Colors.black);
 var kEditLeadTextH2 = GoogleFonts.rubik(fontSize: 18, color: Colors.black);
 var kEditLeadLabelStyle1 = const TextStyle(

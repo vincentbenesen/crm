@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crm/Controllers/log_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -119,6 +120,10 @@ class TableController extends GetxController {
                       getUserIdByFieldTypeAndData("lastName",
                           data.toString().split(" ").last, records)),
                 });
+
+                Get.find<LogController>().userId.value =
+                    getUserIdByFieldTypeAndData(
+                        "lastName", data.toString().split(" ").last, records);
               }
             },
             child: Text(data.toString()))))

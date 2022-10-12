@@ -1,3 +1,5 @@
+import 'package:crm/Models/log.dart';
+import 'package:crm/services/auth_service.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -368,30 +370,41 @@ class LeadDetails extends StatelessWidget {
                                       children: [
                                         Text("Activity Count",
                                             style: kLeadDetailsTextH3),
-                                        RichText(
-                                          text: TextSpan(
-                                            style: kLeadDetailsTextH4,
-                                            children: const [
-                                              WidgetSpan(
-                                                child: Icon(Icons
-                                                    .vertical_align_bottom),
-                                              ),
-                                              TextSpan(text: ': 0 |'),
-                                              WidgetSpan(
-                                                child: Icon(
-                                                    Icons.vertical_align_top),
-                                              ),
-                                              TextSpan(text: ': 0 |'),
-                                              WidgetSpan(
-                                                child:
-                                                    Icon(Icons.phone_in_talk),
-                                              ),
-                                              TextSpan(text: ': 0 |'),
-                                              WidgetSpan(
-                                                child: Icon(Icons.person),
-                                              ),
-                                              TextSpan(text: ': 0'),
-                                            ],
+                                        // To keep track the number of interaction
+                                        Obx(
+                                          () => RichText(
+                                            text: TextSpan(
+                                              style: kLeadDetailsTextH4,
+                                              children: [
+                                                const WidgetSpan(
+                                                  child: Icon(Icons
+                                                      .vertical_align_bottom),
+                                                ),
+                                                TextSpan(
+                                                    text:
+                                                        ": ${Get.find<LogController>().receivedEmailCount.value} |"),
+                                                const WidgetSpan(
+                                                  child: Icon(
+                                                      Icons.vertical_align_top),
+                                                ),
+                                                TextSpan(
+                                                    text:
+                                                        ': ${Get.find<LogController>().receivedEmailCount.value} |'),
+                                                const WidgetSpan(
+                                                  child:
+                                                      Icon(Icons.phone_in_talk),
+                                                ),
+                                                TextSpan(
+                                                    text:
+                                                        ': ${Get.find<LogController>().callCount.value} |'),
+                                                const WidgetSpan(
+                                                  child: Icon(Icons.person),
+                                                ),
+                                                TextSpan(
+                                                    text:
+                                                        ': ${Get.find<LogController>().meetingCount.value} '),
+                                              ],
+                                            ),
                                           ),
                                         )
                                       ],
@@ -769,8 +782,13 @@ class LeadDetails extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Obx(() => Get.find<LogController>()
-                                    .showLogContent(Get.arguments['records'],
-                                        MediaQuery.of(context).size.width)),
+                                    .showLogContent(
+                                        Get.arguments['records'],
+                                        MediaQuery.of(context).size.width,
+                                        Get.find<TableController>()
+                                            .getRecordByFieldType('firstName',
+                                                Get.arguments['records'])
+                                            .userId)),
                               ],
                             ),
                           )
@@ -1732,6 +1750,60 @@ class LeadDetails extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 15),
+                          Text('Activities', style: kTextTitle),
+                          const SizedBox(height: 15),
+                          StreamBuilder(
+                              stream: Stream.fromFuture(
+                                  Get.find<LogController>().getAllLogs(
+                                      Get.find<TableController>()
+                                          .getRecordByFieldType(
+                                              "type", Get.arguments['records'])
+                                          .userId)),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.done &&
+                                    snapshot.hasData) {
+                                  return Expanded(
+                                    child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            (snapshot.data as List<Log>).length,
+                                        itemBuilder: (context, count) {
+                                          return ListTile(
+                                            leading: Get.find<LogController>()
+                                                .getIcon((snapshot.data
+                                                        as List<Log>)[count]
+                                                    .typeOfData),
+                                            title: Text(
+                                              (snapshot.data
+                                                      as List<Log>)[count]
+                                                  .data,
+                                              style:
+                                                  kLeadDetailsActivitiesTitle,
+                                            ),
+                                            subtitle: Text(
+                                                "${AuthService.instance.user.value!.email.toString()} ${Get.find<LogController>().getSubtitle((snapshot.data as List<Log>)[count].typeOfData)}"),
+                                            trailing: Text(
+                                                "${(snapshot.data as List<Log>)[count].date}"),
+                                          );
+                                        }),
+                                  );
+                                } else {
+                                  return Container(
+                                    child: const Center(
+                                      child: CircularProgressIndicator(
+                                        value: 10,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              })
+                        ],
                       ),
                     ),
                   ),
