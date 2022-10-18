@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:crm/constant.dart';
 import 'package:crm/services/auth_service.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+  SignUpPage({Key? key}) : super(key: key);
 
   var authController = Get.find<AuthService>();
 
@@ -39,11 +39,11 @@ class LoginPage extends StatelessWidget {
                 Text("Blueprint Platform", style: kLoginTextTitle1),
                 const SizedBox(height: 30),
                 Text(
-                  "Login",
+                  "Sign Up",
                   style: kLoginTextTitle2,
                 ),
                 Text(
-                  "Please your Email and Password",
+                  "Register below with your details",
                   style: kLoginTextSubTitle,
                 ),
                 const SizedBox(height: 30),
@@ -83,21 +83,20 @@ class LoginPage extends StatelessWidget {
                 // Log in button
                 ElevatedButton(
                   onPressed: () {
-                    authController.signIn(context);
+                    authController.signUp(context);
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                  // color: Colors.white,
-                  child: Text("Login", style: kButtonText2),
+                  child: Text("Sign Up", style: kButtonText2),
                 ),
 
                 const SizedBox(height: 20),
                 InkWell(
                   onTap: () {
-                    Get.offAndToNamed("/SignUp");
+                    Get.offAndToNamed("/Login");
                   },
                   child: Text(
-                    "Sign Up",
+                    "Log In",
                     style: kLoginTextSubTitle,
                   ),
                 )

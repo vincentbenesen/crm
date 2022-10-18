@@ -12,7 +12,15 @@ import 'package:crm/Widgets/custom_AppBar.dart';
 import '../Models/record.dart';
 
 class SearchedLeads extends StatelessWidget {
-  const SearchedLeads({super.key});
+  SearchedLeads({super.key});
+
+  // These variables are for controllers
+  var recordController = Get.find<RecordController>();
+  var tableController = Get.find<TableController>();
+
+  // This variable is used to access the argument passed from Leads page.
+  var argumentLeadList = Get.arguments['allLeads'];
+  var argumentSearchedResultList = Get.arguments['searchedResults'];
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +54,7 @@ class SearchedLeads extends StatelessWidget {
                     Container(
                       width: 500,
                       child: TextField(
-                        controller:
-                            Get.find<TableController>().searchController,
+                        controller: tableController.searchController,
                         decoration: InputDecoration(
                             hoverColor: kColorDarkBlue,
                             contentPadding: const EdgeInsets.symmetric(
@@ -56,16 +63,13 @@ class SearchedLeads extends StatelessWidget {
                                 onTap: () {
                                   // When the searched icon is clicked, it searches names
                                   Get.offAllNamed('/SearchedLeads', arguments: {
-                                    'searchedResults':
-                                        Get.find<TableController>().result(
-                                            Get.arguments['allLeads'],
-                                            Get.find<TableController>()
-                                                .matchesName(
-                                                    Get.arguments['allLeads'],
-                                                    Get.find<TableController>()
-                                                        .searchController
-                                                        .text)),
-                                    'allLeads': Get.arguments['allLeads']
+                                    'searchedResults': tableController.result(
+                                        argumentLeadList,
+                                        tableController.matchesName(
+                                            argumentLeadList,
+                                            tableController
+                                                .searchController.text)),
+                                    'allLeads': argumentLeadList
                                   });
                                 },
                                 child: Icon(Icons.search)),
@@ -81,7 +85,7 @@ class SearchedLeads extends StatelessWidget {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Get.arguments['searchedResults'];
+                                  argumentSearchedResultList;
                                   Get.offAllNamed("/Panel");
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -98,7 +102,7 @@ class SearchedLeads extends StatelessWidget {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Get.find<RecordController>().importFile();
+                                  recordController.importFile();
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
@@ -114,7 +118,7 @@ class SearchedLeads extends StatelessWidget {
                   ]),
             ),
             // Checks if theres a result from the search
-            (Get.arguments['searchedResults'] as List<Record>).isEmpty
+            (argumentSearchedResultList as List<Record>).isEmpty
                 ? Container(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Center(
@@ -129,15 +133,14 @@ class SearchedLeads extends StatelessWidget {
                       child: DataTable(
                         columnSpacing: 10,
                         dataRowHeight: 80,
-                        columns: Get.find<TableController>().getColumns(
-                            Get.find<TableController>().leadsColumns,
-                            Get.arguments['searchedResults'],
+                        columns: tableController.getColumns(
+                            tableController.leadsColumns,
+                            argumentSearchedResultList,
                             context),
-                        rows: Get.find<TableController>()
-                            .getRows(Get.arguments['searchedResults']),
+                        rows:
+                            tableController.getRows(argumentSearchedResultList),
                         sortColumnIndex: 0,
-                        sortAscending:
-                            Get.find<TableController>().isAscending.value,
+                        sortAscending: tableController.isAscending.value,
                       ),
                     ),
                   ),

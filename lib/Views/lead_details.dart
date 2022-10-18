@@ -9,6 +9,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:crm/constant.dart';
+import 'package:intl/intl.dart';
 import '../Controllers/log_controller.dart';
 import '../Controllers/record_controller.dart';
 import 'package:crm/Controllers/mail_controller.dart';
@@ -17,9 +18,18 @@ import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/Widgets/custom_AppBar.dart';
 
 class LeadDetails extends StatelessWidget {
-  const LeadDetails({
+  LeadDetails({
     Key? key,
   }) : super(key: key);
+
+  // These variables are for controllers
+  var recordController = Get.find<RecordController>();
+  var tableController = Get.find<TableController>();
+  var logController = Get.find<LogController>();
+  var mailController = Get.find<MailController>();
+
+  // This variable is used to access the argument passed from Leads page.
+  var argumentRecordList = Get.arguments['records'];
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +89,7 @@ class LeadDetails extends StatelessWidget {
                                                   style: kLeadDetailsTextH3,
                                                 ),
                                                 Text(
-                                                  "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                                                  // '',
+                                                  "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
                                                   style: kLeadDetailsTextH2,
                                                 )
                                               ],
@@ -92,10 +101,10 @@ class LeadDetails extends StatelessWidget {
                                       Container(
                                         child: RatingBar.builder(
                                           initialRating: double.parse(
-                                              Get.find<TableController>()
+                                              tableController
                                                   .getRecordByFieldType(
                                                       "ratings",
-                                                      Get.arguments['records'])
+                                                      argumentRecordList)
                                                   .data),
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
@@ -121,8 +130,8 @@ class LeadDetails extends StatelessWidget {
                                               onPressed: () {
                                                 Get.offAllNamed("/EditLeads",
                                                     arguments: {
-                                                      'records': Get
-                                                          .arguments['records'],
+                                                      'records':
+                                                          argumentRecordList,
                                                     });
                                               },
                                               style: TextButton.styleFrom(
@@ -150,10 +159,9 @@ class LeadDetails extends StatelessWidget {
                                                       kLeadDetailsTextH3,
                                                   btnCancelOnPress: () {},
                                                   btnOkOnPress: () {
-                                                    Get.find<RecordController>()
+                                                    recordController
                                                         .deleteRecord(
-                                                            Get.arguments[
-                                                                'records']);
+                                                            argumentRecordList);
 
                                                     Get.offAllNamed("/Leads");
                                                   },
@@ -202,8 +210,7 @@ class LeadDetails extends StatelessWidget {
                                               style: kLeadDetailsTextH3,
                                             ),
                                             Text(
-                                              "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
-                                              // '',
+                                              "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
                                               style: kLeadDetailsTextH2,
                                             )
                                           ],
@@ -215,11 +222,10 @@ class LeadDetails extends StatelessWidget {
                                   // For the ratings
                                   Container(
                                       child: RatingBar.builder(
-                                    initialRating: double.parse(
-                                        Get.find<TableController>()
-                                            .getRecordByFieldType("ratings",
-                                                Get.arguments['records'])
-                                            .data),
+                                    initialRating: double.parse(tableController
+                                        .getRecordByFieldType(
+                                            "ratings", argumentRecordList)
+                                        .data),
                                     direction: Axis.horizontal,
                                     allowHalfRating: true,
                                     itemCount: 5,
@@ -250,8 +256,8 @@ class LeadDetails extends StatelessWidget {
                                             onPressed: () {
                                               Get.offAllNamed("/EditLeads",
                                                   arguments: {
-                                                    'records': Get
-                                                        .arguments['records'],
+                                                    'records':
+                                                        argumentRecordList,
                                                   });
                                             },
                                             style: TextButton.styleFrom(
@@ -270,9 +276,8 @@ class LeadDetails extends StatelessWidget {
                                               : kSmallerButtonSize,
                                           child: TextButton(
                                             onPressed: () {
-                                              Get.find<RecordController>()
-                                                  .deleteRecord(
-                                                      Get.arguments['records']);
+                                              recordController.deleteRecord(
+                                                  argumentRecordList);
 
                                               Get.offAllNamed("/Leads");
                                             },
@@ -333,7 +338,7 @@ class LeadDetails extends StatelessWidget {
                                             style: kLeadDetailsTextH3),
                                         const SizedBox(height: 5),
                                         Text(
-                                            "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                                            "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
                                             style: kLeadDetailsTextH4),
                                       ],
                                     ),
@@ -346,67 +351,14 @@ class LeadDetails extends StatelessWidget {
                                             style: kLeadDetailsTextH3),
                                         const SizedBox(height: 5),
                                         Text(
-                                          Get.find<TableController>()
-                                                      .getRecordByFieldType(
-                                                          "phoneNumber",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data ==
-                                                  'null'
-                                              ? "N/A"
-                                              : Get.find<TableController>()
+                                          recordController.isStringDataNull(
+                                              tableController
                                                   .getRecordByFieldType(
                                                       "phoneNumber",
-                                                      Get.arguments['records'])
-                                                  .data,
+                                                      argumentRecordList)
+                                                  .data),
                                           style: kLeadDetailsTextH4,
                                         ),
-                                      ],
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Activity Count",
-                                            style: kLeadDetailsTextH3),
-                                        // To keep track the number of interaction
-                                        Obx(
-                                          () => RichText(
-                                            text: TextSpan(
-                                              style: kLeadDetailsTextH4,
-                                              children: [
-                                                const WidgetSpan(
-                                                  child: Icon(Icons
-                                                      .vertical_align_bottom),
-                                                ),
-                                                TextSpan(
-                                                    text:
-                                                        ": ${Get.find<LogController>().receivedEmailCount.value} |"),
-                                                const WidgetSpan(
-                                                  child: Icon(
-                                                      Icons.vertical_align_top),
-                                                ),
-                                                TextSpan(
-                                                    text:
-                                                        ': ${Get.find<LogController>().receivedEmailCount.value} |'),
-                                                const WidgetSpan(
-                                                  child:
-                                                      Icon(Icons.phone_in_talk),
-                                                ),
-                                                TextSpan(
-                                                    text:
-                                                        ': ${Get.find<LogController>().callCount.value} |'),
-                                                const WidgetSpan(
-                                                  child: Icon(Icons.person),
-                                                ),
-                                                TextSpan(
-                                                    text:
-                                                        ': ${Get.find<LogController>().meetingCount.value} '),
-                                              ],
-                                            ),
-                                          ),
-                                        )
                                       ],
                                     ),
                                     const SizedBox(width: 20),
@@ -418,20 +370,12 @@ class LeadDetails extends StatelessWidget {
                                             style: kLeadDetailsTextH3),
                                         const SizedBox(height: 5),
                                         Text(
-                                            Get.find<TableController>()
-                                                        .getRecordByFieldType(
-                                                            "email",
-                                                            Get.arguments[
-                                                                'records'])
-                                                        .data ==
-                                                    'null'
-                                                ? 'N/A'
-                                                : Get.find<TableController>()
+                                            recordController.isStringDataNull(
+                                                tableController
                                                     .getRecordByFieldType(
                                                         "email",
-                                                        Get.arguments[
-                                                            'records'])
-                                                    .data,
+                                                        argumentRecordList)
+                                                    .data),
                                             style: kLeadDetailsTextH4),
                                       ],
                                     )
@@ -456,7 +400,7 @@ class LeadDetails extends StatelessWidget {
                                             Text("Account Name",
                                                 style: kLeadDetailsTextH5),
                                             Text(
-                                                "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                                                "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
                                                 style: kLeadDetailsTextH6),
                                           ],
                                         ),
@@ -468,20 +412,12 @@ class LeadDetails extends StatelessWidget {
                                             Text("Phone",
                                                 style: kLeadDetailsTextH5),
                                             Text(
-                                              Get.find<TableController>()
-                                                          .getRecordByFieldType(
-                                                              "phoneNumber",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data ==
-                                                      'null'
-                                                  ? 'N/A'
-                                                  : Get.find<TableController>()
+                                              recordController.isStringDataNull(
+                                                  tableController
                                                       .getRecordByFieldType(
                                                           "phoneNumber",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data,
+                                                          argumentRecordList)
+                                                      .data),
                                               style: kLeadDetailsTextH6,
                                             ),
                                           ],
@@ -500,21 +436,12 @@ class LeadDetails extends StatelessWidget {
                                             Text("Email",
                                                 style: kLeadDetailsTextH5),
                                             Text(
-                                                Get.find<TableController>()
-                                                            .getRecordByFieldType(
-                                                                "email",
-                                                                Get.arguments[
-                                                                    'records'])
-                                                            .data ==
-                                                        'null'
-                                                    ? 'N/A'
-                                                    : Get.find<
-                                                            TableController>()
+                                                recordController.isStringDataNull(
+                                                    tableController
                                                         .getRecordByFieldType(
                                                             "email",
-                                                            Get.arguments[
-                                                                'records'])
-                                                        .data,
+                                                            argumentRecordList)
+                                                        .data),
                                                 style: kLeadDetailsTextH6),
                                           ],
                                         ),
@@ -569,50 +496,28 @@ class LeadDetails extends StatelessWidget {
                                         constraints.maxWidth >= 880 ? 130 : 70,
                                     child: TextButton(
                                       onPressed: () {
-                                        Get.find<LogController>()
-                                            .currentSection
-                                            .value = "call";
+                                        logController.currentSection.value =
+                                            "call";
                                       },
                                       style: TextButton.styleFrom(
                                           fixedSize: Size.fromHeight(50),
                                           shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                   topLeft: Radius.circular(4))),
-                                          backgroundColor:
-                                              Get.find<LogController>()
-                                                          .currentSection
-                                                          .value ==
-                                                      'call'
-                                                  ? Colors.white
-                                                  : kColorPearlWhite),
-                                      child:
-                                          // Text(
-                                          //   "Log a call",
-                                          //   style: constraints.maxWidth >= 880
-                                          //       ? (Get.find<LogController>()
-                                          //                   .currentSection
-                                          //                   .value ==
-                                          //               'call'
-                                          //           ? kLeadDetailsTextH4
-                                          //           : kLeadDetailsTextH3)
-                                          //       : (Get.find<LogController>()
-                                          //                   .currentSection
-                                          //                   .value ==
-                                          //               'call'
-                                          //           ? kLeadDetailsTextH6
-                                          //           : kLeadDetailsTextH5),
-                                          // ),
-                                          RichText(
+                                          backgroundColor: logController
+                                                      .currentSection.value ==
+                                                  'call'
+                                              ? Colors.white
+                                              : kColorPearlWhite),
+                                      child: RichText(
                                         text: TextSpan(
                                           style: constraints.maxWidth >= 880
-                                              ? (Get.find<LogController>()
-                                                          .currentSection
+                                              ? (logController.currentSection
                                                           .value ==
                                                       'call'
                                                   ? kLeadDetailsTextH4
                                                   : kLeadDetailsTextH3)
-                                              : (Get.find<LogController>()
-                                                          .currentSection
+                                              : (logController.currentSection
                                                           .value ==
                                                       'call'
                                                   ? kLeadDetailsTextH6
@@ -638,50 +543,28 @@ class LeadDetails extends StatelessWidget {
                                         constraints.maxWidth >= 880 ? 150 : 70,
                                     child: TextButton(
                                       onPressed: () {
-                                        Get.find<LogController>()
-                                            .currentSection
-                                            .value = "meeting";
+                                        logController.currentSection.value =
+                                            "meeting";
                                       },
                                       style: TextButton.styleFrom(
-                                          fixedSize: Size.fromHeight(50),
+                                          fixedSize: const Size.fromHeight(50),
                                           shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.zero)),
-                                          backgroundColor:
-                                              Get.find<LogController>()
-                                                          .currentSection
-                                                          .value ==
-                                                      'meeting'
-                                                  ? Colors.white
-                                                  : kColorPearlWhite),
-                                      child:
-                                          // Text(
-                                          //   "Log a meeting",
-                                          //   style: constraints.maxWidth >= 880
-                                          //       ? (Get.find<LogController>()
-                                          //                   .currentSection
-                                          //                   .value ==
-                                          //               'meeting'
-                                          //           ? kLeadDetailsTextH4
-                                          //           : kLeadDetailsTextH3)
-                                          //       : (Get.find<LogController>()
-                                          //                   .currentSection
-                                          //                   .value ==
-                                          //               'meeting'
-                                          //           ? kLeadDetailsTextH6
-                                          //           : kLeadDetailsTextH5),
-                                          // ),
-                                          RichText(
+                                          backgroundColor: logController
+                                                      .currentSection.value ==
+                                                  'meeting'
+                                              ? Colors.white
+                                              : kColorPearlWhite),
+                                      child: RichText(
                                         text: TextSpan(
                                           style: constraints.maxWidth >= 880
-                                              ? (Get.find<LogController>()
-                                                          .currentSection
+                                              ? (logController.currentSection
                                                           .value ==
                                                       'meeting'
                                                   ? kLeadDetailsTextH4
                                                   : kLeadDetailsTextH3)
-                                              : (Get.find<LogController>()
-                                                          .currentSection
+                                              : (logController.currentSection
                                                           .value ==
                                                       'meeting'
                                                   ? kLeadDetailsTextH6
@@ -707,50 +590,28 @@ class LeadDetails extends StatelessWidget {
                                         constraints.maxWidth >= 880 ? 130 : 62,
                                     child: TextButton(
                                       onPressed: () {
-                                        Get.find<LogController>()
-                                            .currentSection
-                                            .value = "email";
+                                        logController.currentSection.value =
+                                            "email";
                                       },
                                       style: TextButton.styleFrom(
                                           fixedSize: Size.fromHeight(50),
                                           shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.zero)),
-                                          backgroundColor:
-                                              Get.find<LogController>()
-                                                          .currentSection
-                                                          .value ==
-                                                      'email'
-                                                  ? Colors.white
-                                                  : kColorPearlWhite),
-                                      child:
-                                          //  Text(
-                                          //   "email",
-                                          //   style: constraints.maxWidth >= 880
-                                          //       ? (Get.find<LogController>()
-                                          //                   .currentSection
-                                          //                   .value ==
-                                          //               'email'
-                                          //           ? kLeadDetailsTextH4
-                                          //           : kLeadDetailsTextH3)
-                                          //       : (Get.find<LogController>()
-                                          //                   .currentSection
-                                          //                   .value ==
-                                          //               'email'
-                                          //           ? kLeadDetailsTextH6
-                                          //           : kLeadDetailsTextH5),
-                                          // ),
-                                          RichText(
+                                          backgroundColor: logController
+                                                      .currentSection.value ==
+                                                  'email'
+                                              ? Colors.white
+                                              : kColorPearlWhite),
+                                      child: RichText(
                                         text: TextSpan(
                                           style: constraints.maxWidth >= 880
-                                              ? (Get.find<LogController>()
-                                                          .currentSection
+                                              ? (logController.currentSection
                                                           .value ==
                                                       'email'
                                                   ? kLeadDetailsTextH4
                                                   : kLeadDetailsTextH3)
-                                              : (Get.find<LogController>()
-                                                          .currentSection
+                                              : (logController.currentSection
                                                           .value ==
                                                       'email'
                                                   ? kLeadDetailsTextH6
@@ -781,14 +642,13 @@ class LeadDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Obx(() => Get.find<LogController>()
-                                    .showLogContent(
-                                        Get.arguments['records'],
-                                        MediaQuery.of(context).size.width,
-                                        Get.find<TableController>()
-                                            .getRecordByFieldType('firstName',
-                                                Get.arguments['records'])
-                                            .userId)),
+                                Obx(() => logController.showLogContent(
+                                    argumentRecordList,
+                                    MediaQuery.of(context).size.width,
+                                    tableController
+                                        .getRecordByFieldType(
+                                            'firstName', argumentRecordList)
+                                        .userId)),
                               ],
                             ),
                           )
@@ -805,11 +665,8 @@ class LeadDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                        width: Get.find<LogController>()
-                                .isPressCompossedEmail
-                                .value
-                            ? 0
-                            : 10),
+                        width:
+                            logController.isPressCompossedEmail.value ? 0 : 10),
 
                     // Container for all the details
                     Flexible(
@@ -842,25 +699,10 @@ class LeadDetails extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                // Container(
-                                //   decoration: const BoxDecoration(
-                                //     border: Border(
-                                //         bottom: BorderSide(
-                                //       color: Colors.white,
-                                //       width: 5,
-                                //     )),
-                                //   ),
-                                //   child: Text(
-                                //     "Related",
-                                //     style: GoogleFonts.rubik(
-                                //         fontSize: 25, fontWeight: FontWeight.bold),
-                                //   ),
-                                // ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    Get.find<LogController>()
-                                        .isPressCompossedEmail
-                                        .value = true;
+                                    logController.isPressCompossedEmail.value =
+                                        true;
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.white),
@@ -877,7 +719,7 @@ class LeadDetails extends StatelessWidget {
                                   TextFormField(
                                     readOnly: true,
                                     initialValue:
-                                        "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                                        "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
                                     decoration: InputDecoration(
                                       labelText: "Name",
                                       labelStyle: kLeadDetailsTextH3,
@@ -900,18 +742,16 @@ class LeadDetails extends StatelessWidget {
                                           child: Row(children: [
                                             InkWell(
                                               onTap: () {
-                                                if (Get.find<TableController>()
+                                                if (tableController
                                                         .showContactInfo
                                                         .value ==
                                                     false) {
-                                                  Get.find<TableController>()
-                                                      .setToTrue(Get.find<
-                                                              TableController>()
+                                                  tableController.setToTrue(
+                                                      tableController
                                                           .showContactInfo);
                                                 } else {
-                                                  Get.find<TableController>()
-                                                      .setToFalse(Get.find<
-                                                              TableController>()
+                                                  tableController.setToFalse(
+                                                      tableController
                                                           .showContactInfo);
                                                 }
                                               },
@@ -925,9 +765,8 @@ class LeadDetails extends StatelessWidget {
                                             ),
                                           ]),
                                         ),
-                                        Obx(() => Get.find<TableController>()
-                                                    .showContactInfo
-                                                    .value ==
+                                        Obx(() => tableController
+                                                    .showContactInfo.value ==
                                                 true
                                             ? Container(
                                                 width: MediaQuery.of(context)
@@ -961,7 +800,7 @@ class LeadDetails extends StatelessWidget {
                                                       child: TextFormField(
                                                         readOnly: true,
                                                         initialValue:
-                                                            "${Get.find<TableController>().getRecordByFieldType("firstName", Get.arguments['records']).data} ${Get.find<TableController>().getRecordByFieldType("lastName", Get.arguments['records']).data}",
+                                                            "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
                                                         decoration:
                                                             InputDecoration(
                                                           labelText:
@@ -995,18 +834,16 @@ class LeadDetails extends StatelessWidget {
                                           child: Row(children: [
                                             InkWell(
                                               onTap: () {
-                                                if (Get.find<TableController>()
+                                                if (tableController
                                                         .showPhoneandEmail
                                                         .value ==
                                                     false) {
-                                                  Get.find<TableController>()
-                                                      .setToTrue(Get.find<
-                                                              TableController>()
+                                                  tableController.setToTrue(
+                                                      tableController
                                                           .showPhoneandEmail);
                                                 } else {
-                                                  Get.find<TableController>()
-                                                      .setToFalse(Get.find<
-                                                              TableController>()
+                                                  tableController.setToFalse(
+                                                      tableController
                                                           .showPhoneandEmail);
                                                 }
                                               },
@@ -1020,114 +857,91 @@ class LeadDetails extends StatelessWidget {
                                             ),
                                           ]),
                                         ),
-                                        Obx(
-                                            () =>
-                                                Get.find<TableController>()
-                                                            .showPhoneandEmail
-                                                            .value ==
-                                                        true
-                                                    ? Container(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: 120,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 20),
+                                        Obx(() => tableController
+                                                    .showPhoneandEmail.value ==
+                                                true
+                                            ? Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 120,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: TextFormField(
+                                                            readOnly: true,
+                                                            initialValue: recordController
+                                                                .isStringDataNull(tableController
+                                                                    .getRecordByFieldType(
+                                                                        "phoneNumber",
+                                                                        argumentRecordList)
+                                                                    .data),
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  "Phone",
+                                                              labelStyle:
+                                                                  kLeadDetailsTextH3,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 30),
+                                                        Expanded(
+                                                          child: TextFormField(
+                                                            readOnly: true,
+                                                            initialValue: recordController
+                                                                .isStringDataNull(tableController
+                                                                    .getRecordByFieldType(
+                                                                        "email",
+                                                                        argumentRecordList)
+                                                                    .data),
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  "Email",
+                                                              labelStyle:
+                                                                  kLeadDetailsTextH3,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 605,
+                                                      child: TextFormField(
+                                                        readOnly: true,
+                                                        initialValue: recordController
+                                                            .isStringDataNull(
+                                                                tableController
+                                                                    .getRecordByFieldType(
+                                                                        "mobileNumber",
+                                                                        argumentRecordList)
+                                                                    .data),
                                                         decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                            InputDecoration(
+                                                          labelText: "Mobile",
+                                                          labelStyle:
+                                                              kLeadDetailsTextH3,
                                                         ),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                      TextFormField(
-                                                                    readOnly:
-                                                                        true,
-                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("phoneNumber", Get.arguments['records']).data ==
-                                                                            'null'
-                                                                        ? 'N/A'
-                                                                        : Get.find<TableController>()
-                                                                            .getRecordByFieldType("phoneNumber",
-                                                                                Get.arguments['records'])
-                                                                            .data,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      labelText:
-                                                                          "Phone",
-                                                                      labelStyle:
-                                                                          kLeadDetailsTextH3,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                    width: 30),
-                                                                Expanded(
-                                                                  child:
-                                                                      TextFormField(
-                                                                    readOnly:
-                                                                        true,
-                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("email", Get.arguments['records']).data ==
-                                                                            'null'
-                                                                        ? 'N/A'
-                                                                        : Get.find<TableController>()
-                                                                            .getRecordByFieldType("email",
-                                                                                Get.arguments['records'])
-                                                                            .data,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      labelText:
-                                                                          "Email",
-                                                                      labelStyle:
-                                                                          kLeadDetailsTextH3,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              width: 605,
-                                                              child:
-                                                                  TextFormField(
-                                                                readOnly: true,
-                                                                initialValue: Get.find<TableController>()
-                                                                            .getRecordByFieldType(
-                                                                                "mobileNumber",
-                                                                                Get.arguments[
-                                                                                    'records'])
-                                                                            .data ==
-                                                                        'null'
-                                                                    ? 'N/A'
-                                                                    : Get.find<
-                                                                            TableController>()
-                                                                        .getRecordByFieldType(
-                                                                            "mobileNumber",
-                                                                            Get.arguments['records'])
-                                                                        .data,
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  labelText:
-                                                                      "Mobile",
-                                                                  labelStyle:
-                                                                      kLeadDetailsTextH3,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      )
-                                                    : Container())
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Container())
                                       ],
                                     ),
                                   ),
@@ -1148,18 +962,16 @@ class LeadDetails extends StatelessWidget {
                                           child: Row(children: [
                                             InkWell(
                                               onTap: () {
-                                                if (Get.find<TableController>()
+                                                if (tableController
                                                         .showAddressInfo
                                                         .value ==
                                                     false) {
-                                                  Get.find<TableController>()
-                                                      .setToTrue(Get.find<
-                                                              TableController>()
+                                                  tableController.setToTrue(
+                                                      tableController
                                                           .showAddressInfo);
                                                 } else {
-                                                  Get.find<TableController>()
-                                                      .setToFalse(Get.find<
-                                                              TableController>()
+                                                  tableController.setToFalse(
+                                                      tableController
                                                           .showAddressInfo);
                                                 }
                                               },
@@ -1173,141 +985,111 @@ class LeadDetails extends StatelessWidget {
                                             ),
                                           ]),
                                         ),
-                                        Obx(
-                                            () =>
-                                                Get.find<TableController>()
-                                                            .showAddressInfo
-                                                            .value ==
-                                                        true
-                                                    ? Container(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: 190,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 20),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                        ),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            TextFormField(
-                                                              readOnly: true,
-                                                              initialValue: Get.find<
-                                                                              TableController>()
-                                                                          .getRecordByFieldType(
-                                                                              "address1",
-                                                                              Get.arguments[
-                                                                                  'records'])
-                                                                          .data ==
-                                                                      'null'
-                                                                  ? 'N/A'
-                                                                  : Get.find<
-                                                                          TableController>()
-                                                                      .getRecordByFieldType(
-                                                                          "address1",
-                                                                          Get.arguments[
-                                                                              'records'])
-                                                                      .data,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelText:
-                                                                    "Street Address 1",
-                                                                labelStyle:
-                                                                    kLeadDetailsTextH3,
-                                                              ),
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                      TextFormField(
-                                                                    readOnly:
-                                                                        true,
-                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("city", Get.arguments['records']).data ==
-                                                                            'null'
-                                                                        ? 'N/A'
-                                                                        : Get.find<TableController>()
-                                                                            .getRecordByFieldType("city",
-                                                                                Get.arguments['records'])
-                                                                            .data,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      labelText:
-                                                                          "City",
-                                                                      labelStyle:
-                                                                          GoogleFonts.rubik(
-                                                                              fontSize: 15),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                    width: 30),
-                                                                Expanded(
-                                                                  child:
-                                                                      TextFormField(
-                                                                    readOnly:
-                                                                        true,
-                                                                    initialValue: Get.find<TableController>().getRecordByFieldType("province", Get.arguments['records']).data ==
-                                                                            'null'
-                                                                        ? 'N/A'
-                                                                        : Get.find<TableController>()
-                                                                            .getRecordByFieldType("province",
-                                                                                Get.arguments['records'])
-                                                                            .data,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      labelText:
-                                                                          "Province",
-                                                                      labelStyle:
-                                                                          kLeadDetailsTextH3,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              width: 605,
-                                                              child:
-                                                                  TextFormField(
-                                                                readOnly: true,
-                                                                initialValue: Get.find<TableController>()
-                                                                            .getRecordByFieldType(
-                                                                                "postal",
-                                                                                Get.arguments[
-                                                                                    'records'])
-                                                                            .data ==
-                                                                        'null'
-                                                                    ? "N/A"
-                                                                    : Get.find<
-                                                                            TableController>()
+                                        Obx(() => tableController
+                                                    .showAddressInfo.value ==
+                                                true
+                                            ? Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 190,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    TextFormField(
+                                                      readOnly: true,
+                                                      initialValue: recordController
+                                                          .isStringDataNull(
+                                                              tableController
+                                                                  .getRecordByFieldType(
+                                                                      "address1",
+                                                                      argumentRecordList)
+                                                                  .data),
+                                                      decoration:
+                                                          InputDecoration(
+                                                        labelText:
+                                                            "Street Address 1",
+                                                        labelStyle:
+                                                            kLeadDetailsTextH3,
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: TextFormField(
+                                                            readOnly: true,
+                                                            initialValue: recordController
+                                                                .isStringDataNull(
+                                                                    tableController
                                                                         .getRecordByFieldType(
-                                                                            "postal",
-                                                                            Get.arguments['records'])
-                                                                        .data,
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  labelText:
-                                                                      "Postal Code",
-                                                                  labelStyle:
-                                                                      kLeadDetailsTextH3,
-                                                                ),
-                                                              ),
+                                                                            "city",
+                                                                            argumentRecordList)
+                                                                        .data),
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText: "City",
+                                                              labelStyle:
+                                                                  GoogleFonts.rubik(
+                                                                      fontSize:
+                                                                          15),
                                                             ),
-                                                          ],
+                                                          ),
                                                         ),
-                                                      )
-                                                    : Container())
+                                                        const SizedBox(
+                                                            width: 30),
+                                                        Expanded(
+                                                          child: TextFormField(
+                                                            readOnly: true,
+                                                            initialValue: recordController
+                                                                .isStringDataNull(tableController
+                                                                    .getRecordByFieldType(
+                                                                        "province",
+                                                                        argumentRecordList)
+                                                                    .data),
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelText:
+                                                                  "Province",
+                                                              labelStyle:
+                                                                  kLeadDetailsTextH3,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 605,
+                                                      child: TextFormField(
+                                                        readOnly: true,
+                                                        initialValue: recordController
+                                                            .isStringDataNull(
+                                                                tableController
+                                                                    .getRecordByFieldType(
+                                                                        "postal",
+                                                                        argumentRecordList)
+                                                                    .data),
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelText:
+                                                              "Postal Code",
+                                                          labelStyle:
+                                                              kLeadDetailsTextH3,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Container())
                                       ],
                                     ),
                                   ),
@@ -1320,11 +1102,11 @@ class LeadDetails extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     // Container for Email box
-                    Get.find<LogController>().isPressCompossedEmail.value
+                    logController.isPressCompossedEmail.value
                         ? Flexible(
                             flex: 1,
                             child: Form(
-                              key: Get.find<MailController>().mailFormKey,
+                              key: mailController.mailFormKey,
                               child: Container(
                                 width: (MediaQuery.of(context).size.width / 3) -
                                     28,
@@ -1363,11 +1145,10 @@ class LeadDetails extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: TextFormField(
-                                            initialValue: Get.find<
-                                                    TableController>()
+                                            initialValue: tableController
                                                 .getRecordByFieldType(
                                                     "firstName",
-                                                    Get.arguments['records'])
+                                                    argumentRecordList)
                                                 .data,
                                             enabled: false,
                                             decoration: InputDecoration(
@@ -1396,9 +1177,7 @@ class LeadDetails extends StatelessWidget {
                                               ),
                                             ),
                                             onSaved: (value) {
-                                              Get.find<MailController>()
-                                                  .message
-                                                  .value
+                                              mailController.message.value
                                                   .firstName = value.toString();
                                             },
                                           ),
@@ -1406,11 +1185,10 @@ class LeadDetails extends StatelessWidget {
                                         const SizedBox(width: 5),
                                         Expanded(
                                           child: TextFormField(
-                                            initialValue: Get.find<
-                                                    TableController>()
+                                            initialValue: tableController
                                                 .getRecordByFieldType(
                                                     "lastName",
-                                                    Get.arguments['records'])
+                                                    argumentRecordList)
                                                 .data,
                                             enabled: false,
                                             decoration: InputDecoration(
@@ -1439,9 +1217,7 @@ class LeadDetails extends StatelessWidget {
                                               ),
                                             ),
                                             onSaved: (value) {
-                                              Get.find<MailController>()
-                                                  .message
-                                                  .value
+                                              mailController.message.value
                                                   .lastName = value.toString();
                                             },
                                           ),
@@ -1455,9 +1231,9 @@ class LeadDetails extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 3),
                                     TextFormField(
-                                      initialValue: Get.find<TableController>()
+                                      initialValue: tableController
                                           .getRecordByFieldType(
-                                              "email", Get.arguments['records'])
+                                              "email", argumentRecordList)
                                           .data,
                                       enabled: false,
                                       decoration: InputDecoration(
@@ -1482,10 +1258,8 @@ class LeadDetails extends StatelessWidget {
                                         ),
                                       ),
                                       onSaved: (value) {
-                                        Get.find<MailController>()
-                                            .message
-                                            .value
-                                            .email = value.toString();
+                                        mailController.message.value.email =
+                                            value.toString();
                                       },
                                     ),
                                     const SizedBox(height: 12),
@@ -1511,10 +1285,8 @@ class LeadDetails extends StatelessWidget {
                                         ),
                                       ),
                                       onSaved: (value) {
-                                        Get.find<MailController>()
-                                            .message
-                                            .value
-                                            .subject = value.toString();
+                                        mailController.message.value.subject =
+                                            value.toString();
                                       },
                                     ),
                                     const SizedBox(height: 12),
@@ -1540,10 +1312,8 @@ class LeadDetails extends StatelessWidget {
                                         ),
                                       ),
                                       onSaved: (value) {
-                                        Get.find<MailController>()
-                                            .message
-                                            .value
-                                            .message = value.toString();
+                                        mailController.message.value.message =
+                                            value.toString();
                                       },
                                     ),
                                     // Cancel and Send Button
@@ -1554,8 +1324,7 @@ class LeadDetails extends StatelessWidget {
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
-                                            Get.find<LogController>()
-                                                .isPressCompossedEmail
+                                            logController.isPressCompossedEmail
                                                 .value = false;
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -1566,17 +1335,14 @@ class LeadDetails extends StatelessWidget {
                                         const SizedBox(width: 10),
                                         ElevatedButton(
                                           onPressed: () {
-                                            if (Get.find<MailController>()
-                                                .mailFormKey
-                                                .currentState!
+                                            if (mailController
+                                                .mailFormKey.currentState!
                                                 .validate()) {
-                                              Get.find<MailController>()
-                                                  .mailFormKey
-                                                  .currentState!
+                                              mailController
+                                                  .mailFormKey.currentState!
                                                   .save();
 
-                                              Get.find<MailController>()
-                                                  .sendMail();
+                                              mailController.sendMail();
                                             }
 
                                             AwesomeDialog(
@@ -1587,7 +1353,7 @@ class LeadDetails extends StatelessWidget {
                                               dialogType: DialogType.SUCCES,
                                               title: 'Email sent',
                                               btnOkOnPress: () {
-                                                Get.find<LogController>()
+                                                logController
                                                     .isPressCompossedEmail
                                                     .value = false;
                                               },
@@ -1653,9 +1419,9 @@ class LeadDetails extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: TextFormField(
-                                    initialValue: Get.find<TableController>()
-                                        .getRecordByFieldType("howFoundUs",
-                                            Get.arguments['records'])
+                                    initialValue: tableController
+                                        .getRecordByFieldType(
+                                            "howFoundUs", argumentRecordList)
                                         .data,
                                     enabled: false,
                                     decoration: InputDecoration(
@@ -1682,9 +1448,9 @@ class LeadDetails extends StatelessWidget {
                                 const SizedBox(width: 5),
                                 Expanded(
                                   child: TextFormField(
-                                    initialValue: Get.find<TableController>()
+                                    initialValue: tableController
                                         .getRecordByFieldType(
-                                            "type", Get.arguments['records'])
+                                            "type", argumentRecordList)
                                         .data,
                                     readOnly: true,
                                     decoration: InputDecoration(
@@ -1715,9 +1481,9 @@ class LeadDetails extends StatelessWidget {
                             TextFormField(
                               readOnly: true,
                               maxLines: 8,
-                              initialValue: Get.find<TableController>()
+                              initialValue: tableController
                                   .getRecordByFieldType(
-                                      'comments', Get.arguments['records'])
+                                      'comments', argumentRecordList)
                                   .data,
                               decoration: InputDecoration(
                                 labelText: 'Comments',
@@ -1755,14 +1521,13 @@ class LeadDetails extends StatelessWidget {
                         children: [
                           const SizedBox(height: 15),
                           Text('Activities', style: kTextTitle),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 10),
                           StreamBuilder(
                               stream: Stream.fromFuture(
-                                  Get.find<LogController>().getAllLogs(
-                                      Get.find<TableController>()
-                                          .getRecordByFieldType(
-                                              "type", Get.arguments['records'])
-                                          .userId)),
+                                  logController.getAllLogs(tableController
+                                      .getRecordByFieldType(
+                                          "firstName", argumentRecordList)
+                                      .userId)),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                         ConnectionState.done &&
@@ -1775,8 +1540,8 @@ class LeadDetails extends StatelessWidget {
                                             (snapshot.data as List<Log>).length,
                                         itemBuilder: (context, count) {
                                           return ListTile(
-                                            leading: Get.find<LogController>()
-                                                .getIcon((snapshot.data
+                                            leading: logController.getIcon(
+                                                (snapshot.data
                                                         as List<Log>)[count]
                                                     .typeOfData),
                                             title: Text(
@@ -1787,9 +1552,9 @@ class LeadDetails extends StatelessWidget {
                                                   kLeadDetailsActivitiesTitle,
                                             ),
                                             subtitle: Text(
-                                                "${AuthService.instance.user.value!.email.toString()} ${Get.find<LogController>().getSubtitle((snapshot.data as List<Log>)[count].typeOfData)}"),
+                                                "${AuthService.instance.user.value!.email.toString()} ${logController.getSubtitle((snapshot.data as List<Log>)[count].typeOfData)}"),
                                             trailing: Text(
-                                                "${(snapshot.data as List<Log>)[count].date}"),
+                                                "${DateFormat("dd-MMM-yyyy").format((snapshot.data as List<Log>)[count].date)}"),
                                           );
                                         }),
                                   );

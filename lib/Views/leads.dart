@@ -12,7 +12,11 @@ import 'package:crm/Widgets/custom_AppBar.dart';
 import '../Models/record.dart';
 
 class Leads extends StatelessWidget {
-  const Leads({Key? key}) : super(key: key);
+  Leads({Key? key}) : super(key: key);
+
+  // These variables are for controllers
+  var recordController = Get.find<RecordController>();
+  var tableController = Get.find<TableController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +24,7 @@ class Leads extends StatelessWidget {
         drawer: Navbar(),
         appBar: CustomAppbar(),
         body: StreamBuilder(
-          stream:
-              Stream.fromFuture(Get.find<RecordController>().fetchRecords()),
+          stream: Stream.fromFuture(recordController.fetchRecords()),
           builder: ((context, snapshot) {
             try {
               return SingleChildScrollView(
@@ -43,13 +46,11 @@ class Leads extends StatelessWidget {
                                 ],
                               ),
                             ),
-
                             // Searchbar
                             Container(
                               width: 500,
                               child: TextField(
-                                controller: Get.find<TableController>()
-                                    .searchController,
+                                controller: tableController.searchController,
                                 decoration: InputDecoration(
                                     hoverColor: kColorDarkBlue,
                                     contentPadding: const EdgeInsets.symmetric(
@@ -61,21 +62,16 @@ class Leads extends StatelessWidget {
                                           // These data are the searched lead/user
                                           Get.offAllNamed('/SearchedLeads',
                                               arguments: {
-                                                'searchedResults': Get.find<
-                                                        TableController>()
-                                                    .result(
+                                                'searchedResults':
+                                                    tableController.result(
                                                         snapshot.data
                                                             as List<Record>,
-                                                        Get.find<
-                                                                TableController>()
-                                                            .matchesName(
-                                                                snapshot.data
-                                                                    as List<
-                                                                        Record>,
-                                                                Get.find<
-                                                                        TableController>()
-                                                                    .searchController
-                                                                    .text)),
+                                                        tableController.matchesName(
+                                                            snapshot.data
+                                                                as List<Record>,
+                                                            tableController
+                                                                .searchController
+                                                                .text)),
                                                 'allLeads': snapshot.data
                                                     as List<Record>
                                               });
@@ -93,7 +89,6 @@ class Leads extends StatelessWidget {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          print(snapshot.data);
                                           Get.offAllNamed("/Panel");
                                         },
                                         style: ElevatedButton.styleFrom(
@@ -111,8 +106,7 @@ class Leads extends StatelessWidget {
                                       // This button is for importing the data from the excel to firebase
                                       ElevatedButton(
                                         onPressed: () {
-                                          Get.find<RecordController>()
-                                              .importFile();
+                                          recordController.importFile();
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white,
@@ -141,16 +135,15 @@ class Leads extends StatelessWidget {
                               child: DataTable(
                                 columnSpacing: 10,
                                 dataRowHeight: 80,
-                                columns: Get.find<TableController>().getColumns(
-                                    Get.find<TableController>().leadsColumns,
+                                columns: tableController.getColumns(
+                                    tableController.leadsColumns,
                                     snapshot.data as List<Record>,
                                     context),
-                                rows: Get.find<TableController>()
+                                rows: tableController
                                     .getRows(snapshot.data as List<Record>),
                                 sortColumnIndex: 0,
-                                sortAscending: Get.find<TableController>()
-                                    .isAscending
-                                    .value,
+                                sortAscending:
+                                    tableController.isAscending.value,
                               ),
                             ),
                           ),

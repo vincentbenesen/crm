@@ -37,7 +37,7 @@ class LogController extends GetxController {
 
     callCount.value = await callLogCount(userId.value);
     meetingCount.value = await meetingLogCount(userId.value);
-    receivedEmailCount.value = await emailReceiveCount(userId.value);
+    // receivedEmailCount.value = await emailReceiveCount(userId.value);
   }
 
   // Insert the log in the Firebase
@@ -53,6 +53,7 @@ class LogController extends GetxController {
     Get.offAllNamed('/LeadDetails', arguments: {'records': records});
   }
 
+  // Get all the logs depending of the userId
   Future<List<Log>> getAllLogs(int userId) async {
     QuerySnapshot logs = await collectionReference
         .orderBy('date', descending: true)
@@ -79,6 +80,8 @@ class LogController extends GetxController {
         .get();
 
     return callCount.docs.length;
+
+    // return logs.where((log) => log.userId == userId).length;
   }
 
   Future<int> emailReceiveCount(int userId) async {

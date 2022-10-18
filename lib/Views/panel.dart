@@ -1,18 +1,22 @@
 import 'dart:async';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:crm/Controllers/stepper_controller.dart';
 import 'package:crm/Widgets/custom_AppBar.dart';
-import 'package:crm/Widgets/navbar.dart';
-import 'package:crm/Widgets/text_Field.dart';
 import 'package:crm/constant.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:crm/Widgets/navbar.dart';
+import 'package:crm/Widgets/text_Field.dart';
 import 'package:crm/Controllers/record_controller.dart';
+import 'package:crm/Controllers/stepper_controller.dart';
 
 class Panel extends StatelessWidget {
-  const Panel({Key? key}) : super(key: key);
+  Panel({Key? key}) : super(key: key);
+
+  // These variables are for controllers
+  var recordController = Get.find<RecordController>();
+  var stepperController = Get.find<StepperController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,99 +47,61 @@ class Panel extends StatelessWidget {
                               primary: Color.fromARGB(255, 56, 91, 133))),
                       child: Stepper(
                         type: StepperType.horizontal,
-                        currentStep:
-                            Get.find<StepperController>().currentStep.value,
+                        currentStep: stepperController.currentStep.value,
                         onStepTapped: (value) {},
                         onStepCancel: () {
-                          if (Get.find<StepperController>().currentStep.value ==
-                              0) {
+                          if (stepperController.currentStep.value == 0) {
                             Get.offAllNamed("/Leads");
-                          } else if (Get.find<StepperController>()
-                                  .currentStep
-                                  .value ==
-                              1) {
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("firstName");
-
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("lastName");
-                          } else if (Get.find<StepperController>()
-                                  .currentStep
-                                  .value ==
-                              2) {
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("address1");
-
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("address2");
-
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("city");
-
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("province");
-
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("postal");
-                          } else if (Get.find<StepperController>()
-                                  .currentStep
-                                  .value ==
-                              3) {
-                            Get.find<RecordController>()
-                                .recordToInsert
+                          } else if (stepperController.currentStep.value == 1) {
+                            // Removes the records from the list of records that will be inserted when
+                            // we go back to the previous page
+                            recordController.recordToInsert.remove("firstName");
+                            recordController.recordToInsert.remove("lastName");
+                          } else if (stepperController.currentStep.value == 2) {
+                            // Removes the records from the list of records that will be inserted when
+                            // we go back to the previous page
+                            recordController.recordToInsert.remove("address1");
+                            recordController.recordToInsert.remove("address2");
+                            recordController.recordToInsert.remove("city");
+                            recordController.recordToInsert.remove("province");
+                            recordController.recordToInsert.remove("postal");
+                          } else if (stepperController.currentStep.value == 3) {
+                            // Removes the records from the list of records that will be inserted when
+                            // we go back to the previous page
+                            recordController.recordToInsert
                                 .remove("phoneNumber");
-                            Get.find<RecordController>()
-                                .recordToInsert
+                            recordController.recordToInsert
                                 .remove("mobileNumber");
-                            Get.find<RecordController>()
-                                .recordToInsert
-                                .remove("email");
+                            recordController.recordToInsert.remove("email");
                           }
 
-                          Get.find<StepperController>().decrement();
+                          stepperController.decrement();
                         },
                         onStepContinue: () {
-                          switch (
-                              Get.find<StepperController>().currentStep.value) {
+                          switch (stepperController.currentStep.value) {
                             case 0:
-                              if (Get.find<RecordController>()
-                                  .validateTextField(
-                                      Get.find<RecordController>()
-                                          .nameFormKey)) {
-                                Get.find<StepperController>().increment();
+                              if (recordController.validateTextField(
+                                  recordController.nameFormKey)) {
+                                stepperController.increment();
                               }
                               break;
                             case 1:
-                              if (Get.find<RecordController>()
-                                  .validateTextField(
-                                      Get.find<RecordController>()
-                                          .addressFormKey)) {
-                                Get.find<StepperController>().increment();
+                              if (recordController.validateTextField(
+                                  recordController.addressFormKey)) {
+                                stepperController.increment();
                               }
                               break;
                             case 2:
-                              if (Get.find<RecordController>()
-                                  .validateTextField(
-                                      Get.find<RecordController>()
-                                          .contactFormKey)) {
-                                Get.find<StepperController>().increment();
+                              if (recordController.validateTextField(
+                                  recordController.contactFormKey)) {
+                                stepperController.increment();
                               }
                               break;
                             case 3:
-                              if (Get.find<RecordController>()
-                                  .validateTextField(
-                                      Get.find<RecordController>()
-                                          .otherInfoFormKey)) {
-                                Get.find<RecordController>().addRecords(
-                                    Get.find<RecordController>()
-                                        .recordToInsert);
+                              if (recordController.validateTextField(
+                                  recordController.otherInfoFormKey)) {
+                                recordController.addRecords(
+                                    recordController.recordToInsert);
 
                                 AwesomeDialog(
                                   context: context,
@@ -163,17 +129,11 @@ class Panel extends StatelessWidget {
                               children: [
                                 ElevatedButton(
                                   onPressed: controls.onStepCancel,
-                                  // color: kColorDarkBlue,
-                                  // height: 50,
-                                  // minWidth: 130,
                                   child: Text("Cancel", style: kButtonText3),
                                 ),
                                 const SizedBox(width: 20),
                                 ElevatedButton(
                                   onPressed: controls.onStepContinue,
-                                  // color: kColorDarkBlue,
-                                  // height: 50,
-                                  // minWidth: 130,
                                   child: Text(
                                     "Continue",
                                     style: kButtonText3,
@@ -183,10 +143,10 @@ class Panel extends StatelessWidget {
                             ),
                           );
                         },
-                        steps: Get.find<StepperController>().getSteps(
+                        steps: stepperController.getSteps(
                           // Name of the user
                           Form(
-                            key: Get.find<RecordController>().nameFormKey,
+                            key: recordController.nameFormKey,
                             child: Container(
                               height: 180,
                               padding: const EdgeInsets.symmetric(
@@ -210,9 +170,9 @@ class Panel extends StatelessWidget {
                                         fieldType: "firstName",
                                         fieldId: 1,
                                         maxLength: 40,
-                                        records: Get.find<RecordController>()
-                                            .recordToInsert,
-                                        controller: Get.find<RecordController>()
+                                        records:
+                                            recordController.recordToInsert,
+                                        controller: recordController
                                             .firstNameController,
                                       )),
                                       const SizedBox(
@@ -225,10 +185,10 @@ class Panel extends StatelessWidget {
                                         fieldType: "lastName",
                                         fieldId: 2,
                                         maxLength: 40,
-                                        records: Get.find<RecordController>()
-                                            .recordToInsert,
-                                        controller: Get.find<RecordController>()
-                                            .lastNameController,
+                                        records:
+                                            recordController.recordToInsert,
+                                        controller:
+                                            recordController.lastNameController,
                                       )),
                                     ],
                                   ),
@@ -238,7 +198,7 @@ class Panel extends StatelessWidget {
                           ),
                           // Address Information
                           Form(
-                            key: Get.find<RecordController>().addressFormKey,
+                            key: recordController.addressFormKey,
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 440,
@@ -261,10 +221,9 @@ class Panel extends StatelessWidget {
                                     fieldType: "address1",
                                     fieldId: 3,
                                     maxLength: 40,
-                                    records: Get.find<RecordController>()
-                                        .recordToInsert,
-                                    controller: Get.find<RecordController>()
-                                        .address1Controller,
+                                    records: recordController.recordToInsert,
+                                    controller:
+                                        recordController.address1Controller,
                                   ),
                                   CustomTextField(
                                     labelText: "Street Address Line 2",
@@ -273,10 +232,9 @@ class Panel extends StatelessWidget {
                                     fieldType: "address2",
                                     fieldId: 4,
                                     maxLength: 40,
-                                    records: Get.find<RecordController>()
-                                        .recordToInsert,
-                                    controller: Get.find<RecordController>()
-                                        .address2Controller,
+                                    records: recordController.recordToInsert,
+                                    controller:
+                                        recordController.address2Controller,
                                   ),
                                   Row(
                                     children: [
@@ -287,11 +245,10 @@ class Panel extends StatelessWidget {
                                           fieldType: "city",
                                           fieldId: 5,
                                           maxLength: 40,
-                                          records: Get.find<RecordController>()
-                                              .recordToInsert,
+                                          records:
+                                              recordController.recordToInsert,
                                           controller:
-                                              Get.find<RecordController>()
-                                                  .cityController,
+                                              recordController.cityController,
                                         ),
                                       ),
                                       const SizedBox(
@@ -304,11 +261,10 @@ class Panel extends StatelessWidget {
                                           fieldType: "province",
                                           fieldId: 6,
                                           maxLength: 40,
-                                          records: Get.find<RecordController>()
-                                              .recordToInsert,
-                                          controller:
-                                              Get.find<RecordController>()
-                                                  .provinceController,
+                                          records:
+                                              recordController.recordToInsert,
+                                          controller: recordController
+                                              .provinceController,
                                         ),
                                       ),
                                     ],
@@ -319,10 +275,9 @@ class Panel extends StatelessWidget {
                                     fieldType: "postal",
                                     fieldId: 7,
                                     maxLength: 40,
-                                    records: Get.find<RecordController>()
-                                        .recordToInsert,
-                                    controller: Get.find<RecordController>()
-                                        .postalCodeController,
+                                    records: recordController.recordToInsert,
+                                    controller:
+                                        recordController.postalCodeController,
                                   ),
                                 ],
                               ),
@@ -330,7 +285,7 @@ class Panel extends StatelessWidget {
                           ),
                           // Contact Information
                           Form(
-                            key: Get.find<RecordController>().contactFormKey,
+                            key: recordController.contactFormKey,
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.symmetric(
@@ -354,11 +309,10 @@ class Panel extends StatelessWidget {
                                           fieldType: "phoneNumber",
                                           fieldId: 8,
                                           maxLength: 10,
-                                          records: Get.find<RecordController>()
-                                              .recordToInsert,
-                                          controller:
-                                              Get.find<RecordController>()
-                                                  .phoneNumberController,
+                                          records:
+                                              recordController.recordToInsert,
+                                          controller: recordController
+                                              .phoneNumberController,
                                         ),
                                       ),
                                       const SizedBox(width: 30),
@@ -369,11 +323,10 @@ class Panel extends StatelessWidget {
                                           fieldType: "email",
                                           fieldId: 9,
                                           maxLength: 100,
-                                          records: Get.find<RecordController>()
-                                              .recordToInsert,
+                                          records:
+                                              recordController.recordToInsert,
                                           controller:
-                                              Get.find<RecordController>()
-                                                  .emailController,
+                                              recordController.emailController,
                                         ),
                                       ),
                                     ],
@@ -386,9 +339,8 @@ class Panel extends StatelessWidget {
                                       fieldType: "mobileNumber",
                                       fieldId: 8,
                                       maxLength: 10,
-                                      records: Get.find<RecordController>()
-                                          .recordToInsert,
-                                      controller: Get.find<RecordController>()
+                                      records: recordController.recordToInsert,
+                                      controller: recordController
                                           .mobileNumberController,
                                     ),
                                   ),
@@ -398,7 +350,7 @@ class Panel extends StatelessWidget {
                           ),
                           // Additional Information
                           Form(
-                            key: Get.find<RecordController>().otherInfoFormKey,
+                            key: recordController.otherInfoFormKey,
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.symmetric(
@@ -416,16 +368,13 @@ class Panel extends StatelessWidget {
                                   Obx(
                                     () => ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount: Get.find<RecordController>()
-                                          .numberOfNewFields
-                                          .value,
+                                      itemCount: recordController
+                                          .numberOfNewFields.value,
                                       itemBuilder: (context, index) {
-                                        return Get.find<RecordController>()
-                                            .newField(
-                                                index,
-                                                Get.find<RecordController>()
-                                                    .fieldtypes[index],
-                                                context);
+                                        return recordController.newField(
+                                            index,
+                                            recordController.fieldtypes[index],
+                                            context);
                                       },
                                     ),
                                   ),

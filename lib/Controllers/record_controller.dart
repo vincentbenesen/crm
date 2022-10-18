@@ -309,6 +309,13 @@ class RecordController extends GetxController {
     );
   }
 
+  String isStringDataNull(String data) {
+    if (data == 'null') {
+      return 'N/A';
+    }
+    return data;
+  }
+
   // Imports the data from an Excel file to firebase
   // This method only accept files with an extensiont of 'xls', 'xlsx', 'csv'.
   void importFile() async {

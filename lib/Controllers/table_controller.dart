@@ -83,7 +83,12 @@ class TableController extends GetxController {
 
   // This function is used to retrieve the records from the database based on the given fieldType.
   Record getRecordByFieldType(String fieldType, List<Record> records) {
-    return records.firstWhere((record) => record.type == fieldType);
+    try {
+      Record record = records.firstWhere((record) => record.type == fieldType);
+      return record;
+    } catch (E) {
+      return Record(0, 0, "N/A", "N/A");
+    }
   }
 
   // This function is used to retrieve the id of the record from the database based on the given fieldType and Data.
@@ -184,21 +189,6 @@ class TableController extends GetxController {
             // .toList()
             .sort((a, b) => compareString(a.data, b.data, ascending));
         break;
-      // case 1:
-      // records.sort((a, b) => compareString(
-      //     (a.type == "address1" ? a.data : continueWithAddress(a.data)),
-      //     (b.type == "address1" ? b.data : ""),
-      //     ascending));
-      // break;
-      // case 2:
-      //   records.sort((a, b) => a.data.compareTo(b.data));
-      //   break;
-      // case 3:
-      //   records.sort((a, b) => a.data.compareTo(b.data));
-      //   break;
-      // case 4:
-      //   records.sort((a, b) => a.data.compareTo(b.data));
-      //   break;
     }
     index.value = columnIndex;
     isAscending.value = ascending;

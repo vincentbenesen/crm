@@ -1,4 +1,5 @@
 import 'package:crm/Views/searched_leads.dart';
+import 'package:crm/Views/signup_page.dart';
 import 'package:crm/services/routeAccess.dart';
 import 'package:get/get.dart';
 
@@ -16,28 +17,28 @@ class Routes {
   static List<GetPage> routes = [
     GetPage(
       name: "/Leads",
-      page: () => const Leads(),
+      page: () => Leads(),
       binding: ControllerBinding(),
       transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(
       name: "/SearchedLeads",
-      page: () => const SearchedLeads(),
+      page: () => SearchedLeads(),
       binding: ControllerBinding(),
       transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(
       name: "/Panel",
-      page: () => const Panel(),
+      page: () => Panel(),
       binding: ControllerBinding(),
       transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(
       name: "/LeadDetails",
-      page: () => const LeadDetails(),
+      page: () => LeadDetails(),
       arguments: [],
       binding: ControllerBinding(),
       transition: Transition.noTransition,
@@ -45,14 +46,21 @@ class Routes {
     ),
     GetPage(
       name: "/EditLeads",
-      page: () => const EditLeads(),
+      page: () => EditLeads(),
       binding: ControllerBinding(),
       transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
     ),
     GetPage(
       name: "/Login",
-      page: () => const LoginPage(),
+      page: () => LoginPage(),
+      transition: Transition.noTransition,
+      binding: ControllerBinding(),
+    ),
+    GetPage(
+      name: "/SignUp",
+      page: () => SignUpPage(),
+      transition: Transition.noTransition,
       binding: ControllerBinding(),
     ),
   ];

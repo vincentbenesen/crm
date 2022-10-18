@@ -14,7 +14,15 @@ import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/Widgets/custom_AppBar.dart';
 
 class EditLeads extends StatelessWidget {
-  const EditLeads({Key? key}) : super(key: key);
+  EditLeads({Key? key}) : super(key: key);
+
+  // These variables are for controller
+  var recordController = Get.find<RecordController>();
+  var tableController = Get.find<TableController>();
+  var recordUpdateController = Get.find<RecordUpdateController>();
+
+  // This variable is used to access the argument passed from LeadDetails page.
+  var argumentRecordList = Get.arguments['records'];
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class EditLeads extends StatelessWidget {
       drawer: Navbar(),
       backgroundColor: kColorDarkBlue,
       body: Form(
-        key: Get.find<RecordController>().updateFormKey,
+        key: recordController.updateFormKey,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -47,11 +55,10 @@ class EditLeads extends StatelessWidget {
                               Text("Ratings", style: kTextTitle),
                               const SizedBox(height: 5),
                               RatingBar.builder(
-                                initialRating: double.parse(
-                                    Get.find<TableController>()
-                                        .getRecordByFieldType(
-                                            "ratings", Get.arguments['records'])
-                                        .data),
+                                initialRating: double.parse(tableController
+                                    .getRecordByFieldType(
+                                        "ratings", argumentRecordList)
+                                    .data),
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 glow: false,
@@ -64,11 +71,7 @@ class EditLeads extends StatelessWidget {
                                   color: kColorStar,
                                 ),
                                 onRatingUpdate: (rating) {
-                                  Get.find<RecordController>().rating.value =
-                                      rating;
-                                  print(Get.find<RecordController>()
-                                      .rating
-                                      .value);
+                                  recordController.rating.value = rating;
                                 },
                               ),
                             ],
@@ -89,17 +92,14 @@ class EditLeads extends StatelessWidget {
                                 child: Row(children: [
                                   InkWell(
                                     onTap: () {
-                                      if (Get.find<TableController>()
-                                              .showContactInfo
-                                              .value ==
+                                      if (tableController
+                                              .showContactInfo.value ==
                                           false) {
-                                        Get.find<TableController>().setToTrue(
-                                            Get.find<TableController>()
-                                                .showContactInfo);
+                                        tableController.setToTrue(
+                                            tableController.showContactInfo);
                                       } else {
-                                        Get.find<TableController>().setToFalse(
-                                            Get.find<TableController>()
-                                                .showContactInfo);
+                                        tableController.setToFalse(
+                                            tableController.showContactInfo);
                                       }
                                     },
                                     child:
@@ -112,9 +112,7 @@ class EditLeads extends StatelessWidget {
                                   ),
                                 ]),
                               ),
-                              Obx(() => Get.find<TableController>()
-                                          .showContactInfo
-                                          .value ==
+                              Obx(() => tableController.showContactInfo.value ==
                                       true
                                   ? Container(
                                       width: MediaQuery.of(context).size.width,
@@ -129,11 +127,10 @@ class EditLeads extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: TextFormField(
-                                              initialValue: Get.find<
-                                                      TableController>()
+                                              initialValue: tableController
                                                   .getRecordByFieldType(
                                                       "firstName",
-                                                      Get.arguments['records'])
+                                                      argumentRecordList)
                                                   .data,
                                               decoration: InputDecoration(
                                                 contentPadding:
@@ -149,56 +146,46 @@ class EditLeads extends StatelessWidget {
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
-                                                if (Get.find<TableController>()
+                                                if (tableController
                                                         .getRecordByFieldType(
                                                             "firstName",
-                                                            Get.arguments[
-                                                                'records'])
+                                                            argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
                                                   // Adds an RecordUpdate in the the list of updates
                                                   // RecordUpdate class allows us to track the changes we did in the user's information
-                                                  Get.find<RecordUpdateController>().createRecordUpdate(
-                                                      Get.find<
-                                                              TableController>()
+                                                  recordUpdateController.createRecordUpdate(
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "firstName",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .userId,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "firstName",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .type,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "firstName",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data,
                                                       value.toString());
 
                                                   // Change the data of the record based on the given field type
-                                                  Get.find<TableController>()
+                                                  tableController
                                                       .getRecordByFieldType(
                                                           "firstName",
-                                                          Get.arguments[
-                                                              'records'])
+                                                          argumentRecordList)
                                                       .data = value.toString();
 
                                                   // Add the updated record to the list of updated records
-                                                  Get.find<RecordController>()
+                                                  recordController
                                                       .recordsToUpdate
-                                                      .add(Get.find<
-                                                              TableController>()
+                                                      .add(tableController
                                                           .getRecordByFieldType(
                                                               "firstName",
-                                                              Get.arguments[
-                                                                  'records']));
+                                                              argumentRecordList));
                                                 }
                                               },
                                             ),
@@ -206,13 +193,11 @@ class EditLeads extends StatelessWidget {
                                           const SizedBox(width: 30),
                                           Expanded(
                                             child: TextFormField(
-                                              initialValue: Get.find<
-                                                      TableController>()
+                                              initialValue: tableController
                                                   .getRecordByFieldType(
                                                       "lastName",
-                                                      Get.arguments['records'])
+                                                      argumentRecordList)
                                                   .data,
-                                              // '',
                                               decoration: InputDecoration(
                                                 contentPadding:
                                                     const EdgeInsets.all(0),
@@ -227,56 +212,46 @@ class EditLeads extends StatelessWidget {
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
-                                                if (Get.find<TableController>()
+                                                if (tableController
                                                         .getRecordByFieldType(
                                                             "lastName",
-                                                            Get.arguments[
-                                                                'records'])
+                                                            argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
                                                   // Adds an RecordUpdate in the the list of updates
                                                   // RecordUpdate class allows us to track the changes we did in the user's information
-                                                  Get.find<RecordUpdateController>().createRecordUpdate(
-                                                      Get.find<
-                                                              TableController>()
+                                                  recordUpdateController.createRecordUpdate(
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "lastName",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .userId,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "lastName",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .type,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "lastName",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data,
                                                       value.toString());
 
                                                   // Change the data of the record based on the given field type
-                                                  Get.find<TableController>()
+                                                  tableController
                                                       .getRecordByFieldType(
                                                           "lastName",
-                                                          Get.arguments[
-                                                              'records'])
+                                                          argumentRecordList)
                                                       .data = value.toString();
 
                                                   // Add the updated record to the list of updated records
-                                                  Get.find<RecordController>()
+                                                  recordController
                                                       .recordsToUpdate
-                                                      .add(Get.find<
-                                                              TableController>()
+                                                      .add(tableController
                                                           .getRecordByFieldType(
                                                               "lastName",
-                                                              Get.arguments[
-                                                                  'records']));
+                                                              argumentRecordList));
                                                 }
                                               },
                                             ),
@@ -303,17 +278,14 @@ class EditLeads extends StatelessWidget {
                                 child: Row(children: [
                                   InkWell(
                                     onTap: () {
-                                      if (Get.find<TableController>()
-                                              .showPhoneandEmail
-                                              .value ==
+                                      if (tableController
+                                              .showPhoneandEmail.value ==
                                           false) {
-                                        Get.find<TableController>().setToTrue(
-                                            Get.find<TableController>()
-                                                .showPhoneandEmail);
+                                        tableController.setToTrue(
+                                            tableController.showPhoneandEmail);
                                       } else {
-                                        Get.find<TableController>().setToFalse(
-                                            Get.find<TableController>()
-                                                .showPhoneandEmail);
+                                        tableController.setToFalse(
+                                            tableController.showPhoneandEmail);
                                       }
                                     },
                                     child:
@@ -326,9 +298,8 @@ class EditLeads extends StatelessWidget {
                                   ),
                                 ]),
                               ),
-                              Obx(() => Get.find<TableController>()
-                                          .showPhoneandEmail
-                                          .value ==
+                              Obx(() => tableController
+                                          .showPhoneandEmail.value ==
                                       true
                                   ? Container(
                                       width: MediaQuery.of(context).size.width,
@@ -347,22 +318,12 @@ class EditLeads extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 child: TextFormField(
-                                                  initialValue: Get.find<
-                                                                  TableController>()
-                                                              .getRecordByFieldType(
-                                                                  "phoneNumber",
-                                                                  Get.arguments[
-                                                                      'records'])
-                                                              .data ==
-                                                          'null'
-                                                      ? 'N/A'
-                                                      : Get.find<
-                                                              TableController>()
+                                                  initialValue: recordController
+                                                      .isStringDataNull(tableController
                                                           .getRecordByFieldType(
                                                               "phoneNumber",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data,
+                                                              argumentRecordList)
+                                                          .data),
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -385,59 +346,46 @@ class EditLeads extends StatelessWidget {
                                                   },
                                                   onSaved: (value) {
                                                     // Check if the data has changed before updating the database
-                                                    if (Get.find<
-                                                                TableController>()
+                                                    if (tableController
                                                             .getRecordByFieldType(
                                                                 "phoneNumber",
-                                                                Get.arguments[
-                                                                    'records'])
+                                                                argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
                                                       // Adds an RecordUpdate in the the list of updates
                                                       // RecordUpdate class allows us to track the changes we did in the user's information
-                                                      Get.find<RecordUpdateController>().createRecordUpdate(
-                                                          Get.find<
-                                                                  TableController>()
+                                                      recordUpdateController.createRecordUpdate(
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "phoneNumber",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .userId,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "phoneNumber",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .type,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "phoneNumber",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .data,
                                                           value.toString());
 
                                                       // Change the data of the record based on the given field type
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "phoneNumber",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data = value.toString();
 
                                                       // Add the updated record to the list of updated records
-                                                      Get.find<
-                                                              RecordController>()
+                                                      recordController
                                                           .recordsToUpdate
-                                                          .add(Get.find<
-                                                                  TableController>()
+                                                          .add(tableController
                                                               .getRecordByFieldType(
                                                                   "phoneNumber",
-                                                                  Get.arguments[
-                                                                      'records']));
+                                                                  argumentRecordList));
                                                     }
                                                   },
                                                 ),
@@ -445,22 +393,12 @@ class EditLeads extends StatelessWidget {
                                               const SizedBox(width: 30),
                                               Expanded(
                                                 child: TextFormField(
-                                                  initialValue: Get.find<
-                                                                  TableController>()
-                                                              .getRecordByFieldType(
-                                                                  "email",
-                                                                  Get.arguments[
-                                                                      'records'])
-                                                              .data ==
-                                                          'null'
-                                                      ? 'N/A'
-                                                      : Get.find<
-                                                              TableController>()
+                                                  initialValue: recordController
+                                                      .isStringDataNull(tableController
                                                           .getRecordByFieldType(
                                                               "email",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data,
+                                                              argumentRecordList)
+                                                          .data),
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -485,59 +423,46 @@ class EditLeads extends StatelessWidget {
                                                   },
                                                   onSaved: (value) {
                                                     // Check if the data has changed before updating the database
-                                                    if (Get.find<
-                                                                TableController>()
+                                                    if (tableController
                                                             .getRecordByFieldType(
                                                                 "email",
-                                                                Get.arguments[
-                                                                    'records'])
+                                                                argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
                                                       // Adds an RecordUpdate in the the list of updates
                                                       // RecordUpdate class allows us to track the changes we did in the user's information
-                                                      Get.find<RecordUpdateController>().createRecordUpdate(
-                                                          Get.find<
-                                                                  TableController>()
+                                                      recordUpdateController.createRecordUpdate(
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "email",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .userId,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "email",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .type,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "email",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .data,
                                                           value.toString());
 
                                                       // Change the data of the record based on the given field type
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "email",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data = value.toString();
 
                                                       // Add the updated record to the list of updated records
-                                                      Get.find<
-                                                              RecordController>()
+                                                      recordController
                                                           .recordsToUpdate
-                                                          .add(Get.find<
-                                                                  TableController>()
+                                                          .add(tableController
                                                               .getRecordByFieldType(
                                                                   "email",
-                                                                  Get.arguments[
-                                                                      'records']));
+                                                                  argumentRecordList));
                                                     }
                                                   },
                                                 ),
@@ -548,21 +473,13 @@ class EditLeads extends StatelessWidget {
                                           SizedBox(
                                             width: 895,
                                             child: TextFormField(
-                                              initialValue: Get.find<
-                                                              TableController>()
+                                              initialValue: recordController
+                                                  .isStringDataNull(
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "mobileNumber",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data ==
-                                                      'null'
-                                                  ? 'N/A'
-                                                  : Get.find<TableController>()
-                                                      .getRecordByFieldType(
-                                                          "mobileNumber",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data,
+                                                              argumentRecordList)
+                                                          .data),
                                               decoration: InputDecoration(
                                                 contentPadding:
                                                     const EdgeInsets.all(0),
@@ -584,56 +501,46 @@ class EditLeads extends StatelessWidget {
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
-                                                if (Get.find<TableController>()
+                                                if (tableController
                                                         .getRecordByFieldType(
                                                             "mobileNumber",
-                                                            Get.arguments[
-                                                                'records'])
+                                                            argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
                                                   // Adds an RecordUpdate in the the list of updates
                                                   // RecordUpdate class allows us to track the changes we did in the user's information
-                                                  Get.find<RecordUpdateController>().createRecordUpdate(
-                                                      Get.find<
-                                                              TableController>()
+                                                  recordUpdateController.createRecordUpdate(
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "mobileNumber",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .userId,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "mobileNumber",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .type,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "mobileNumber",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data,
                                                       value.toString());
 
                                                   // Change the data of the record based on the given field type
-                                                  Get.find<TableController>()
+                                                  tableController
                                                       .getRecordByFieldType(
                                                           "mobileNumber",
-                                                          Get.arguments[
-                                                              'records'])
+                                                          argumentRecordList)
                                                       .data = value.toString();
 
                                                   // Add the updated record to the list of updated records
-                                                  Get.find<RecordController>()
+                                                  recordController
                                                       .recordsToUpdate
-                                                      .add(Get.find<
-                                                              TableController>()
+                                                      .add(tableController
                                                           .getRecordByFieldType(
                                                               "mobileNumber",
-                                                              Get.arguments[
-                                                                  'records']));
+                                                              argumentRecordList));
                                                 }
                                               },
                                             ),
@@ -660,17 +567,14 @@ class EditLeads extends StatelessWidget {
                                 child: Row(children: [
                                   InkWell(
                                     onTap: () {
-                                      if (Get.find<TableController>()
-                                              .showAddressInfo
-                                              .value ==
+                                      if (tableController
+                                              .showAddressInfo.value ==
                                           false) {
-                                        Get.find<TableController>().setToTrue(
-                                            Get.find<TableController>()
-                                                .showAddressInfo);
+                                        tableController.setToTrue(
+                                            tableController.showAddressInfo);
                                       } else {
-                                        Get.find<TableController>().setToFalse(
-                                            Get.find<TableController>()
-                                                .showAddressInfo);
+                                        tableController.setToFalse(
+                                            tableController.showAddressInfo);
                                       }
                                     },
                                     child:
@@ -682,9 +586,7 @@ class EditLeads extends StatelessWidget {
                                   ),
                                 ]),
                               ),
-                              Obx(() => Get.find<TableController>()
-                                          .showAddressInfo
-                                          .value ==
+                              Obx(() => tableController.showAddressInfo.value ==
                                       true
                                   ? Container(
                                       width: MediaQuery.of(context).size.width,
@@ -701,21 +603,13 @@ class EditLeads extends StatelessWidget {
                                         children: [
                                           const SizedBox(height: 10),
                                           TextFormField(
-                                            initialValue: Get.find<
-                                                            TableController>()
+                                            initialValue: recordController
+                                                .isStringDataNull(
+                                                    tableController
                                                         .getRecordByFieldType(
                                                             "address1",
-                                                            Get.arguments[
-                                                                'records'])
-                                                        .data ==
-                                                    'null'
-                                                ? 'N/A'
-                                                : Get.find<TableController>()
-                                                    .getRecordByFieldType(
-                                                        "address1",
-                                                        Get.arguments[
-                                                            'records'])
-                                                    .data,
+                                                            argumentRecordList)
+                                                        .data),
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.all(0),
@@ -730,58 +624,45 @@ class EditLeads extends StatelessWidget {
                                             },
                                             onSaved: (value) {
                                               // Check if the data has changed before updating the database
-                                              if (Get.find<TableController>()
+                                              if (tableController
                                                       .getRecordByFieldType(
                                                           "address1",
-                                                          Get.arguments[
-                                                              'records'])
+                                                          argumentRecordList)
                                                       .data !=
                                                   value.toString()) {
                                                 // Adds an RecordUpdate in the the list of updates
                                                 // RecordUpdate class allows us to track the changes we did in the user's information
-                                                Get.find<
-                                                        RecordUpdateController>()
-                                                    .createRecordUpdate(
-                                                        Get.find<
-                                                                TableController>()
-                                                            .getRecordByFieldType(
-                                                                "address1",
-                                                                Get.arguments[
-                                                                    'records'])
-                                                            .userId,
-                                                        Get.find<
-                                                                TableController>()
-                                                            .getRecordByFieldType(
-                                                                "address1",
-                                                                Get.arguments[
-                                                                    'records'])
-                                                            .type,
-                                                        Get.find<
-                                                                TableController>()
-                                                            .getRecordByFieldType(
-                                                                "address1",
-                                                                Get.arguments[
-                                                                    'records'])
-                                                            .data,
-                                                        value.toString());
+                                                recordUpdateController.createRecordUpdate(
+                                                    tableController
+                                                        .getRecordByFieldType(
+                                                            "address1",
+                                                            argumentRecordList)
+                                                        .userId,
+                                                    tableController
+                                                        .getRecordByFieldType(
+                                                            "address1",
+                                                            argumentRecordList)
+                                                        .type,
+                                                    tableController
+                                                        .getRecordByFieldType(
+                                                            "address1",
+                                                            argumentRecordList)
+                                                        .data,
+                                                    value.toString());
 
                                                 // Change the data of the record based on the given field type
-                                                Get.find<TableController>()
+                                                tableController
                                                     .getRecordByFieldType(
                                                         "address1",
-                                                        Get.arguments[
-                                                            'records'])
+                                                        argumentRecordList)
                                                     .data = value.toString();
 
                                                 // Add the updated record to the list of updated records
-                                                Get.find<RecordController>()
-                                                    .recordsToUpdate
-                                                    .add(Get.find<
-                                                            TableController>()
+                                                recordController.recordsToUpdate
+                                                    .add(tableController
                                                         .getRecordByFieldType(
                                                             "address1",
-                                                            Get.arguments[
-                                                                'records']));
+                                                            argumentRecordList));
                                               }
                                             },
                                           ),
@@ -790,22 +671,12 @@ class EditLeads extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 child: TextFormField(
-                                                  initialValue: Get.find<
-                                                                  TableController>()
-                                                              .getRecordByFieldType(
-                                                                  "city",
-                                                                  Get.arguments[
-                                                                      'records'])
-                                                              .data ==
-                                                          'null'
-                                                      ? 'N/A'
-                                                      : Get.find<
-                                                              TableController>()
+                                                  initialValue: recordController
+                                                      .isStringDataNull(tableController
                                                           .getRecordByFieldType(
                                                               "city",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data,
+                                                              argumentRecordList)
+                                                          .data),
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -822,59 +693,46 @@ class EditLeads extends StatelessWidget {
                                                   },
                                                   onSaved: (value) {
                                                     // Check is the data has changed before updating the database
-                                                    if (Get.find<
-                                                                TableController>()
+                                                    if (tableController
                                                             .getRecordByFieldType(
                                                                 "city",
-                                                                Get.arguments[
-                                                                    'records'])
+                                                                argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
                                                       // Adds an RecordUpdate in the the list of updates
                                                       // RecordUpdate class allows us to track the changes we did in the user's information
-                                                      Get.find<RecordUpdateController>().createRecordUpdate(
-                                                          Get.find<
-                                                                  TableController>()
+                                                      recordUpdateController.createRecordUpdate(
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "city",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .userId,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "city",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .type,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "city",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .data,
                                                           value.toString());
 
                                                       // Change the data of the record based on the given field type
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "city",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data = value.toString();
 
                                                       // Add the updated record to the list of updated records
-                                                      Get.find<
-                                                              RecordController>()
+                                                      recordController
                                                           .recordsToUpdate
-                                                          .add(Get.find<
-                                                                  TableController>()
+                                                          .add(tableController
                                                               .getRecordByFieldType(
                                                                   "city",
-                                                                  Get.arguments[
-                                                                      'records']));
+                                                                  argumentRecordList));
                                                     }
                                                   },
                                                 ),
@@ -882,22 +740,12 @@ class EditLeads extends StatelessWidget {
                                               const SizedBox(width: 30),
                                               Expanded(
                                                 child: TextFormField(
-                                                  initialValue: Get.find<
-                                                                  TableController>()
-                                                              .getRecordByFieldType(
-                                                                  "province",
-                                                                  Get.arguments[
-                                                                      'records'])
-                                                              .data ==
-                                                          'null'
-                                                      ? 'N/A'
-                                                      : Get.find<
-                                                              TableController>()
+                                                  initialValue: recordController
+                                                      .isStringDataNull(tableController
                                                           .getRecordByFieldType(
                                                               "province",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data,
+                                                              argumentRecordList)
+                                                          .data),
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         const EdgeInsets.all(0),
@@ -914,59 +762,46 @@ class EditLeads extends StatelessWidget {
                                                   },
                                                   onSaved: (value) {
                                                     // Check if the data has changed before updating the database
-                                                    if (Get.find<
-                                                                TableController>()
+                                                    if (tableController
                                                             .getRecordByFieldType(
                                                                 "province",
-                                                                Get.arguments[
-                                                                    'records'])
+                                                                argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
                                                       // Adds an RecordUpdate in the the list of updates
                                                       // RecordUpdate class allows us to track the changes we did in the user's information
-                                                      Get.find<RecordUpdateController>().createRecordUpdate(
-                                                          Get.find<
-                                                                  TableController>()
+                                                      recordUpdateController.createRecordUpdate(
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "province",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .userId,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "province",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .type,
-                                                          Get.find<
-                                                                  TableController>()
+                                                          tableController
                                                               .getRecordByFieldType(
                                                                   "province",
-                                                                  Get.arguments[
-                                                                      'records'])
+                                                                  argumentRecordList)
                                                               .data,
                                                           value.toString());
 
                                                       // Change the data of the record based on the given field type
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "province",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data = value.toString();
 
                                                       // Add the updated record to the list of updated records
-                                                      Get.find<
-                                                              RecordController>()
+                                                      recordController
                                                           .recordsToUpdate
-                                                          .add(Get.find<
-                                                                  TableController>()
+                                                          .add(tableController
                                                               .getRecordByFieldType(
                                                                   "province",
-                                                                  Get.arguments[
-                                                                      'records']));
+                                                                  argumentRecordList));
                                                     }
                                                   },
                                                 ),
@@ -977,21 +812,13 @@ class EditLeads extends StatelessWidget {
                                           SizedBox(
                                             width: 895,
                                             child: TextFormField(
-                                              initialValue: Get.find<
-                                                              TableController>()
+                                              initialValue: recordController
+                                                  .isStringDataNull(
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "postal",
-                                                              Get.arguments[
-                                                                  'records'])
-                                                          .data ==
-                                                      'null'
-                                                  ? 'N/A'
-                                                  : Get.find<TableController>()
-                                                      .getRecordByFieldType(
-                                                          "postal",
-                                                          Get.arguments[
-                                                              'records'])
-                                                      .data,
+                                                              argumentRecordList)
+                                                          .data),
                                               decoration: InputDecoration(
                                                 contentPadding:
                                                     const EdgeInsets.all(0),
@@ -1006,56 +833,46 @@ class EditLeads extends StatelessWidget {
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
-                                                if (Get.find<TableController>()
+                                                if (tableController
                                                         .getRecordByFieldType(
                                                             "postal",
-                                                            Get.arguments[
-                                                                'records'])
+                                                            argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
                                                   // Adds an RecordUpdate in the the list of updates
                                                   // RecordUpdate class allows us to track the changes we did in the user's information
-                                                  Get.find<RecordUpdateController>().createRecordUpdate(
-                                                      Get.find<
-                                                              TableController>()
+                                                  recordUpdateController.createRecordUpdate(
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "postal",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .userId,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "postal",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .type,
-                                                      Get.find<
-                                                              TableController>()
+                                                      tableController
                                                           .getRecordByFieldType(
                                                               "postal",
-                                                              Get.arguments[
-                                                                  'records'])
+                                                              argumentRecordList)
                                                           .data,
                                                       value.toString());
 
                                                   // Change the data of the record based on the given field type
-                                                  Get.find<TableController>()
+                                                  tableController
                                                       .getRecordByFieldType(
                                                           "postal",
-                                                          Get.arguments[
-                                                              'records'])
+                                                          argumentRecordList)
                                                       .data = value.toString();
 
                                                   // Add the updated record to the list of updated records
-                                                  Get.find<RecordController>()
+                                                  recordController
                                                       .recordsToUpdate
-                                                      .add(Get.find<
-                                                              TableController>()
+                                                      .add(tableController
                                                           .getRecordByFieldType(
                                                               "postal",
-                                                              Get.arguments[
-                                                                  'records']));
+                                                              argumentRecordList));
                                                 }
                                               },
                                             ),
@@ -1075,7 +892,7 @@ class EditLeads extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () {
                                 Get.offAllNamed("/LeadDetails", arguments: {
-                                  'records': Get.arguments['records'],
+                                  'records': argumentRecordList,
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -1085,33 +902,25 @@ class EditLeads extends StatelessWidget {
                             const SizedBox(width: 10),
                             ElevatedButton(
                               onPressed: () {
-                                if (Get.find<RecordController>()
-                                    .validateTextField(
-                                        Get.find<RecordController>()
-                                            .updateFormKey)) {
+                                if (recordController.validateTextField(
+                                    recordController.updateFormKey)) {
                                   // Change the value of the ratings
-                                  Get.find<TableController>()
-                                          .getRecordByFieldType("ratings",
-                                              Get.arguments['records'])
+                                  tableController
+                                          .getRecordByFieldType(
+                                              "ratings", argumentRecordList)
                                           .data =
-                                      Get.find<RecordController>()
-                                          .rating
-                                          .value
-                                          .toString();
+                                      recordController.rating.value.toString();
 
                                   // Add the record with the rating to the list of records that we are updating
-                                  Get.find<RecordController>()
-                                      .recordsToUpdate
-                                      .add(Get.find<TableController>()
-                                          .getRecordByFieldType("ratings",
-                                              Get.arguments['records']));
+                                  recordController.recordsToUpdate.add(
+                                      tableController.getRecordByFieldType(
+                                          "ratings", argumentRecordList));
 
                                   // Update all the records
-                                  Get.find<RecordController>().updateRecord();
+                                  recordController.updateRecord();
 
                                   // Insert all the updates in the database to keep track of all the changes
-                                  Get.find<RecordUpdateController>()
-                                      .insertAllUdpates();
+                                  recordUpdateController.insertAllUdpates();
 
                                   AwesomeDialog(
                                     context: context,
