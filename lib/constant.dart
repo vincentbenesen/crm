@@ -17,6 +17,52 @@ const kServiceId = 'service_lce03ol';
 const kTemplateId = 'template_p3x59sr';
 const kUserId = 'dVUn9I_CeROfYzKXa';
 
+// These constants variables are used for TextFormFields labels and methods parameters
+const kFirstName = 'firstName';
+const kLastName = 'lastName';
+const kAddress1 = 'address1';
+const kAddress2 = 'address2';
+const kCity = 'city';
+const kProvince = 'province';
+const kPostal = 'postal';
+const kPhoneNumber = 'phoneNumber';
+const kMobileNumber = 'mobileNumber';
+const kEmail = 'email';
+const kFullNameTitle = 'Full Name';
+const kAddressTitle = 'Address';
+const kContactInfoTitle = 'Contact Information';
+const kFirstNameLabelText = 'First Name *';
+const kLastNameLabelText = 'Last Name *';
+const kAddress1LabelText = 'Street Address *';
+const kAddress2LabelText = 'Street Address Line 2';
+const kCityLabelText = 'City *';
+const kProvinceLabelText = 'Province *';
+const kPostalLabelText = 'Postal/Zip Code *';
+const kPhoneLabelText = 'Phone *';
+const kEmailLabelText = 'Email *';
+const kMobileLabelText = 'Mobile *';
+
+const kFirstNameHintText = 'Vincent';
+const kLastNameHintText = 'Benesen';
+const kAddressHintText = '1130 rue Sherbrooke Ouest, Suite 700';
+const kCityHintText = 'Montreal';
+const kProvinceHintText = 'Quebec';
+const kPostalHintText = 'H3A 2M8';
+const kPhoneNumberHintText = '123456789';
+const kEmailHintText = '123@yahoo.com';
+
+// These constants are used to navigate through the page
+const kToLead = '/Leads';
+const kToSearchedLeads = '/SearchedLeads';
+const kToPanel = '/Panel';
+const kToLeadDetails = '/LeadDetails';
+const kToLogin = "/Login";
+const kToSignUp = '/SignUp';
+
+// Regex
+const kPhoneRegex =
+    r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$";
+
 // These variable are for styling the text
 const kColorDarkBlue = Color.fromARGB(255, 56, 91, 133);
 const kColorPearlWhite = Color.fromARGB(255, 219, 217, 217);
@@ -61,5 +107,6 @@ var kButtonText2 = GoogleFonts.rubik(fontSize: 20, color: kColorDarkBlue);
 var kButtonText3 = GoogleFonts.rubik(fontSize: 20, color: Colors.white);
 var kButtonText4 = GoogleFonts.rubik(fontSize: 12, color: kColorDarkBlue);
 
+// Sizes of the the buttons
 double kDefaultButtonSize = 80;
 double kSmallerButtonSize = 65;

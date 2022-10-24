@@ -44,7 +44,7 @@ class SearchedLeads extends StatelessWidget {
                           const SizedBox(width: 5),
                           InkWell(
                               onTap: () {
-                                Get.offAllNamed('/Leads');
+                                Get.offAllNamed(kToLead);
                               },
                               child: Text("Leads", style: kTextTitle))
                         ],
@@ -62,7 +62,7 @@ class SearchedLeads extends StatelessWidget {
                             suffixIcon: InkWell(
                                 onTap: () {
                                   // When the searched icon is clicked, it searches names
-                                  Get.offAllNamed('/SearchedLeads', arguments: {
+                                  Get.offAllNamed(kToSearchedLeads, arguments: {
                                     'searchedResults': tableController.result(
                                         argumentLeadList,
                                         tableController.matchesName(
@@ -86,7 +86,7 @@ class SearchedLeads extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: () {
                                   argumentSearchedResultList;
-                                  Get.offAllNamed("/Panel");
+                                  Get.offAllNamed(kToPanel);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:crm/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,9 @@ class AuthService extends GetxController {
 
   _initialScreen(User? user) {
     if (user == null) {
-      Get.offAllNamed('/Login');
+      Get.offAllNamed(kToLogin);
     } else {
-      Get.offAllNamed('/Leads');
+      Get.offAllNamed(kToLead);
     }
   }
 
@@ -54,7 +55,7 @@ class AuthService extends GetxController {
           email: emailTextController.text.trim(),
           password: passwordTextController.text.trim());
 
-      Get.offAllNamed('/Login');
+      Get.offAllNamed(kToLogin);
     } on FirebaseAuthException catch (e) {
       showErrorLogin(context, e.toString()).show();
     }

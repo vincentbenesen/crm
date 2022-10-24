@@ -7,7 +7,6 @@ import 'package:crm/constant.dart';
 import 'package:crm/Controllers/record_controller.dart';
 import 'package:crm/Controllers/table_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
-import 'package:crm/services/auth_service.dart';
 import 'package:crm/Widgets/custom_AppBar.dart';
 import '../Models/record.dart';
 
@@ -60,7 +59,7 @@ class Leads extends StatelessWidget {
                                           // Go to searchLeads page
                                           // It also passed some data from lead to searchLeads page
                                           // These data are the searched lead/user
-                                          Get.offAllNamed('/SearchedLeads',
+                                          Get.offAllNamed(kToSearchedLeads,
                                               arguments: {
                                                 'searchedResults':
                                                     tableController.result(
@@ -89,7 +88,7 @@ class Leads extends StatelessWidget {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          Get.offAllNamed("/Panel");
+                                          Get.offAllNamed(kToPanel);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white,

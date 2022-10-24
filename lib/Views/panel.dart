@@ -51,28 +51,28 @@ class Panel extends StatelessWidget {
                         onStepTapped: (value) {},
                         onStepCancel: () {
                           if (stepperController.currentStep.value == 0) {
-                            Get.offAllNamed("/Leads");
+                            Get.offAllNamed(kToLead);
                           } else if (stepperController.currentStep.value == 1) {
                             // Removes the records from the list of records that will be inserted when
                             // we go back to the previous page
-                            recordController.recordToInsert.remove("firstName");
-                            recordController.recordToInsert.remove("lastName");
+                            recordController.recordToInsert.remove(kFirstName);
+                            recordController.recordToInsert.remove(kLastName);
                           } else if (stepperController.currentStep.value == 2) {
                             // Removes the records from the list of records that will be inserted when
                             // we go back to the previous page
-                            recordController.recordToInsert.remove("address1");
-                            recordController.recordToInsert.remove("address2");
-                            recordController.recordToInsert.remove("city");
-                            recordController.recordToInsert.remove("province");
-                            recordController.recordToInsert.remove("postal");
+                            recordController.recordToInsert.remove(kAddress1);
+                            recordController.recordToInsert.remove(kAddress2);
+                            recordController.recordToInsert.remove(kCity);
+                            recordController.recordToInsert.remove(kProvince);
+                            recordController.recordToInsert.remove(kPostal);
                           } else if (stepperController.currentStep.value == 3) {
                             // Removes the records from the list of records that will be inserted when
                             // we go back to the previous page
                             recordController.recordToInsert
-                                .remove("phoneNumber");
+                                .remove(kPhoneNumber);
                             recordController.recordToInsert
-                                .remove("mobileNumber");
-                            recordController.recordToInsert.remove("email");
+                                .remove(kMobileNumber);
+                            recordController.recordToInsert.remove(kEmail);
                           }
 
                           stepperController.decrement();
@@ -112,7 +112,7 @@ class Panel extends StatelessWidget {
                                   title: 'Record Inserted',
                                   btnOkOnPress: () {
                                     // Go back to Lead page
-                                    Get.offAllNamed("/Leads");
+                                    Get.offAllNamed(kToLead);
                                   },
                                   btnOkIcon: Icons.check_circle,
                                   onDissmissCallback: (type) {},
@@ -158,16 +158,16 @@ class Panel extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Full Name",
+                                    kFullNameTitle,
                                     style: kPanelTextH1,
                                   ),
                                   Row(
                                     children: [
                                       Expanded(
                                           child: CustomTextField(
-                                        labelText: "First Name *",
-                                        hintText: "Vincent",
-                                        fieldType: "firstName",
+                                        labelText: kFirstNameLabelText,
+                                        hintText: kFirstNameHintText,
+                                        fieldType: kFirstName,
                                         fieldId: 1,
                                         maxLength: 40,
                                         records:
@@ -180,9 +180,9 @@ class Panel extends StatelessWidget {
                                       ),
                                       Expanded(
                                           child: CustomTextField(
-                                        labelText: "Last Name *",
-                                        hintText: "Benesen",
-                                        fieldType: "lastName",
+                                        labelText: kLastNameLabelText,
+                                        hintText: kLastNameHintText,
+                                        fieldType: kLastName,
                                         fieldId: 2,
                                         maxLength: 40,
                                         records:
@@ -211,14 +211,13 @@ class Panel extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Address",
+                                    kAddressTitle,
                                     style: kPanelTextH1,
                                   ),
                                   CustomTextField(
-                                    labelText: "Street Address *",
-                                    hintText:
-                                        "1130 rue Sherbrooke Ouest, Suite 700",
-                                    fieldType: "address1",
+                                    labelText: kAddress1LabelText,
+                                    hintText: kAddressHintText,
+                                    fieldType: kAddress1,
                                     fieldId: 3,
                                     maxLength: 40,
                                     records: recordController.recordToInsert,
@@ -226,10 +225,9 @@ class Panel extends StatelessWidget {
                                         recordController.address1Controller,
                                   ),
                                   CustomTextField(
-                                    labelText: "Street Address Line 2",
-                                    hintText:
-                                        "1130 rue Sherbrooke Ouest, Suite 700",
-                                    fieldType: "address2",
+                                    labelText: kAddress2LabelText,
+                                    hintText: kAddressHintText,
+                                    fieldType: kAddress2,
                                     fieldId: 4,
                                     maxLength: 40,
                                     records: recordController.recordToInsert,
@@ -240,9 +238,9 @@ class Panel extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: CustomTextField(
-                                          labelText: "City *",
-                                          hintText: "Montreal",
-                                          fieldType: "city",
+                                          labelText: kCityLabelText,
+                                          hintText: kCityHintText,
+                                          fieldType: kCity,
                                           fieldId: 5,
                                           maxLength: 40,
                                           records:
@@ -256,9 +254,9 @@ class Panel extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: CustomTextField(
-                                          labelText: "Province *",
-                                          hintText: "Quebec",
-                                          fieldType: "province",
+                                          labelText: kProvinceLabelText,
+                                          hintText: kProvinceHintText,
+                                          fieldType: kProvince,
                                           fieldId: 6,
                                           maxLength: 40,
                                           records:
@@ -270,9 +268,9 @@ class Panel extends StatelessWidget {
                                     ],
                                   ),
                                   CustomTextField(
-                                    labelText: "Postal/Zip Code *",
-                                    hintText: "H3A 2M8",
-                                    fieldType: "postal",
+                                    labelText: kPostalLabelText,
+                                    hintText: kPostalHintText,
+                                    fieldType: kPostal,
                                     fieldId: 7,
                                     maxLength: 40,
                                     records: recordController.recordToInsert,
@@ -297,16 +295,16 @@ class Panel extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Contact Information",
+                                    kContactInfoTitle,
                                     style: kPanelTextH1,
                                   ),
                                   Row(
                                     children: [
                                       Expanded(
                                         child: CustomTextField(
-                                          labelText: "Phone *",
-                                          hintText: "123456789",
-                                          fieldType: "phoneNumber",
+                                          labelText: kPhoneLabelText,
+                                          hintText: kPhoneNumberHintText,
+                                          fieldType: kPhoneNumber,
                                           fieldId: 8,
                                           maxLength: 10,
                                           records:
@@ -318,9 +316,9 @@ class Panel extends StatelessWidget {
                                       const SizedBox(width: 30),
                                       Expanded(
                                         child: CustomTextField(
-                                          labelText: "Email *",
-                                          hintText: "123@yahoo.com",
-                                          fieldType: "email",
+                                          labelText: kEmailLabelText,
+                                          hintText: kEmailHintText,
+                                          fieldType: kEmail,
                                           fieldId: 9,
                                           maxLength: 100,
                                           records:
@@ -334,9 +332,9 @@ class Panel extends StatelessWidget {
                                   SizedBox(
                                     width: 850,
                                     child: CustomTextField(
-                                      labelText: "Mobile *",
-                                      hintText: "123456789",
-                                      fieldType: "mobileNumber",
+                                      labelText: kMobileLabelText,
+                                      hintText: kPhoneNumberHintText,
+                                      fieldType: kMobileNumber,
                                       fieldId: 8,
                                       maxLength: 10,
                                       records: recordController.recordToInsert,

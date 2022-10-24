@@ -89,7 +89,7 @@ class LeadDetails extends StatelessWidget {
                                                   style: kLeadDetailsTextH3,
                                                 ),
                                                 Text(
-                                                  "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
+                                                  "${tableController.getRecordByFieldType(kFirstName, argumentRecordList).data} ${tableController.getRecordByFieldType(kLastName, argumentRecordList).data}",
                                                   style: kLeadDetailsTextH2,
                                                 )
                                               ],
@@ -163,7 +163,7 @@ class LeadDetails extends StatelessWidget {
                                                         .deleteRecord(
                                                             argumentRecordList);
 
-                                                    Get.offAllNamed("/Leads");
+                                                    Get.offAllNamed(kToLead);
                                                   },
                                                 ).show();
                                               },
@@ -177,7 +177,7 @@ class LeadDetails extends StatelessWidget {
                                             ),
                                             TextButton(
                                               onPressed: () {
-                                                Get.offAllNamed("/Leads");
+                                                Get.offAllNamed(kToLead);
                                               },
                                               style: TextButton.styleFrom(
                                                   backgroundColor:
@@ -210,7 +210,7 @@ class LeadDetails extends StatelessWidget {
                                               style: kLeadDetailsTextH3,
                                             ),
                                             Text(
-                                              "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
+                                              "${tableController.getRecordByFieldType(kFirstName, argumentRecordList).data} ${tableController.getRecordByFieldType(kLastName, argumentRecordList).data}",
                                               style: kLeadDetailsTextH2,
                                             )
                                           ],
@@ -279,7 +279,7 @@ class LeadDetails extends StatelessWidget {
                                               recordController.deleteRecord(
                                                   argumentRecordList);
 
-                                              Get.offAllNamed("/Leads");
+                                              Get.offAllNamed(kToLead);
                                             },
                                             style: TextButton.styleFrom(
                                                 backgroundColor: Colors.white),
@@ -297,7 +297,7 @@ class LeadDetails extends StatelessWidget {
                                               : kSmallerButtonSize,
                                           child: TextButton(
                                             onPressed: () {
-                                              Get.offAllNamed("/Leads");
+                                              Get.offAllNamed(kToLead);
                                             },
                                             style: TextButton.styleFrom(
                                                 backgroundColor: Colors.white),
@@ -338,7 +338,7 @@ class LeadDetails extends StatelessWidget {
                                             style: kLeadDetailsTextH3),
                                         const SizedBox(height: 5),
                                         Text(
-                                            "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
+                                            "${tableController.getRecordByFieldType(kFirstName, argumentRecordList).data} ${tableController.getRecordByFieldType(kLastName, argumentRecordList).data}",
                                             style: kLeadDetailsTextH4),
                                       ],
                                     ),
@@ -354,7 +354,7 @@ class LeadDetails extends StatelessWidget {
                                           recordController.isStringDataNull(
                                               tableController
                                                   .getRecordByFieldType(
-                                                      "phoneNumber",
+                                                      kPhoneNumber,
                                                       argumentRecordList)
                                                   .data),
                                           style: kLeadDetailsTextH4,
@@ -373,7 +373,7 @@ class LeadDetails extends StatelessWidget {
                                             recordController.isStringDataNull(
                                                 tableController
                                                     .getRecordByFieldType(
-                                                        "email",
+                                                        kEmail,
                                                         argumentRecordList)
                                                     .data),
                                             style: kLeadDetailsTextH4),
@@ -400,7 +400,7 @@ class LeadDetails extends StatelessWidget {
                                             Text("Account Name",
                                                 style: kLeadDetailsTextH5),
                                             Text(
-                                                "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
+                                                "${tableController.getRecordByFieldType(kFirstName, argumentRecordList).data} ${tableController.getRecordByFieldType(kLastName, argumentRecordList).data}",
                                                 style: kLeadDetailsTextH6),
                                           ],
                                         ),
@@ -415,7 +415,7 @@ class LeadDetails extends StatelessWidget {
                                               recordController.isStringDataNull(
                                                   tableController
                                                       .getRecordByFieldType(
-                                                          "phoneNumber",
+                                                          kPhoneNumber,
                                                           argumentRecordList)
                                                       .data),
                                               style: kLeadDetailsTextH6,
@@ -439,7 +439,7 @@ class LeadDetails extends StatelessWidget {
                                                 recordController.isStringDataNull(
                                                     tableController
                                                         .getRecordByFieldType(
-                                                            "email",
+                                                            kEmail,
                                                             argumentRecordList)
                                                         .data),
                                                 style: kLeadDetailsTextH6),
@@ -591,7 +591,7 @@ class LeadDetails extends StatelessWidget {
                                     child: TextButton(
                                       onPressed: () {
                                         logController.currentSection.value =
-                                            "email";
+                                            kEmail;
                                       },
                                       style: TextButton.styleFrom(
                                           fixedSize: Size.fromHeight(50),
@@ -647,7 +647,7 @@ class LeadDetails extends StatelessWidget {
                                     MediaQuery.of(context).size.width,
                                     tableController
                                         .getRecordByFieldType(
-                                            'firstName', argumentRecordList)
+                                            kFirstName, argumentRecordList)
                                         .userId)),
                               ],
                             ),
@@ -719,7 +719,7 @@ class LeadDetails extends StatelessWidget {
                                   TextFormField(
                                     readOnly: true,
                                     initialValue:
-                                        "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
+                                        "${tableController.getRecordByFieldType(kFirstName, argumentRecordList).data} ${tableController.getRecordByFieldType(kLastName, argumentRecordList).data}",
                                     decoration: InputDecoration(
                                       labelText: "Name",
                                       labelStyle: kLeadDetailsTextH3,
@@ -800,7 +800,7 @@ class LeadDetails extends StatelessWidget {
                                                       child: TextFormField(
                                                         readOnly: true,
                                                         initialValue:
-                                                            "${tableController.getRecordByFieldType("firstName", argumentRecordList).data} ${tableController.getRecordByFieldType("lastName", argumentRecordList).data}",
+                                                            "${tableController.getRecordByFieldType(kFirstName, argumentRecordList).data} ${tableController.getRecordByFieldType(kLastName, argumentRecordList).data}",
                                                         decoration:
                                                             InputDecoration(
                                                           labelText:
@@ -885,7 +885,7 @@ class LeadDetails extends StatelessWidget {
                                                             initialValue: recordController
                                                                 .isStringDataNull(tableController
                                                                     .getRecordByFieldType(
-                                                                        "phoneNumber",
+                                                                        kPhoneNumber,
                                                                         argumentRecordList)
                                                                     .data),
                                                             decoration:
@@ -903,11 +903,12 @@ class LeadDetails extends StatelessWidget {
                                                           child: TextFormField(
                                                             readOnly: true,
                                                             initialValue: recordController
-                                                                .isStringDataNull(tableController
-                                                                    .getRecordByFieldType(
-                                                                        "email",
-                                                                        argumentRecordList)
-                                                                    .data),
+                                                                .isStringDataNull(
+                                                                    tableController
+                                                                        .getRecordByFieldType(
+                                                                            kEmail,
+                                                                            argumentRecordList)
+                                                                        .data),
                                                             decoration:
                                                                 InputDecoration(
                                                               labelText:
@@ -927,7 +928,7 @@ class LeadDetails extends StatelessWidget {
                                                             .isStringDataNull(
                                                                 tableController
                                                                     .getRecordByFieldType(
-                                                                        "mobileNumber",
+                                                                        kMobileNumber,
                                                                         argumentRecordList)
                                                                     .data),
                                                         decoration:
@@ -1011,7 +1012,7 @@ class LeadDetails extends StatelessWidget {
                                                           .isStringDataNull(
                                                               tableController
                                                                   .getRecordByFieldType(
-                                                                      "address1",
+                                                                      kAddress1,
                                                                       argumentRecordList)
                                                                   .data),
                                                       decoration:
@@ -1031,7 +1032,7 @@ class LeadDetails extends StatelessWidget {
                                                                 .isStringDataNull(
                                                                     tableController
                                                                         .getRecordByFieldType(
-                                                                            "city",
+                                                                            kCity,
                                                                             argumentRecordList)
                                                                         .data),
                                                             decoration:
@@ -1052,7 +1053,7 @@ class LeadDetails extends StatelessWidget {
                                                             initialValue: recordController
                                                                 .isStringDataNull(tableController
                                                                     .getRecordByFieldType(
-                                                                        "province",
+                                                                        kProvince,
                                                                         argumentRecordList)
                                                                     .data),
                                                             decoration:
@@ -1074,7 +1075,7 @@ class LeadDetails extends StatelessWidget {
                                                             .isStringDataNull(
                                                                 tableController
                                                                     .getRecordByFieldType(
-                                                                        "postal",
+                                                                        kPostal,
                                                                         argumentRecordList)
                                                                     .data),
                                                         decoration:
@@ -1147,7 +1148,7 @@ class LeadDetails extends StatelessWidget {
                                           child: TextFormField(
                                             initialValue: tableController
                                                 .getRecordByFieldType(
-                                                    "firstName",
+                                                    kFirstName,
                                                     argumentRecordList)
                                                 .data,
                                             enabled: false,
@@ -1186,8 +1187,7 @@ class LeadDetails extends StatelessWidget {
                                         Expanded(
                                           child: TextFormField(
                                             initialValue: tableController
-                                                .getRecordByFieldType(
-                                                    "lastName",
+                                                .getRecordByFieldType(kLastName,
                                                     argumentRecordList)
                                                 .data,
                                             enabled: false,
@@ -1233,7 +1233,7 @@ class LeadDetails extends StatelessWidget {
                                     TextFormField(
                                       initialValue: tableController
                                           .getRecordByFieldType(
-                                              "email", argumentRecordList)
+                                              kEmail, argumentRecordList)
                                           .data,
                                       enabled: false,
                                       decoration: InputDecoration(
@@ -1526,7 +1526,7 @@ class LeadDetails extends StatelessWidget {
                               stream: Stream.fromFuture(
                                   logController.getAllLogs(tableController
                                       .getRecordByFieldType(
-                                          "firstName", argumentRecordList)
+                                          kFirstName, argumentRecordList)
                                       .userId)),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==

@@ -8,9 +8,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:excel_dart/excel_dart.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:phone_numbers_parser/phone_numbers_parser.dart';
 
 import '../Models/record.dart';
 import 'package:crm/Widgets/text_Field.dart';
+import 'package:crm/constant.dart';
 
 class RecordController extends GetxController {
   // To access the records from the database.
@@ -309,11 +312,41 @@ class RecordController extends GetxController {
     );
   }
 
+  // Checks if the data is null or not
   String isStringDataNull(String data) {
     if (data == 'null') {
       return 'N/A';
     }
     return data;
+  }
+
+  // Check if the string is empty or not
+  String? isStringEmpty(String? data) {
+    if (data.toString().trim().isEmpty) {
+      return 'This field is required';
+    }
+    return null;
+  }
+
+  // Check if the email is valid or not
+  String? isEmailValid(String? email) {
+    if (!EmailValidator.validate(email.toString()) &&
+        email.toString().isNotEmpty) {
+      return 'Please enter a valid email';
+    }
+    return isStringEmpty(email.toString());
+  }
+
+  // This method is used to validate the phone number of the user
+  String? isPhoneNumberValid(String? number) {
+    if (number.toString().isNotEmpty) {
+      if (!RegExp(kPhoneRegex).hasMatch(number.toString())) {
+        return "Please enter a valid phone number";
+      }
+      return null;
+    }
+
+    return 'This field is required';
   }
 
   // Imports the data from an Excel file to firebase

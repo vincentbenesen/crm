@@ -93,7 +93,7 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 InkWell(
                   onTap: () {
-                    Get.offAndToNamed("/Login");
+                    Get.offAndToNamed(kToLogin);
                   },
                   child: Text(
                     "Log In",

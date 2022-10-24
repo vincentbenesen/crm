@@ -1,3 +1,4 @@
+import 'package:crm/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -92,35 +93,35 @@ class CustomTextField extends StatelessWidget {
       onSaved: (value) {
         Record newRecord = Record(1, fieldId, fieldType, value.toString());
         switch (fieldType) {
-          case "firstName":
-            records["firstName"] = newRecord;
+          case kFirstName:
+            records[kFirstName] = newRecord;
             break;
-          case "lastName":
-            records["lastName"] = newRecord;
+          case kLastName:
+            records[kLastName] = newRecord;
             break;
-          case "address1":
-            records["address1"] = newRecord;
+          case kAddress1:
+            records[kAddress1] = newRecord;
             break;
-          case "address2":
-            records["address2"] = newRecord;
+          case kAddress2:
+            records[kAddress2] = newRecord;
             break;
-          case "city":
-            records["city"] = newRecord;
+          case kCity:
+            records[kCity] = newRecord;
             break;
-          case "province":
-            records["province"] = newRecord;
+          case kProvince:
+            records[kProvince] = newRecord;
             break;
-          case "postal":
-            records["postal"] = newRecord;
+          case kPostal:
+            records[kPostal] = newRecord;
             break;
-          case "phoneNumber":
-            records["phoneNumber"] = newRecord;
+          case kPhoneNumber:
+            records[kPhoneNumber] = newRecord;
             break;
-          case "mobileNumber":
-            records["mobileNumber"] = newRecord;
+          case kMobileNumber:
+            records[kMobileNumber] = newRecord;
             break;
-          case "email":
-            records["email"] = newRecord;
+          case kEmail:
+            records[kEmail] = newRecord;
             break;
           default:
             records[fieldType] = newRecord;

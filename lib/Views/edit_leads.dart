@@ -129,7 +129,7 @@ class EditLeads extends StatelessWidget {
                                             child: TextFormField(
                                               initialValue: tableController
                                                   .getRecordByFieldType(
-                                                      "firstName",
+                                                      kFirstName,
                                                       argumentRecordList)
                                                   .data,
                                               decoration: InputDecoration(
@@ -139,16 +139,14 @@ class EditLeads extends StatelessWidget {
                                                 labelStyle: kEditLeadTextH2,
                                               ),
                                               validator: (String? value) {
-                                                if (value.toString().isEmpty) {
-                                                  return 'This field is required';
-                                                }
-                                                return null;
+                                                return recordController
+                                                    .isStringEmpty(value);
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
                                                 if (tableController
                                                         .getRecordByFieldType(
-                                                            "firstName",
+                                                            kFirstName,
                                                             argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
@@ -157,17 +155,17 @@ class EditLeads extends StatelessWidget {
                                                   recordUpdateController.createRecordUpdate(
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "firstName",
+                                                              kFirstName,
                                                               argumentRecordList)
                                                           .userId,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "firstName",
+                                                              kFirstName,
                                                               argumentRecordList)
                                                           .type,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "firstName",
+                                                              kFirstName,
                                                               argumentRecordList)
                                                           .data,
                                                       value.toString());
@@ -175,7 +173,7 @@ class EditLeads extends StatelessWidget {
                                                   // Change the data of the record based on the given field type
                                                   tableController
                                                       .getRecordByFieldType(
-                                                          "firstName",
+                                                          kFirstName,
                                                           argumentRecordList)
                                                       .data = value.toString();
 
@@ -184,7 +182,7 @@ class EditLeads extends StatelessWidget {
                                                       .recordsToUpdate
                                                       .add(tableController
                                                           .getRecordByFieldType(
-                                                              "firstName",
+                                                              kFirstName,
                                                               argumentRecordList));
                                                 }
                                               },
@@ -195,7 +193,7 @@ class EditLeads extends StatelessWidget {
                                             child: TextFormField(
                                               initialValue: tableController
                                                   .getRecordByFieldType(
-                                                      "lastName",
+                                                      kLastName,
                                                       argumentRecordList)
                                                   .data,
                                               decoration: InputDecoration(
@@ -205,16 +203,14 @@ class EditLeads extends StatelessWidget {
                                                 labelStyle: kEditLeadTextH2,
                                               ),
                                               validator: (String? value) {
-                                                if (value.toString().isEmpty) {
-                                                  return 'This field is required';
-                                                }
-                                                return null;
+                                                return recordController
+                                                    .isStringEmpty(value);
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
                                                 if (tableController
                                                         .getRecordByFieldType(
-                                                            "lastName",
+                                                            kLastName,
                                                             argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
@@ -223,17 +219,17 @@ class EditLeads extends StatelessWidget {
                                                   recordUpdateController.createRecordUpdate(
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "lastName",
+                                                              kLastName,
                                                               argumentRecordList)
                                                           .userId,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "lastName",
+                                                              kLastName,
                                                               argumentRecordList)
                                                           .type,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "lastName",
+                                                              kLastName,
                                                               argumentRecordList)
                                                           .data,
                                                       value.toString());
@@ -241,7 +237,7 @@ class EditLeads extends StatelessWidget {
                                                   // Change the data of the record based on the given field type
                                                   tableController
                                                       .getRecordByFieldType(
-                                                          "lastName",
+                                                          kLastName,
                                                           argumentRecordList)
                                                       .data = value.toString();
 
@@ -250,7 +246,7 @@ class EditLeads extends StatelessWidget {
                                                       .recordsToUpdate
                                                       .add(tableController
                                                           .getRecordByFieldType(
-                                                              "lastName",
+                                                              kLastName,
                                                               argumentRecordList));
                                                 }
                                               },
@@ -321,7 +317,7 @@ class EditLeads extends StatelessWidget {
                                                   initialValue: recordController
                                                       .isStringDataNull(tableController
                                                           .getRecordByFieldType(
-                                                              "phoneNumber",
+                                                              kPhoneNumber,
                                                               argumentRecordList)
                                                           .data),
                                                   decoration: InputDecoration(
@@ -331,24 +327,15 @@ class EditLeads extends StatelessWidget {
                                                     labelStyle: kEditLeadTextH2,
                                                   ),
                                                   validator: (String? value) {
-                                                    if (value
-                                                        .toString()
-                                                        .isEmpty) {
-                                                      return 'This field is required';
-                                                    }
-                                                    if (!RegExp(
-                                                            r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
-                                                        .hasMatch(
-                                                            value.toString())) {
-                                                      return "Please enter a valid phone number";
-                                                    }
-                                                    return null;
+                                                    return recordController
+                                                        .isPhoneNumberValid(
+                                                            value);
                                                   },
                                                   onSaved: (value) {
                                                     // Check if the data has changed before updating the database
                                                     if (tableController
                                                             .getRecordByFieldType(
-                                                                "phoneNumber",
+                                                                kPhoneNumber,
                                                                 argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
@@ -357,17 +344,17 @@ class EditLeads extends StatelessWidget {
                                                       recordUpdateController.createRecordUpdate(
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "phoneNumber",
+                                                                  kPhoneNumber,
                                                                   argumentRecordList)
                                                               .userId,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "phoneNumber",
+                                                                  kPhoneNumber,
                                                                   argumentRecordList)
                                                               .type,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "phoneNumber",
+                                                                  kPhoneNumber,
                                                                   argumentRecordList)
                                                               .data,
                                                           value.toString());
@@ -375,7 +362,7 @@ class EditLeads extends StatelessWidget {
                                                       // Change the data of the record based on the given field type
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "phoneNumber",
+                                                              kPhoneNumber,
                                                               argumentRecordList)
                                                           .data = value.toString();
 
@@ -384,7 +371,7 @@ class EditLeads extends StatelessWidget {
                                                           .recordsToUpdate
                                                           .add(tableController
                                                               .getRecordByFieldType(
-                                                                  "phoneNumber",
+                                                                  kPhoneNumber,
                                                                   argumentRecordList));
                                                     }
                                                   },
@@ -396,7 +383,7 @@ class EditLeads extends StatelessWidget {
                                                   initialValue: recordController
                                                       .isStringDataNull(tableController
                                                           .getRecordByFieldType(
-                                                              "email",
+                                                              kEmail,
                                                               argumentRecordList)
                                                           .data),
                                                   decoration: InputDecoration(
@@ -406,26 +393,14 @@ class EditLeads extends StatelessWidget {
                                                     labelStyle: kEditLeadTextH2,
                                                   ),
                                                   validator: (String? value) {
-                                                    if (value
-                                                        .toString()
-                                                        .isEmpty) {
-                                                      return 'This field is required';
-                                                    }
-
-                                                    if (!RegExp(
-                                                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                                        .hasMatch(
-                                                            value.toString())) {
-                                                      return "Please enter a valid email";
-                                                    }
-
-                                                    return null;
+                                                    return recordController
+                                                        .isEmailValid(value);
                                                   },
                                                   onSaved: (value) {
                                                     // Check if the data has changed before updating the database
                                                     if (tableController
                                                             .getRecordByFieldType(
-                                                                "email",
+                                                                kEmail,
                                                                 argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
@@ -434,17 +409,17 @@ class EditLeads extends StatelessWidget {
                                                       recordUpdateController.createRecordUpdate(
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "email",
+                                                                  kEmail,
                                                                   argumentRecordList)
                                                               .userId,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "email",
+                                                                  kEmail,
                                                                   argumentRecordList)
                                                               .type,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "email",
+                                                                  kEmail,
                                                                   argumentRecordList)
                                                               .data,
                                                           value.toString());
@@ -452,7 +427,7 @@ class EditLeads extends StatelessWidget {
                                                       // Change the data of the record based on the given field type
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "email",
+                                                              kEmail,
                                                               argumentRecordList)
                                                           .data = value.toString();
 
@@ -461,7 +436,7 @@ class EditLeads extends StatelessWidget {
                                                           .recordsToUpdate
                                                           .add(tableController
                                                               .getRecordByFieldType(
-                                                                  "email",
+                                                                  kEmail,
                                                                   argumentRecordList));
                                                     }
                                                   },
@@ -477,7 +452,7 @@ class EditLeads extends StatelessWidget {
                                                   .isStringDataNull(
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "mobileNumber",
+                                                              kMobileNumber,
                                                               argumentRecordList)
                                                           .data),
                                               decoration: InputDecoration(
@@ -487,23 +462,14 @@ class EditLeads extends StatelessWidget {
                                                 labelStyle: kEditLeadTextH2,
                                               ),
                                               validator: (String? value) {
-                                                if (value.toString().isEmpty) {
-                                                  return 'This field is required';
-                                                }
-
-                                                if (!RegExp(
-                                                        r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
-                                                    .hasMatch(
-                                                        value.toString())) {
-                                                  return "Please enter a valid phone number";
-                                                }
-                                                return null;
+                                                return recordController
+                                                    .isPhoneNumberValid(value);
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
                                                 if (tableController
                                                         .getRecordByFieldType(
-                                                            "mobileNumber",
+                                                            kMobileNumber,
                                                             argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
@@ -512,17 +478,17 @@ class EditLeads extends StatelessWidget {
                                                   recordUpdateController.createRecordUpdate(
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "mobileNumber",
+                                                              kMobileNumber,
                                                               argumentRecordList)
                                                           .userId,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "mobileNumber",
+                                                              kMobileNumber,
                                                               argumentRecordList)
                                                           .type,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "mobileNumber",
+                                                              kMobileNumber,
                                                               argumentRecordList)
                                                           .data,
                                                       value.toString());
@@ -530,7 +496,7 @@ class EditLeads extends StatelessWidget {
                                                   // Change the data of the record based on the given field type
                                                   tableController
                                                       .getRecordByFieldType(
-                                                          "mobileNumber",
+                                                          kMobileNumber,
                                                           argumentRecordList)
                                                       .data = value.toString();
 
@@ -539,7 +505,7 @@ class EditLeads extends StatelessWidget {
                                                       .recordsToUpdate
                                                       .add(tableController
                                                           .getRecordByFieldType(
-                                                              "mobileNumber",
+                                                              kMobileNumber,
                                                               argumentRecordList));
                                                 }
                                               },
@@ -607,7 +573,7 @@ class EditLeads extends StatelessWidget {
                                                 .isStringDataNull(
                                                     tableController
                                                         .getRecordByFieldType(
-                                                            "address1",
+                                                            kAddress1,
                                                             argumentRecordList)
                                                         .data),
                                             decoration: InputDecoration(
@@ -617,16 +583,14 @@ class EditLeads extends StatelessWidget {
                                               labelStyle: kEditLeadTextH2,
                                             ),
                                             validator: (String? value) {
-                                              if (value.toString().isEmpty) {
-                                                return 'This field is required';
-                                              }
-                                              return null;
+                                              return recordController
+                                                  .isStringEmpty(value);
                                             },
                                             onSaved: (value) {
                                               // Check if the data has changed before updating the database
                                               if (tableController
                                                       .getRecordByFieldType(
-                                                          "address1",
+                                                          kAddress1,
                                                           argumentRecordList)
                                                       .data !=
                                                   value.toString()) {
@@ -635,17 +599,17 @@ class EditLeads extends StatelessWidget {
                                                 recordUpdateController.createRecordUpdate(
                                                     tableController
                                                         .getRecordByFieldType(
-                                                            "address1",
+                                                            kAddress1,
                                                             argumentRecordList)
                                                         .userId,
                                                     tableController
                                                         .getRecordByFieldType(
-                                                            "address1",
+                                                            kAddress1,
                                                             argumentRecordList)
                                                         .type,
                                                     tableController
                                                         .getRecordByFieldType(
-                                                            "address1",
+                                                            kAddress1,
                                                             argumentRecordList)
                                                         .data,
                                                     value.toString());
@@ -653,7 +617,7 @@ class EditLeads extends StatelessWidget {
                                                 // Change the data of the record based on the given field type
                                                 tableController
                                                     .getRecordByFieldType(
-                                                        "address1",
+                                                        kAddress1,
                                                         argumentRecordList)
                                                     .data = value.toString();
 
@@ -661,7 +625,7 @@ class EditLeads extends StatelessWidget {
                                                 recordController.recordsToUpdate
                                                     .add(tableController
                                                         .getRecordByFieldType(
-                                                            "address1",
+                                                            kAddress1,
                                                             argumentRecordList));
                                               }
                                             },
@@ -674,7 +638,7 @@ class EditLeads extends StatelessWidget {
                                                   initialValue: recordController
                                                       .isStringDataNull(tableController
                                                           .getRecordByFieldType(
-                                                              "city",
+                                                              kCity,
                                                               argumentRecordList)
                                                           .data),
                                                   decoration: InputDecoration(
@@ -684,18 +648,14 @@ class EditLeads extends StatelessWidget {
                                                     labelStyle: kEditLeadTextH2,
                                                   ),
                                                   validator: (String? value) {
-                                                    if (value
-                                                        .toString()
-                                                        .isEmpty) {
-                                                      return 'This field is required';
-                                                    }
-                                                    return null;
+                                                    return recordController
+                                                        .isStringEmpty(value);
                                                   },
                                                   onSaved: (value) {
                                                     // Check is the data has changed before updating the database
                                                     if (tableController
                                                             .getRecordByFieldType(
-                                                                "city",
+                                                                kCity,
                                                                 argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
@@ -704,17 +664,17 @@ class EditLeads extends StatelessWidget {
                                                       recordUpdateController.createRecordUpdate(
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "city",
+                                                                  kCity,
                                                                   argumentRecordList)
                                                               .userId,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "city",
+                                                                  kCity,
                                                                   argumentRecordList)
                                                               .type,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "city",
+                                                                  kCity,
                                                                   argumentRecordList)
                                                               .data,
                                                           value.toString());
@@ -722,7 +682,7 @@ class EditLeads extends StatelessWidget {
                                                       // Change the data of the record based on the given field type
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "city",
+                                                              kCity,
                                                               argumentRecordList)
                                                           .data = value.toString();
 
@@ -731,7 +691,7 @@ class EditLeads extends StatelessWidget {
                                                           .recordsToUpdate
                                                           .add(tableController
                                                               .getRecordByFieldType(
-                                                                  "city",
+                                                                  kCity,
                                                                   argumentRecordList));
                                                     }
                                                   },
@@ -743,7 +703,7 @@ class EditLeads extends StatelessWidget {
                                                   initialValue: recordController
                                                       .isStringDataNull(tableController
                                                           .getRecordByFieldType(
-                                                              "province",
+                                                              kProvince,
                                                               argumentRecordList)
                                                           .data),
                                                   decoration: InputDecoration(
@@ -753,18 +713,14 @@ class EditLeads extends StatelessWidget {
                                                     labelStyle: kEditLeadTextH2,
                                                   ),
                                                   validator: (String? value) {
-                                                    if (value
-                                                        .toString()
-                                                        .isEmpty) {
-                                                      return 'This field is required';
-                                                    }
-                                                    return null;
+                                                    return recordController
+                                                        .isStringEmpty(value);
                                                   },
                                                   onSaved: (value) {
                                                     // Check if the data has changed before updating the database
                                                     if (tableController
                                                             .getRecordByFieldType(
-                                                                "province",
+                                                                kProvince,
                                                                 argumentRecordList)
                                                             .data !=
                                                         value.toString()) {
@@ -773,17 +729,17 @@ class EditLeads extends StatelessWidget {
                                                       recordUpdateController.createRecordUpdate(
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "province",
+                                                                  kProvince,
                                                                   argumentRecordList)
                                                               .userId,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "province",
+                                                                  kProvince,
                                                                   argumentRecordList)
                                                               .type,
                                                           tableController
                                                               .getRecordByFieldType(
-                                                                  "province",
+                                                                  kProvince,
                                                                   argumentRecordList)
                                                               .data,
                                                           value.toString());
@@ -791,7 +747,7 @@ class EditLeads extends StatelessWidget {
                                                       // Change the data of the record based on the given field type
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "province",
+                                                              kProvince,
                                                               argumentRecordList)
                                                           .data = value.toString();
 
@@ -800,7 +756,7 @@ class EditLeads extends StatelessWidget {
                                                           .recordsToUpdate
                                                           .add(tableController
                                                               .getRecordByFieldType(
-                                                                  "province",
+                                                                  kProvince,
                                                                   argumentRecordList));
                                                     }
                                                   },
@@ -816,7 +772,7 @@ class EditLeads extends StatelessWidget {
                                                   .isStringDataNull(
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "postal",
+                                                              kPostal,
                                                               argumentRecordList)
                                                           .data),
                                               decoration: InputDecoration(
@@ -826,16 +782,14 @@ class EditLeads extends StatelessWidget {
                                                 labelStyle: kEditLeadTextH2,
                                               ),
                                               validator: (String? value) {
-                                                if (value.toString().isEmpty) {
-                                                  return 'This field is required';
-                                                }
-                                                return null;
+                                                return recordController
+                                                    .isStringEmpty(value);
                                               },
                                               onSaved: (value) {
                                                 // Check if the data has changed before updating the database
                                                 if (tableController
                                                         .getRecordByFieldType(
-                                                            "postal",
+                                                            kPostal,
                                                             argumentRecordList)
                                                         .data !=
                                                     value.toString()) {
@@ -844,17 +798,17 @@ class EditLeads extends StatelessWidget {
                                                   recordUpdateController.createRecordUpdate(
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "postal",
+                                                              kPostal,
                                                               argumentRecordList)
                                                           .userId,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "postal",
+                                                              kPostal,
                                                               argumentRecordList)
                                                           .type,
                                                       tableController
                                                           .getRecordByFieldType(
-                                                              "postal",
+                                                              kPostal,
                                                               argumentRecordList)
                                                           .data,
                                                       value.toString());
@@ -862,7 +816,7 @@ class EditLeads extends StatelessWidget {
                                                   // Change the data of the record based on the given field type
                                                   tableController
                                                       .getRecordByFieldType(
-                                                          "postal",
+                                                          kPostal,
                                                           argumentRecordList)
                                                       .data = value.toString();
 
@@ -871,7 +825,7 @@ class EditLeads extends StatelessWidget {
                                                       .recordsToUpdate
                                                       .add(tableController
                                                           .getRecordByFieldType(
-                                                              "postal",
+                                                              kPostal,
                                                               argumentRecordList));
                                                 }
                                               },
@@ -891,7 +845,7 @@ class EditLeads extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Get.offAllNamed("/LeadDetails", arguments: {
+                                Get.offAllNamed(kToLeadDetails, arguments: {
                                   'records': argumentRecordList,
                                 });
                               },
@@ -931,7 +885,7 @@ class EditLeads extends StatelessWidget {
                                     title: 'Record Updated Successfully',
                                     btnOkOnPress: () {
                                       // Go back to Lead page
-                                      Get.offAllNamed("/Leads");
+                                      Get.offAllNamed(kToLead);
                                     },
                                     btnOkIcon: Icons.check_circle,
                                     onDissmissCallback: (type) {},
