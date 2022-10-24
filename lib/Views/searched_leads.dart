@@ -139,7 +139,7 @@ class SearchedLeads extends StatelessWidget {
                             context),
                         rows:
                             tableController.getRows(argumentSearchedResultList),
-                        sortColumnIndex: 0,
+                        sortColumnIndex: tableController.index.value,
                         sortAscending: tableController.isAscending.value,
                       ),
                     ),

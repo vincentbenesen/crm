@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crm/Controllers/log_controller.dart';
+import 'package:crm/constant.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class TableController extends GetxController {
   late CollectionReference collectionReference;
 
   // These variables are used for sorting the records.
+  String typeToSort = 'firstName';
   RxInt index = 0.obs;
   RxBool isAscending = false.obs;
 
@@ -21,9 +23,9 @@ class TableController extends GetxController {
   RxBool showPhoneandEmail = true.obs;
   RxBool showAddressInfo = true.obs;
 
-  final mapss = (Map<int, List<Record>>).obs;
-  RxInt numOfMatches = 0.obs;
-  RxString name = ''.obs;
+  // final mapss = (Map<int, List<Record>>).obs;
+  // RxInt numOfMatches = 0.obs;
+  // RxString name = ''.obs;
   final searchController = TextEditingController();
 
   @override
@@ -105,7 +107,7 @@ class TableController extends GetxController {
     return columns
         .map((column) => DataColumn(
             onSort: ((columnIndex, ascending) {
-              onSort(columnIndex, columnIndex > 0 ? false : ascending, records);
+              onSort(columnIndex, ascending, records);
             }),
             label: Flexible(child: Text(column))))
         .toList();
@@ -136,11 +138,35 @@ class TableController extends GetxController {
   }
 
   // This function is used to get all the rows for the table
+  // List<DataRow> getRows(List<Record> records) {
+  //   List<DataRow> rows = [];
+  //   convertListToMap(records).forEach((key, value) => rows.add(DataRow(
+  //           cells: getCells([
+  //         // Since I have the length of the list I can get the index of the record. I can now get the data based on their userId and fieldType
+  //         "${getRecordByFieldType('firstName', value).data} ${getRecordByFieldType('lastName', value).data}",
+  //         "${getRecordByFieldType(
+  //           'address1',
+  //           value,
+  //         ).data} ${getRecordByFieldType('city', value).data}, ${getRecordByFieldType('province', value).data}, ${getRecordByFieldType('postal', value).data}",
+  //         getRecordByFieldType('phoneNumber', value).data == 'null'
+  //             ? 'N/A'
+  //             : getRecordByFieldType('phoneNumber', value).data,
+  //         getRecordByFieldType('mobileNumber', value).data == 'null'
+  //             ? 'N/A'
+  //             : getRecordByFieldType('mobileNumber', value).data,
+  //         getRecordByFieldType('email', value).data == 'null'
+  //             ? 'N/A'
+  //             : getRecordByFieldType('email', value).data
+  //       ], records))));
+
+  //   return rows;
+  // }
+
   List<DataRow> getRows(List<Record> records) {
     return records
         // I need to get the records based on the name. That means if there 3 names then we will have 3 rows in the table.
         // If I based it on the record itself then I will have multiple rows in the table since some records has the same userId.
-        .where((record) => record.type == "firstName")
+        .where((record) => record.type == typeToSort)
         .map((row) => DataRow(
                 cells: getCells([
               // Since I have the length of the list I can get the index of the record. I can now get the data based on their userId and fieldType
@@ -176,18 +202,53 @@ class TableController extends GetxController {
         .toList();
   }
 
-  int compareString(String a, String b, bool ascending) {
+  int compareString(String a, String b, bool ascending, String typeToSort) {
+    this.typeToSort = typeToSort;
     return ascending ? a.compareTo(b) : b.compareTo(a);
+  }
+
+  Map<int, List<Record>> convertListToMap(List<Record> records) {
+    Map<int, List<Record>> recordsMap = <int, List<Record>>{};
+
+    for (Record record in records) {
+      if (recordsMap.containsKey(record.userId)) {
+        recordsMap[record.userId]!.add(record);
+      } else {
+        recordsMap.addEntries([
+          MapEntry(record.userId, [record])
+        ]);
+      }
+    }
+
+    return recordsMap;
   }
 
   void onSort(int columnIndex, bool ascending, List<Record> records) {
     switch (columnIndex) {
-      case 0:
-        // records.sort((a, b) => compareString(a.data, b.data, ascending));
+      // This case is for the firstName
+      case kIndex0:
+        records.sort(
+            (a, b) => compareString(a.data, b.data, ascending, kFirstName));
+        break;
+      // This case is for the address.
+      case kIndex1:
+        records.sort(
+            (a, b) => compareString(a.data, b.data, ascending, kAddress1));
+        break;
+      // This case is for the telephone number
+      case kIndex2:
+        records.sort(
+            (a, b) => compareString(a.data, b.data, ascending, kPhoneNumber));
+        break;
+      // This case is for the mobile number
+      case kIndex3:
+        records.sort(
+            (a, b) => compareString(a.data, b.data, ascending, kMobileNumber));
+        break;
+      // This case is for the email
+      case kIndex4:
         records
-            // .where((record) => record.type == "firstName")
-            // .toList()
-            .sort((a, b) => compareString(a.data, b.data, ascending));
+            .sort((a, b) => compareString(a.data, b.data, ascending, kEmail));
         break;
     }
     index.value = columnIndex;

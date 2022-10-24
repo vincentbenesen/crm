@@ -110,3 +110,9 @@ var kButtonText4 = GoogleFonts.rubik(fontSize: 12, color: kColorDarkBlue);
 // Sizes of the the buttons
 double kDefaultButtonSize = 80;
 double kSmallerButtonSize = 65;
+
+const int kIndex0 = 0;
+const int kIndex1 = 1;
+const int kIndex2 = 2;
+const int kIndex3 = 3;
+const int kIndex4 = 4;

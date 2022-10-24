@@ -140,7 +140,7 @@ class Leads extends StatelessWidget {
                                     context),
                                 rows: tableController
                                     .getRows(snapshot.data as List<Record>),
-                                sortColumnIndex: 0,
+                                sortColumnIndex: tableController.index.value,
                                 sortAscending:
                                     tableController.isAscending.value,
                               ),
