@@ -50,6 +50,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   email_validator: '^2.1.16'
   phone_numbers_parser: ^7.0.0+1
+  csc_picker: ^0.2.6
 
   
 dev_dependencies:

@@ -13,8 +13,8 @@ import '../Controllers/filter_controller.dart';
 import '../Models/record.dart';
 import '../Widgets/customCheckBox.dart';
 
-class SearchedLeads extends StatelessWidget {
-  SearchedLeads({super.key});
+class FilteredLeads extends StatelessWidget {
+  FilteredLeads({super.key});
 
   // These variables are for controllers
   var recordController = Get.find<RecordController>();
@@ -23,7 +23,7 @@ class SearchedLeads extends StatelessWidget {
 
   // This variable is used to access the argument passed from Leads page.
   var argumentLeadList = Get.arguments['allLeads'];
-  var argumentSearchedResultList = Get.arguments['searchedResults'];
+  var argumentSearchedResultList = Get.arguments['filteredResults'];
 
   @override
   Widget build(BuildContext context) {

@@ -54,6 +54,7 @@ const kEmailHintText = '123@yahoo.com';
 // These constants are used to navigate through the page
 const kToLead = '/Leads';
 const kToSearchedLeads = '/SearchedLeads';
+const kToFilteredLeads = '/FilteredLeads';
 const kToPanel = '/Panel';
 const kToLeadDetails = '/LeadDetails';
 const kToLogin = "/Login";
@@ -65,6 +66,7 @@ const kPhoneRegex =
 
 // These variable are for styling the text
 const kColorDarkBlue = Color.fromARGB(255, 56, 91, 133);
+const kColorDarkerBlue = Color.fromARGB(255, 47, 77, 112);
 const kColorPearlWhite = Color.fromARGB(255, 219, 217, 217);
 const kColorStar = Colors.amber;
 var kLoginTextTitle1 = GoogleFonts.rubik(
@@ -101,6 +103,11 @@ var kPanelTextH1 = GoogleFonts.rubik(fontSize: 30, color: Colors.black);
 var kNavigationText = GoogleFonts.rubik(fontSize: 18, color: kColorDarkBlue);
 var kUserText = GoogleFonts.rubik(fontSize: 14, color: kColorDarkBlue);
 var kStepperTextH1 = GoogleFonts.rubik(fontSize: 20);
+var kLeadFilterTitle = GoogleFonts.rubik(
+    fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white);
+var KLeadFilterChoices = GoogleFonts.rubik(fontSize: 15, color: Colors.black);
+var kLeadFilterCityChoices =
+    GoogleFonts.rubik(fontSize: 15, color: Colors.black);
 
 var kButtonText1 = GoogleFonts.rubik(fontSize: 15, color: kColorDarkBlue);
 var kButtonText2 = GoogleFonts.rubik(fontSize: 20, color: kColorDarkBlue);
@@ -116,3 +123,82 @@ const int kIndex1 = 1;
 const int kIndex2 = 2;
 const int kIndex3 = 3;
 const int kIndex4 = 4;
+
+var stateList = [
+  'AL',
+  'AK',
+  'AZ',
+  'AR',
+  'CA',
+  'CO',
+  'CT',
+  'DE',
+  'DC',
+  'FL',
+  'GA',
+  'HI',
+  'ID',
+  'IL',
+  'IN',
+  'IA',
+  'KS',
+  'KY',
+  'LA',
+  'ME',
+  'MD',
+  'MA',
+  'MI',
+  'MN',
+  'MS',
+  'MO',
+  'MT',
+  'NE',
+  'NV',
+  'NH',
+  'NJ',
+  'NM',
+  'NY',
+  'NC',
+  'ND',
+  'OH',
+  'OK',
+  'OR',
+  'PA',
+  'RI',
+  'SC',
+  'SD',
+  'TN',
+  'TX',
+  'UT',
+  'VT',
+  'VA',
+  'WA',
+  'WV',
+  'WI',
+  'WY'
+];
+
+List<String> typeOfCondoUnitList = [
+  'Semi w/2 car on great lot.',
+  'Semi',
+  '2 bed condos',
+  'Noted all',
+  'TH',
+  'Condo',
+  'Senior condos',
+  'TD',
+  'optional loft',
+  'Semi w/1 car',
+  'rental',
+  'Ret Suite',
+  'Retirement home suite',
+  'Double garage',
+  'Detached bungalow',
+  'Bungalow',
+  'Detached',
+  'Underground parking',
+  '1.5 storey TH',
+  '1.5 storey TH w/garage',
+  'Semi 2 bath 2 bed',
+  'Detached bungalow w/garage'
+];

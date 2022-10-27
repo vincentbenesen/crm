@@ -1,3 +1,4 @@
+import 'package:crm/Views/filtered_leads.dart';
 import 'package:crm/Views/searched_leads.dart';
 import 'package:crm/Views/signup_page.dart';
 import 'package:crm/services/routeAccess.dart';
@@ -25,6 +26,13 @@ class Routes {
     GetPage(
       name: "/SearchedLeads",
       page: () => SearchedLeads(),
+      binding: ControllerBinding(),
+      transition: Transition.noTransition,
+      middlewares: [RouteAccessService()],
+    ),
+    GetPage(
+      name: "/FilteredLeads",
+      page: () => FilteredLeads(),
       binding: ControllerBinding(),
       transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
