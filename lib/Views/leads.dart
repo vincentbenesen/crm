@@ -286,18 +286,21 @@ class Leads extends StatelessWidget {
                                                                       shrinkWrap:
                                                                           true,
                                                                       itemCount:
-                                                                          stateList
+                                                                          kStateList
                                                                               .length,
                                                                       itemBuilder:
                                                                           (context,
                                                                               count) {
                                                                         return CustomCheckBox(
                                                                           label:
-                                                                              stateList[count],
+                                                                              kStateList[count],
                                                                           padding:
                                                                               const EdgeInsets.symmetric(horizontal: 10),
                                                                           optionsToAdd: filterController
                                                                               .citiesToSearch
+                                                                              .value,
+                                                                          isRatings: !filterController
+                                                                              .isForRatings
                                                                               .value,
                                                                         );
                                                                       }),
@@ -370,26 +373,115 @@ class Leads extends StatelessWidget {
                                                                       shrinkWrap:
                                                                           true,
                                                                       itemCount:
-                                                                          typeOfCondoUnitList
+                                                                          kTypeOfCondoUnitList
+                                                                              .length,
+                                                                      itemBuilder:
+                                                                          (context,
+                                                                              count) {
+                                                                        return CustomCheckBox(
+                                                                            label:
+                                                                                kTypeOfCondoUnitList[count],
+                                                                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                                                                            optionsToAdd: filterController.unitsToSearch,
+                                                                            isRatings: !filterController.isForRatings.value);
+                                                                      }),
+                                                            )
+                                                          : Container())
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                // This filter is for the number of ratings
+                                                Container(
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius: filterController
+                                                                  .isRatingOptionOPen
+                                                                  .value
+                                                              ? const BorderRadius
+                                                                      .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          5),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          5))
+                                                              : BorderRadius
+                                                                  .circular(5),
+                                                        ),
+                                                        child: Row(
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: () {
+                                                                filterController
+                                                                    .isRatingButtonClicked();
+                                                              },
+                                                              child: Icon(filterController
+                                                                      .isRatingOptionOPen
+                                                                      .value
+                                                                  ? Icons
+                                                                      .keyboard_arrow_down
+                                                                  : Icons
+                                                                      .keyboard_arrow_right),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 10),
+                                                            Text(
+                                                              "Ratings",
+                                                              style:
+                                                                  KLeadFilterChoices,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Obx(() => filterController
+                                                              .isRatingOptionOPen
+                                                              .value
+                                                          ? Container(
+                                                              color:
+                                                                  Colors.white,
+                                                              height: 200,
+                                                              child: ListView
+                                                                  .builder(
+                                                                      scrollDirection:
+                                                                          Axis
+                                                                              .vertical,
+                                                                      shrinkWrap:
+                                                                          true,
+                                                                      itemCount:
+                                                                          kRatingsList
                                                                               .length,
                                                                       itemBuilder:
                                                                           (context,
                                                                               count) {
                                                                         return CustomCheckBox(
                                                                           label:
-                                                                              typeOfCondoUnitList[count],
+                                                                              kTypeOfCondoUnitList[count],
                                                                           padding:
                                                                               const EdgeInsets.symmetric(horizontal: 10),
-                                                                          optionsToAdd: filterController
-                                                                              .unitsToSearch
+                                                                          optionsToAdd:
+                                                                              filterController.unitsToSearch,
+                                                                          isRatings: filterController
+                                                                              .isForRatings
                                                                               .value,
+                                                                          rating:
+                                                                              kRatingsList[count],
+                                                                          ratingsToAdd:
+                                                                              filterController.ratingsToSearch,
                                                                         );
                                                                       }),
                                                             )
                                                           : Container())
                                                     ],
                                                   ),
-                                                )
+                                                ),
+
+                                                //hi
                                               ],
                                             ),
                                           ),

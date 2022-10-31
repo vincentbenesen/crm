@@ -124,7 +124,7 @@ const int kIndex2 = 2;
 const int kIndex3 = 3;
 const int kIndex4 = 4;
 
-var stateList = [
+var kStateList = [
   'AL',
   'AK',
   'AZ',
@@ -178,7 +178,7 @@ var stateList = [
   'WY'
 ];
 
-List<String> typeOfCondoUnitList = [
+List<String> kTypeOfCondoUnitList = [
   'Semi w/2 car on great lot.',
   'Semi',
   '2 bed condos',
@@ -202,3 +202,5 @@ List<String> typeOfCondoUnitList = [
   'Semi 2 bath 2 bed',
   'Detached bungalow w/garage'
 ];
+
+List<double> kRatingsList = [5, 4, 3, 2, 1, 0];

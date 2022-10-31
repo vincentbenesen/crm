@@ -60,7 +60,7 @@ class EditLeads extends StatelessWidget {
                                         "ratings", argumentRecordList)
                                     .data),
                                 direction: Axis.horizontal,
-                                allowHalfRating: true,
+                                allowHalfRating: false,
                                 glow: false,
                                 itemCount: 5,
                                 itemSize: 30,
