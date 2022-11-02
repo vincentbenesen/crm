@@ -124,6 +124,10 @@ const int kIndex2 = 2;
 const int kIndex3 = 3;
 const int kIndex4 = 4;
 
+// These indexes are used for anaylytic page
+const int kRecordIndex = 0;
+const int kLogIndex = 1;
+
 var kStateList = [
   'AL',
   'AK',

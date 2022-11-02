@@ -49,11 +49,13 @@ class Navbar extends StatelessWidget {
             ),
             ListTile(
               onTap: () {
-                AuthService.instance.signOut();
+                if (Get.currentRoute != "/Analytics") {
+                  Get.offAllNamed("/Analytics");
+                }
               },
               leading: const Icon(Icons.home),
               title: Text(
-                "Assets",
+                "Analytics",
                 style: kNavigationText,
               ),
             ),

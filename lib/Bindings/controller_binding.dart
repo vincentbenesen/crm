@@ -1,3 +1,4 @@
+import 'package:crm/Controllers/analytics_controller.dart';
 import 'package:crm/Controllers/filter_controller.dart';
 import 'package:get/get.dart';
 
@@ -20,5 +21,6 @@ class ControllerBinding extends Bindings {
     Get.lazyPut<MailController>(() => MailController());
     Get.lazyPut<AuthService>(() => AuthService());
     Get.lazyPut<FilterController>(() => FilterController());
+    Get.lazyPut<AnalyticsController>(() => AnalyticsController());
   }
 }

@@ -1,3 +1,4 @@
+import 'package:crm/Views/analytics.dart';
 import 'package:crm/Views/filtered_leads.dart';
 import 'package:crm/Views/searched_leads.dart';
 import 'package:crm/Views/signup_page.dart';
@@ -55,6 +56,13 @@ class Routes {
     GetPage(
       name: "/EditLeads",
       page: () => EditLeads(),
+      binding: ControllerBinding(),
+      transition: Transition.noTransition,
+      middlewares: [RouteAccessService()],
+    ),
+    GetPage(
+      name: "/Analytics",
+      page: () => Analytics(),
       binding: ControllerBinding(),
       transition: Transition.noTransition,
       middlewares: [RouteAccessService()],
