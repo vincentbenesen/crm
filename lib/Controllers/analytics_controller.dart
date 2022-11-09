@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crm/Controllers/table_controller.dart';
+import 'package:crm/Models/chartdata.dart';
 import 'package:crm/Models/log.dart';
 import 'package:crm/Models/record.dart';
 import 'package:crm/constant.dart';
@@ -12,6 +13,7 @@ class AnalyticsController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference recordsCollection;
   late CollectionReference logsCollection;
+  var tableController = Get.find<TableController>();
 
   @override
   void onInit() {
@@ -21,11 +23,13 @@ class AnalyticsController extends GetxController {
     logsCollection = firestore.collection('logs');
   }
 
-  double compareDate(DateTime from) {
+  // Compares the difference from the current date.
+  int compareDate(DateTime from) {
     DateTime today = DateTime.now();
-    return (today.difference(from).inDays).toDouble();
+    return (today.difference(from).inDays);
   }
 
+  // Get both collections (records and logs) from Firebase and it returns a querysnapshot
   Stream<List<QuerySnapshot>> getData() {
     Stream<QuerySnapshot<Object?>> recordsSnapshot =
         recordsCollection.snapshots();
@@ -33,6 +37,7 @@ class AnalyticsController extends GetxController {
     return StreamZip([recordsSnapshot, logsSnapshot]);
   }
 
+  // Get the records from query snapshot
   List<Record> getRecords(QuerySnapshot<Object?> snapshot) {
     List<Record> recordsList = [];
 
@@ -40,9 +45,11 @@ class AnalyticsController extends GetxController {
       recordsList.add(Record(
           record['userId'], record['fieldId'], record['type'], record['data']));
     });
+
     return recordsList;
   }
 
+  // Get the logs form query snapshot
   List<Log> getLogs(QuerySnapshot<Object?> snapshot) {
     List<Log> logsList = [];
 
@@ -58,6 +65,7 @@ class AnalyticsController extends GetxController {
     return logsList;
   }
 
+  // Convers the list of logs to map of logs
   Map<int, List<Log>> convertListOfLogsToMap(List<Log> logs) {
     Map<int, List<Log>> logsMap = <int, List<Log>>{};
 
@@ -74,42 +82,30 @@ class AnalyticsController extends GetxController {
     return logsMap;
   }
 
-  List<BarChartGroupData> getBarChartGroupData(
-      Map<int, List<Log>> logs, Map<int, List<Record>> recordsMap) {
-    List<BarChartGroupData> barChartGroupData = [];
+  List<ChartData> getChartData(
+      Map<int, List<Record>> recordsMap, Map<int, List<Log>> logsMap) {
+    List<ChartData> chartDataList = [];
 
-    // logs.forEach((key, value) {
-    //   barChartGroupData.add(BarChartGroupData(x: key, barRods: [
-    //     BarChartRodData(toY: compareDate(value[0].date), color: kColorDarkBlue)
-    //   ]));
-    // });
+    // Sorts the map based on the last name of the lead
+    var sortedMap = Map.fromEntries(recordsMap.entries.toList()
+      ..sort((e1, e2) => tableController
+          .getRecordByFieldType(kLastName, e2.value)
+          .data
+          .compareTo(
+              tableController.getRecordByFieldType(kLastName, e1.value).data)));
 
-    recordsMap.forEach((key, value) {
+    sortedMap.forEach((key, value) {
       try {
-        barChartGroupData.add(BarChartGroupData(x: key, barRods: [
-          BarChartRodData(
-              toY: compareDate(logs[key]!.first.date), color: kColorDarkBlue)
-        ]));
+        chartDataList.add(ChartData(
+            '${tableController.getRecordByFieldType(kFirstName, value).data} ${Get.find<TableController>().getRecordByFieldType(kLastName, value).data}',
+            compareDate(logsMap[key]!.first.date)));
       } catch (e) {
-        barChartGroupData.add(BarChartGroupData(
-            x: key, barRods: [BarChartRodData(toY: 0, color: kColorDarkBlue)]));
+        chartDataList.add(ChartData(
+            '${tableController.getRecordByFieldType(kFirstName, value).data} ${Get.find<TableController>().getRecordByFieldType(kLastName, value).data}',
+            0));
       }
     });
 
-    return barChartGroupData;
-  }
-
-  // Get the name of the customer and put is as a bottom label of te
-  SideTitles getBottomTitle(Map<int, List<Record>> recordsMap) {
-    return SideTitles(
-        showTitles: true,
-        getTitlesWidget: ((value, meta) {
-          String name = '';
-
-          name =
-              '${Get.find<TableController>().getRecordByFieldType('firstName', recordsMap[value.toInt()]!).data} ${Get.find<TableController>().getRecordByFieldType('lastName', recordsMap[value.toInt()]!).data}';
-
-          return Text(name);
-        }));
+    return chartDataList;
   }
 }

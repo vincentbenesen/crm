@@ -52,6 +52,7 @@ dependencies:
   phone_numbers_parser: ^7.0.0+1
   csc_picker: ^0.2.6
   fl_chart: ^0.55.2
+  syncfusion_flutter_charts: ^20.3.56
 
   
 dev_dependencies:

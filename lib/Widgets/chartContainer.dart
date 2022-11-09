@@ -16,39 +16,33 @@ class ChartContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.95,
-          height: MediaQuery.of(context).size.width * 0.95 * 0.65,
-          // width: MediaQuery.of(context).size.width,
-          // height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  title,
-                  style: const TextStyle(
-                      color: kColorDarkBlue,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(top: 10),
-                    child: chart,
-                  ),
-                )
-              ],
+    return Container(
+      width: 650,
+      height: 400,
+      // width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height,
+      padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              title,
+              style: const TextStyle(
+                  color: kColorDarkBlue,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
-          ),
+            Container(
+              padding: EdgeInsets.only(top: 10),
+              child: chart,
+            )
+          ],
         ),
       ),
     );
