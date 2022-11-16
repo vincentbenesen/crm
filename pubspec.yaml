@@ -51,8 +51,9 @@ dependencies:
   email_validator: '^2.1.16'
   phone_numbers_parser: ^7.0.0+1
   csc_picker: ^0.2.6
-  fl_chart: ^0.55.2
   syncfusion_flutter_charts: ^20.3.56
+  progress_stepper: ^1.0.0
+  focused_menu: ^1.0.5
 
   
 dev_dependencies:

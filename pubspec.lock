@@ -190,13 +190,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.1"
-  fl_chart:
-    dependency: "direct main"
-    description:
-      name: fl_chart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.55.2"
   flare_flutter:
     dependency: transitive
     description:
@@ -240,6 +233,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  focused_menu:
+    dependency: "direct main"
+    description:
+      name: focused_menu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   get:
     dependency: "direct main"
     description:
@@ -408,6 +408,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  progress_stepper:
+    dependency: "direct main"
+    description:
+      name: progress_stepper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   simple_animations:
     dependency: transitive
     description:

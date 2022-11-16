@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class ChartData {
   late String title;
   late int value;
@@ -9,6 +11,13 @@ class ChartData {
       'title': title,
       'value': value,
     };
+  }
+
+  static ChartData fromMap(Map<String, dynamic> map) {
+    return ChartData(
+      map['title'],
+      map['value'],
+    );
   }
 
   @override

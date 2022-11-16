@@ -4,7 +4,6 @@ import 'package:crm/Models/chartdata.dart';
 import 'package:crm/Models/log.dart';
 import 'package:crm/Models/record.dart';
 import 'package:crm/constant.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:async/async.dart';
@@ -30,7 +29,7 @@ class AnalyticsController extends GetxController {
   }
 
   // Get both collections (records and logs) from Firebase and it returns a querysnapshot
-  Stream<List<QuerySnapshot>> getData() {
+  Stream<List<QuerySnapshot>> getRecordsAndLogs() {
     Stream<QuerySnapshot<Object?>> recordsSnapshot =
         recordsCollection.snapshots();
     Stream<QuerySnapshot<Object?>> logsSnapshot = logsCollection.snapshots();
@@ -42,8 +41,8 @@ class AnalyticsController extends GetxController {
     List<Record> recordsList = [];
 
     snapshot.docs.forEach((record) {
-      recordsList.add(Record(
-          record['userId'], record['fieldId'], record['type'], record['data']));
+      recordsList.add(Record(record[kUserIdLog], record[kFieldIdRecord],
+          record[kTypeRecord], record[kDataLog]));
     });
 
     return recordsList;
@@ -54,13 +53,13 @@ class AnalyticsController extends GetxController {
     List<Log> logsList = [];
 
     snapshot.docs.forEach((log) {
-      Timestamp timeStamp = log['date'];
+      Timestamp timeStamp = log[kDateLog];
       logsList.add(Log(
-          log['userId'],
+          log[kUserIdLog],
           DateTime.fromMillisecondsSinceEpoch(timeStamp.millisecondsSinceEpoch),
-          log['typeOfData'],
-          log['data'],
-          log['docId']));
+          log[kTypeOfDataLog],
+          log[kDataLog],
+          log[kDocIdLog]));
     });
     return logsList;
   }

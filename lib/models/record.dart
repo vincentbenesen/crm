@@ -29,9 +29,4 @@ class Record {
     // TODO: implement toString
     return 'Record{userId: $userId, fieldId: $fieldId, type: $type, data: $data, documentId: $documentId}';
   }
-
-  @override
-  bool operator ==(other) {
-    return (other is Record) && other.data == data;
-  }
 }

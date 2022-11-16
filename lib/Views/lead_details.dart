@@ -1,4 +1,5 @@
 import 'package:crm/Models/log.dart';
+import 'package:crm/Widgets/completionBar.dart';
 import 'package:crm/services/auth_service.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -658,6 +659,8 @@ class LeadDetails extends StatelessWidget {
                   )
                 ],
               ),
+              const SizedBox(height: 10),
+              CompletionBar(),
               const SizedBox(height: 10),
               // This container is where all the details about a lead are and sending an email page
               Obx(

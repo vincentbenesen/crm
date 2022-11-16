@@ -10,7 +10,6 @@ import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/constant.dart';
 import 'package:get/get.dart';
 import 'package:http/retry.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
@@ -27,14 +26,11 @@ class Analytics extends StatelessWidget {
       drawer: Navbar(),
       backgroundColor: kColorDarkBlue,
       body: StreamBuilder(
-        stream: analyticController.getData(),
+        stream: analyticController.getRecordsAndLogs(),
         builder: (BuildContext context,
             AsyncSnapshot<List<QuerySnapshot>> snapshot) {
           if (snapshot.hasData) {
             List<QuerySnapshot> querySnapshotData = snapshot.data!.toList();
-            // analyticController.getRecords(querySnapshotData[kRecordIndex]);
-            // print(analyticController.convertListOfLogsToMap(
-            //     analyticController.getLogs(querySnapshotData[kLogIndex])));
             return SingleChildScrollView(
               child: Column(
                 children: [

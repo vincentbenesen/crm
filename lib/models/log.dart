@@ -17,6 +17,10 @@ class Log {
     };
   }
 
+  static Log fromMap(Map<String, dynamic> map) {
+    return Log(map['userId'], map['date'], map['typeOfData'], map['data']);
+  }
+
   @override
   String toString() {
     // TODO: implement toString

@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:excel_dart/excel_dart.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:phone_numbers_parser/phone_numbers_parser.dart';
+import 'package:async/async.dart';
 
 import '../Models/record.dart';
 import 'package:crm/Widgets/text_Field.dart';
@@ -18,7 +18,8 @@ import 'package:crm/constant.dart';
 class RecordController extends GetxController {
   // To access the records from the database.
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  late CollectionReference collectionReference;
+  late CollectionReference recordReference;
+  late CollectionReference progressReference;
 
   // These are the variables used to manipulate the data in the textfields.
   GlobalKey<FormState> nameFormKey = GlobalKey<FormState>();
@@ -78,7 +79,8 @@ class RecordController extends GetxController {
     mobileNumberController = TextEditingController();
     emailController = TextEditingController();
 
-    collectionReference = firestore.collection('records');
+    recordReference = firestore.collection('records');
+    progressReference = firestore.collection('progress');
 
     fieldtypes.add('Other');
 
@@ -97,7 +99,7 @@ class RecordController extends GetxController {
 
   // This function is used to fetch all the records from the database.
   Future<List<Record>> fetchRecords() async {
-    QuerySnapshot records = await collectionReference.get();
+    QuerySnapshot records = await recordReference.get();
 
     records.docs.forEach((record) {
       recordList.add(Record(record['userId'], record['fieldId'], record['type'],
@@ -110,7 +112,7 @@ class RecordController extends GetxController {
   // This record is used to retrieve the records from the database based on the given userId. This is used to display the records in the table.
   Future<List<Record>> getRecordsById(int userId) async {
     QuerySnapshot records =
-        await collectionReference.where('userId', isEqualTo: userId).get();
+        await recordReference.where('userId', isEqualTo: userId).get();
 
     records.docs.forEach((record) {
       recordList.add(Record(
@@ -130,7 +132,7 @@ class RecordController extends GetxController {
 
   Future<List<Record>> getRecordByName() async {
     QuerySnapshot records =
-        await collectionReference.where('data', isEqualTo: 'Lisa').get();
+        await recordReference.where('data', isEqualTo: 'Lisa').get();
 
     records.docs.forEach((record) {
       recordList.add(Record(record['userId'], record['fieldId'], record['type'],
@@ -142,10 +144,19 @@ class RecordController extends GetxController {
     return recordList;
   }
 
+  // Get both collections (records and logs) from Firebase and it returns a querysnapshot
+  Stream<List<QuerySnapshot>> getRecordsAndLogs() {
+    Stream<QuerySnapshot<Object?>> recordsSnapshot =
+        recordReference.snapshots();
+    Stream<QuerySnapshot<Object?>> progressSnapshot =
+        progressReference.snapshots();
+    return StreamZip([recordsSnapshot, progressSnapshot]);
+  }
+
   // This function is used to update the records from the database based on the given docId.
   void updateRecord() {
     recordsToUpdate.forEach((element) {
-      collectionReference.doc(element.documentId).update({
+      recordReference.doc(element.documentId).update({
         'userId': element.userId,
         'fieldId': element.fieldId,
         'type': element.type,
@@ -159,7 +170,7 @@ class RecordController extends GetxController {
   // This function is used to delete the records from the database based on the given docId.
   void deleteRecord(List<Record> records) {
     records.forEach((record) {
-      collectionReference.doc(record.documentId).delete();
+      recordReference.doc(record.documentId).delete();
     });
   }
 
@@ -185,8 +196,8 @@ class RecordController extends GetxController {
 
     // Inserts the records in the firebase.
     records.forEach((key, value) {
-      value.documentId = collectionReference.doc().id;
-      collectionReference.doc(value.documentId).set(value.toMap(highestId));
+      value.documentId = recordReference.doc().id;
+      recordReference.doc(value.documentId).set(value.toMap(highestId));
     });
 
     // Clears all the records from the map after inserting it in firebase .
@@ -196,10 +207,8 @@ class RecordController extends GetxController {
   // Returns the highest userId from Firestore
   Future<int> getHighestUserId() async {
     try {
-      Future<QuerySnapshot<Object?>> record = collectionReference
-          .orderBy('userId', descending: true)
-          .limit(1)
-          .get();
+      Future<QuerySnapshot<Object?>> record =
+          recordReference.orderBy('userId', descending: true).limit(1).get();
       return await record.then((QuerySnapshot querySnapshot) {
         return (querySnapshot.docs.first['userId']);
       });
@@ -482,9 +491,9 @@ class RecordController extends GetxController {
     for (var record in records.values) {
       highestUserId++;
       for (var i = 0; i < maxColumn + 1; i++) {
-        documentId = collectionReference.doc().id;
-        collectionReference.doc(documentId).set(Record(highestUserId,
-                getFieldId(i), getTypeOfData(i), record[i], documentId)
+        documentId = recordReference.doc().id;
+        recordReference.doc(documentId).set(Record(highestUserId, getFieldId(i),
+                getTypeOfData(i), record[i], documentId)
             .toMap(highestUserId));
       }
     }

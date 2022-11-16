@@ -17,6 +17,15 @@ const kServiceId = 'service_lce03ol';
 const kTemplateId = 'template_p3x59sr';
 const kUserId = 'dVUn9I_CeROfYzKXa';
 
+// These constants are for the data members of Log class and Record class
+const kUserIdLog = 'userId';
+const kDateLog = 'date';
+const kTypeOfDataLog = 'typeOfData';
+const kDataLog = 'data';
+const kDocIdLog = 'docId';
+const kFieldIdRecord = 'fieldId';
+const kTypeRecord = 'type';
+
 // These constants variables are used for TextFormFields labels and methods parameters
 const kFirstName = 'firstName';
 const kLastName = 'lastName';
@@ -51,6 +60,10 @@ const kPostalHintText = 'H3A 2M8';
 const kPhoneNumberHintText = '123456789';
 const kEmailHintText = '123@yahoo.com';
 
+const kEstimateDate = 'estimateDate';
+const kFinishDate = 'finishDate';
+const kTitle = 'title';
+
 // These constants are used to navigate through the page
 const kToLead = '/Leads';
 const kToSearchedLeads = '/SearchedLeads';
@@ -66,6 +79,7 @@ const kPhoneRegex =
 
 // These variable are for styling the text
 const kColorDarkBlue = Color.fromARGB(255, 56, 91, 133);
+const kColorLighterBlue = Color.fromARGB(255, 79, 127, 185);
 const kColorDarkerBlue = Color.fromARGB(255, 47, 77, 112);
 const kColorPearlWhite = Color.fromARGB(255, 219, 217, 217);
 const kColorStar = Colors.amber;
@@ -114,6 +128,7 @@ var kButtonText2 = GoogleFonts.rubik(fontSize: 20, color: kColorDarkBlue);
 var kButtonText3 = GoogleFonts.rubik(fontSize: 20, color: Colors.white);
 var kButtonText4 = GoogleFonts.rubik(fontSize: 12, color: kColorDarkBlue);
 
+var kProgressText = GoogleFonts.rubik(color: Colors.white);
 // Sizes of the the buttons
 double kDefaultButtonSize = 80;
 double kSmallerButtonSize = 65;
@@ -208,3 +223,15 @@ List<String> kTypeOfCondoUnitList = [
 ];
 
 List<double> kRatingsList = [5, 4, 3, 2, 1, 0];
+
+List<String> kProgressList = [
+  "Choosing a unit",
+  "Chose a unit",
+  "Money",
+  "Have cash",
+  "Mortgage",
+  "Preapproved",
+  "Waiting for approval",
+  "Signed",
+  "Provide keys"
+];
