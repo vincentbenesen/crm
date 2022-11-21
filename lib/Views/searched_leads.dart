@@ -24,6 +24,7 @@ class SearchedLeads extends StatelessWidget {
   // This variable is used to access the argument passed from Leads page.
   var argumentLeadList = Get.arguments['allLeads'];
   var argumentSearchedResultList = Get.arguments['searchedResults'];
+  var argumentsProgressList = Get.arguments['progressDataList'];
 
   @override
   Widget build(BuildContext context) {
@@ -152,8 +153,9 @@ class SearchedLeads extends StatelessWidget {
                                         tableController.leadsColumns,
                                         argumentSearchedResultList,
                                         context),
-                                    rows: tableController
-                                        .getRows(argumentSearchedResultList),
+                                    rows: tableController.getRows(
+                                        argumentSearchedResultList,
+                                        argumentsProgressList),
                                     sortColumnIndex:
                                         tableController.index.value,
                                     sortAscending:
@@ -451,8 +453,9 @@ class SearchedLeads extends StatelessWidget {
                                   tableController.leadsColumns,
                                   argumentSearchedResultList,
                                   context),
-                              rows: tableController
-                                  .getRows(argumentSearchedResultList),
+                              rows: tableController.getRows(
+                                  argumentSearchedResultList,
+                                  argumentsProgressList),
                               sortColumnIndex: tableController.index.value,
                               sortAscending: tableController.isAscending.value,
                             ),

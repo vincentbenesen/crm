@@ -1,5 +1,6 @@
 import 'package:crm/Controllers/analytics_controller.dart';
 import 'package:crm/Controllers/filter_controller.dart';
+import 'package:crm/Controllers/progress_controller.dart';
 import 'package:get/get.dart';
 
 import 'package:crm/Controllers/log_controller.dart';
@@ -22,5 +23,6 @@ class ControllerBinding extends Bindings {
     Get.lazyPut<AuthService>(() => AuthService());
     Get.lazyPut<FilterController>(() => FilterController());
     Get.lazyPut<AnalyticsController>(() => AnalyticsController());
+    Get.lazyPut<ProgressController>(() => ProgressController());
   }
 }

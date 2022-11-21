@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:crm/Controllers/progress_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,8 @@ class RecordController extends GetxController {
 
   // This variable is used for the form that updates the record in the the edit lead page.
   GlobalKey<FormState> updateFormKey = GlobalKey<FormState>();
+
+  var progressController = Get.find<ProgressController>();
 
   late TextEditingController firstNameController,
       lastNameController,
@@ -187,9 +190,12 @@ class RecordController extends GetxController {
     int highestId = await getHighestUserId();
     highestId++;
     Record initialRating = Record(highestId, 13, 'ratings', '0');
+    Record initialProgress = Record(highestId, 14, 'progress', '0');
 
     // This is to add a record for ratings. As a default a lead will start with 0 rating
     records.addEntries([MapEntry('ratings', initialRating)]);
+
+    records.addEntries([MapEntry('progress', initialProgress)]);
 
     // Removes the records with empty data from the list. This is to avoid adding empty records to the firebase.
     records.removeWhere((key, value) => value.data.isEmpty);
@@ -199,6 +205,11 @@ class RecordController extends GetxController {
       value.documentId = recordReference.doc().id;
       recordReference.doc(value.documentId).set(value.toMap(highestId));
     });
+
+    // Insert the 9 progress level on the firebase with the userId
+    // Each user will have 9 progress level
+    progressController.insertProgressRecords(progressController
+        .generateListOfProgressData(kProgressList, highestId));
 
     // Clears all the records from the map after inserting it in firebase .
     records.clear();
@@ -374,7 +385,7 @@ class RecordController extends GetxController {
         maxColumn = excel.tables[table]!.maxCols;
         maxRow = excel.tables[table]!.maxRows;
         for (var i = 1; i < maxRow; i++) {
-          for (var j = 0; j < maxColumn + 1; j++) {
+          for (var j = 0; j < maxColumn + 2; j++) {
             try {
               if (recordsMap.containsKey(i)) {
                 recordsMap[i]!
@@ -385,7 +396,7 @@ class RecordController extends GetxController {
                       i, [excel.tables[table]!.rows[i][j]!.value.toString()])
                 ]);
               }
-            } catch (Exception) {
+            } catch (exemption) {
               if (recordsMap.containsKey(i)) {
                 if (j == maxColumn) {
                   // This is the default rating for the customer which is 0
@@ -441,6 +452,8 @@ class RecordController extends GetxController {
         return 'comments';
       case 13:
         return 'ratings';
+      case 14:
+        return 'progress';
       default:
         return '';
     }
@@ -478,6 +491,8 @@ class RecordController extends GetxController {
         return 12;
       case 13:
         return 13;
+      case 14:
+        return 14;
       default:
         return 0;
     }
@@ -489,8 +504,13 @@ class RecordController extends GetxController {
     int highestUserId = await getHighestUserId();
     String documentId = '';
     for (var record in records.values) {
+      // Insert the 9 progress level on the firebase with the userId
+      // Each user will have 9 progress level
       highestUserId++;
-      for (var i = 0; i < maxColumn + 1; i++) {
+      progressController.insertProgressRecords(progressController
+          .generateListOfProgressData(kProgressList, highestUserId));
+      // Added + 2 because I added extra field values that are not in the excel
+      for (var i = 0; i < maxColumn + 2; i++) {
         documentId = recordReference.doc().id;
         recordReference.doc(documentId).set(Record(highestUserId, getFieldId(i),
                 getTypeOfData(i), record[i], documentId)

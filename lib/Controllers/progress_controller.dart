@@ -1,17 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crm/Models/progressData.dart';
+import 'package:crm/Models/record.dart';
 import 'package:crm/constant.dart';
 import 'package:get/get.dart';
 
 class ProgressController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late CollectionReference progressReference;
+  late CollectionReference recordReference;
+
+  RxInt progressLevel = 0.obs;
+  var progressRecord = Record(0, 0, '', '', '').obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     progressReference = firestore.collection('progress');
+    recordReference = firestore.collection('records');
   }
 
   void insertProgressRecords(List<ProgressData> progressList) {
@@ -69,9 +75,17 @@ class ProgressController extends GetxController {
     return progressDataList;
   }
 
+  List<ProgressData>? getProgressDataById(
+      List<ProgressData> progressDataList, int userId) {
+    Map<int, List<ProgressData>> pDataMap =
+        convertListToMapPData(progressDataList);
+
+    return pDataMap[userId];
+  }
+
   // Convert the list of progress data to a map
   Map<int, List<ProgressData>> convertListToMapPData(
-      List<ProgressData> listPData, userId) {
+      List<ProgressData> listPData) {
     Map<int, List<ProgressData>> pDataMap = <int, List<ProgressData>>{};
 
     for (ProgressData pData in listPData) {
@@ -85,5 +99,11 @@ class ProgressController extends GetxController {
     }
 
     return pDataMap;
+  }
+
+  void updateProgress(Record record) {
+    recordReference.doc(record.documentId).update({
+      'data': record.data,
+    });
   }
 }

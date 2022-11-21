@@ -21,7 +21,8 @@ class Record {
   }
 
   static Record fromMap(Map<String, dynamic> map) {
-    return Record(map['userId'], map['fieldId'], map['type'], map['data']);
+    return Record(map['userId'], map['fieldId'], map['type'], map['data'],
+        map['documentId']);
   }
 
   @override

@@ -31,10 +31,12 @@ class LeadDetails extends StatelessWidget {
 
   // This variable is used to access the argument passed from Leads page.
   var argumentRecordList = Get.arguments['records'];
+  var argumentProgressList = Get.arguments['progressDataList'];
 
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).size.width);
+    print(argumentProgressList);
     return Scaffold(
       appBar: CustomAppbar(),
       drawer: Navbar(),
@@ -660,7 +662,9 @@ class LeadDetails extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              CompletionBar(),
+              CompletionBar(
+                recordsList: argumentRecordList,
+              ),
               const SizedBox(height: 10),
               // This container is where all the details about a lead are and sending an email page
               Obx(

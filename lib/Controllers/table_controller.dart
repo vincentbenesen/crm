@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crm/Controllers/log_controller.dart';
+import 'package:crm/Controllers/progress_controller.dart';
+import 'package:crm/Models/progressData.dart';
 import 'package:crm/constant.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,8 @@ class TableController extends GetxController {
   // RxInt numOfMatches = 0.obs;
   // RxString name = ''.obs;
   final searchController = TextEditingController();
+
+  var progressController = Get.find<ProgressController>();
 
   @override
   onInit() {
@@ -114,7 +118,8 @@ class TableController extends GetxController {
   }
 
   // This function is used to get all the cells that will be inserted in a row for the table
-  List<DataCell> getCells(List<dynamic> cells, List<Record> records) {
+  List<DataCell> getCells(List<dynamic> cells, List<Record> records,
+      List<ProgressData> progressDataList) {
     return cells
         .map((data) => DataCell(InkWell(
             onTap: () {
@@ -126,6 +131,10 @@ class TableController extends GetxController {
                       records,
                       getUserIdByFieldTypeAndData("lastName",
                           data.toString().split(" ").last, records)),
+                  'progressDataList': progressController.getProgressDataById(
+                      progressDataList,
+                      getUserIdByFieldTypeAndData(
+                          "lastName", data.toString().split(" ").last, records))
                 });
 
                 Get.find<LogController>().userId.value =
@@ -137,32 +146,8 @@ class TableController extends GetxController {
         .toList();
   }
 
-  // This function is used to get all the rows for the table
-  // List<DataRow> getRows(List<Record> records) {
-  //   List<DataRow> rows = [];
-  //   convertListToMap(records).forEach((key, value) => rows.add(DataRow(
-  //           cells: getCells([
-  //         // Since I have the length of the list I can get the index of the record. I can now get the data based on their userId and fieldType
-  //         "${getRecordByFieldType('firstName', value).data} ${getRecordByFieldType('lastName', value).data}",
-  //         "${getRecordByFieldType(
-  //           'address1',
-  //           value,
-  //         ).data} ${getRecordByFieldType('city', value).data}, ${getRecordByFieldType('province', value).data}, ${getRecordByFieldType('postal', value).data}",
-  //         getRecordByFieldType('phoneNumber', value).data == 'null'
-  //             ? 'N/A'
-  //             : getRecordByFieldType('phoneNumber', value).data,
-  //         getRecordByFieldType('mobileNumber', value).data == 'null'
-  //             ? 'N/A'
-  //             : getRecordByFieldType('mobileNumber', value).data,
-  //         getRecordByFieldType('email', value).data == 'null'
-  //             ? 'N/A'
-  //             : getRecordByFieldType('email', value).data
-  //       ], records))));
-
-  //   return rows;
-  // }
-
-  List<DataRow> getRows(List<Record> records) {
+  List<DataRow> getRows(
+      List<Record> records, List<ProgressData> progressDataList) {
     return records
         // I need to get the records based on the name. That means if there 3 names then we will have 3 rows in the table.
         // If I based it on the record itself then I will have multiple rows in the table since some records has the same userId.
@@ -198,7 +183,7 @@ class TableController extends GetxController {
                   : getRecordByFieldType(
                           'email', getRecordsById(records, row.userId))
                       .data
-            ], records)))
+            ], records, progressDataList)))
         .toList();
   }
 

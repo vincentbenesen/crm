@@ -1,5 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crm/Controllers/analytics_controller.dart';
+import 'package:crm/Controllers/progress_controller.dart';
+import 'package:crm/Models/progressData.dart';
 import 'package:crm/Widgets/customCheckBox.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,8 @@ class Leads extends StatelessWidget {
   var recordController = Get.find<RecordController>();
   var tableController = Get.find<TableController>();
   var filterController = Get.find<FilterController>();
+  var progressController = Get.find<ProgressController>();
+  var analyticController = Get.find<AnalyticsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +33,19 @@ class Leads extends StatelessWidget {
         drawer: Navbar(),
         appBar: CustomAppbar(),
         body: StreamBuilder(
-          stream: Stream.fromFuture(recordController.fetchRecords()),
-          builder: ((context, snapshot) {
-            try {
+          stream: recordController.getRecordsAndLogs()
+          // Stream.fromFuture(recordController.fetchRecords())
+          ,
+          builder: ((BuildContext context,
+              AsyncSnapshot<List<QuerySnapshot>> snapshot) {
+            if (snapshot.hasData) {
+              List<QuerySnapshot> querySnapshotData = snapshot.data!.toList();
+              List<Record> recordsList = analyticController
+                  .getRecords(querySnapshotData[kRecordIndex]);
+
+              List<ProgressData> progressDataList =
+                  progressController.getProgressData(querySnapshotData[1]);
+
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -68,16 +83,15 @@ class Leads extends StatelessWidget {
                                               arguments: {
                                                 'searchedResults':
                                                     tableController.result(
-                                                        snapshot.data
-                                                            as List<Record>,
+                                                        recordsList,
                                                         tableController.matchesName(
-                                                            snapshot.data
-                                                                as List<Record>,
+                                                            recordsList,
                                                             tableController
                                                                 .searchController
                                                                 .text)),
-                                                'allLeads': snapshot.data
-                                                    as List<Record>
+                                                'allLeads': recordsList,
+                                                'progressDataList':
+                                                    progressDataList
                                               });
                                         },
                                         child: Icon(Icons.search)),
@@ -157,10 +171,10 @@ class Leads extends StatelessWidget {
                                             dataRowHeight: 80,
                                             columns: tableController.getColumns(
                                                 tableController.leadsColumns,
-                                                snapshot.data as List<Record>,
+                                                recordsList,
                                                 context),
                                             rows: tableController.getRows(
-                                                snapshot.data as List<Record>),
+                                                recordsList, progressDataList),
                                             sortColumnIndex:
                                                 tableController.index.value,
                                             sortAscending: tableController
@@ -195,23 +209,21 @@ class Leads extends StatelessWidget {
                                                             kToFilteredLeads,
                                                             arguments: {
                                                               'filteredResults':
-                                                                  filterController.filterRecords(tableController
-                                                                      .convertListToMap(snapshot
-                                                                              .data
-                                                                          as List<
-                                                                              Record>)),
+                                                                  filterController
+                                                                      .filterRecords(
+                                                                          tableController
+                                                                              .convertListToMap(recordsList)),
                                                               'allLeads':
-                                                                  snapshot.data
-                                                                      as List<
-                                                                          Record>
+                                                                  recordsList,
+                                                              'progressDataList':
+                                                                  progressDataList
                                                             });
 
                                                         print(filterController
-                                                            .filterRecords(tableController
-                                                                .convertListToMap(
-                                                                    snapshot.data
-                                                                        as List<
-                                                                            Record>)));
+                                                            .filterRecords(
+                                                                tableController
+                                                                    .convertListToMap(
+                                                                        recordsList)));
                                                       },
                                                       style: ElevatedButton
                                                           .styleFrom(
@@ -481,8 +493,6 @@ class Leads extends StatelessWidget {
                                                     ],
                                                   ),
                                                 ),
-
-                                                //hi
                                               ],
                                             ),
                                           ),
@@ -497,10 +507,10 @@ class Leads extends StatelessWidget {
                                       dataRowHeight: 80,
                                       columns: tableController.getColumns(
                                           tableController.leadsColumns,
-                                          snapshot.data as List<Record>,
+                                          recordsList,
                                           context),
                                       rows: tableController.getRows(
-                                          snapshot.data as List<Record>),
+                                          recordsList, progressDataList),
                                       sortColumnIndex:
                                           tableController.index.value,
                                       sortAscending:
@@ -511,14 +521,10 @@ class Leads extends StatelessWidget {
                   ],
                 ),
               );
-            } catch (e) {
-              return Scaffold(
-                body: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Navbar(),
-                    ],
-                  ),
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(
+                  value: 10,
                 ),
               );
             }

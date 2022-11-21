@@ -15,7 +15,7 @@ const kPostUrl = 'https://api.emailjs.com/api/v1.0/email/send';
 const kContentType = 'application/json';
 const kServiceId = 'service_lce03ol';
 const kTemplateId = 'template_p3x59sr';
-const kUserId = 'dVUn9I_CeROfYzKXa';
+const kUserIdFirebase = 'dVUn9I_CeROfYzKXa';
 
 // These constants are for the data members of Log class and Record class
 const kUserIdLog = 'userId';
@@ -25,6 +25,7 @@ const kDataLog = 'data';
 const kDocIdLog = 'docId';
 const kFieldIdRecord = 'fieldId';
 const kTypeRecord = 'type';
+const kDocumentIdRecord = 'documentId';
 
 // These constants variables are used for TextFormFields labels and methods parameters
 const kFirstName = 'firstName';
@@ -60,6 +61,7 @@ const kPostalHintText = 'H3A 2M8';
 const kPhoneNumberHintText = '123456789';
 const kEmailHintText = '123@yahoo.com';
 
+const kUserId = 'userId';
 const kEstimateDate = 'estimateDate';
 const kFinishDate = 'finishDate';
 const kTitle = 'title';
@@ -142,6 +144,7 @@ const int kIndex4 = 4;
 // These indexes are used for anaylytic page
 const int kRecordIndex = 0;
 const int kLogIndex = 1;
+const int kProgressDataIndex = 1;
 
 var kStateList = [
   'AL',

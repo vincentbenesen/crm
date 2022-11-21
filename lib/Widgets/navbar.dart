@@ -15,6 +15,7 @@ class Navbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 250,
+      height: MediaQuery.of(context).size.height,
       child: Drawer(
         child: ListView(
           children: [

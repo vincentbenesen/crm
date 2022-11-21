@@ -42,7 +42,7 @@ class AnalyticsController extends GetxController {
 
     snapshot.docs.forEach((record) {
       recordsList.add(Record(record[kUserIdLog], record[kFieldIdRecord],
-          record[kTypeRecord], record[kDataLog]));
+          record[kTypeRecord], record[kDataLog], record[kDocumentIdRecord]));
     });
 
     return recordsList;

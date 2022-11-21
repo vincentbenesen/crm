@@ -18,7 +18,7 @@ class MailController extends GetxController {
       body: json.encode({
         'service_id': kServiceId,
         'template_id': kTemplateId,
-        'user_id': kUserId,
+        'user_id': kUserIdFirebase,
         'template_params': {
           'user_email': message.value.email,
           'user_subject': message.value.subject,
