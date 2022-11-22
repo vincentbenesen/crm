@@ -44,7 +44,7 @@ class Leads extends StatelessWidget {
                   .getRecords(querySnapshotData[kRecordIndex]);
 
               List<ProgressData> progressDataList =
-                  progressController.getProgressData(querySnapshotData[1]);
+                  progressController.getProgressDataList(querySnapshotData[1]);
 
               return SingleChildScrollView(
                 child: Column(

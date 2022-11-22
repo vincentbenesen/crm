@@ -131,10 +131,11 @@ class TableController extends GetxController {
                       records,
                       getUserIdByFieldTypeAndData("lastName",
                           data.toString().split(" ").last, records)),
-                  'progressDataList': progressController.getProgressDataById(
-                      progressDataList,
-                      getUserIdByFieldTypeAndData(
-                          "lastName", data.toString().split(" ").last, records))
+                  'progressDataList':
+                      progressController.getListProgressDataById(
+                          progressDataList,
+                          getUserIdByFieldTypeAndData("lastName",
+                              data.toString().split(" ").last, records))
                 });
 
                 Get.find<LogController>().userId.value =

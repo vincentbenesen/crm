@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crm/Controllers/analytics_controller.dart';
 import 'package:crm/Models/progressData.dart';
 import 'package:crm/Models/record.dart';
 import 'package:crm/constant.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProgressController extends GetxController {
@@ -11,6 +13,7 @@ class ProgressController extends GetxController {
 
   RxInt progressLevel = 0.obs;
   var progressRecord = Record(0, 0, '', '', '').obs;
+  var currentColor = kColorDarkBlue.obs;
 
   @override
   void onInit() {
@@ -20,6 +23,13 @@ class ProgressController extends GetxController {
     recordReference = firestore.collection('records');
   }
 
+// Compares the difference from the current date.
+  int compareDate(DateTime from) {
+    DateTime today = DateTime.now();
+    return (from.difference(today).inDays);
+  }
+
+  // Insert all the progress records per user. Each user will have different progress record
   void insertProgressRecords(List<ProgressData> progressList) {
     progressList.forEach((progressData) {
       progressData.documentId = progressReference.doc().id;
@@ -27,6 +37,14 @@ class ProgressController extends GetxController {
     });
   }
 
+  // Update the estimate date
+  void updateProgressRecord(ProgressData? progressData, DateTime? dateTime) {
+    progressReference
+        .doc(progressData!.documentId)
+        .update({'estimateDate': dateTime});
+  }
+
+  // Generate a list of progressdata based on the list of progress title
   List<ProgressData> generateListOfProgressData(
       List<String> listOfProgressTitle, int userId) {
     List<ProgressData> progressDataList = [];
@@ -38,7 +56,7 @@ class ProgressController extends GetxController {
   }
 
   // Get the list of progress data from
-  List<ProgressData> getProgressData(QuerySnapshot<Object?> snapshot) {
+  List<ProgressData> getProgressDataList(QuerySnapshot<Object?> snapshot) {
     List<ProgressData> progressDataList = [];
 
     snapshot.docs.forEach((progressData) {
@@ -55,7 +73,8 @@ class ProgressController extends GetxController {
                 .toString(),
             DateTime.fromMillisecondsSinceEpoch(
                     finishDate!.millisecondsSinceEpoch)
-                .toString()));
+                .toString(),
+            progressData['documentId']));
       } catch (e) {
         progressDataList.add(ProgressData(
             progressData[kUserId],
@@ -69,18 +88,32 @@ class ProgressController extends GetxController {
                 ? 'N/A'
                 : DateTime.fromMillisecondsSinceEpoch(
                         finishDate!.millisecondsSinceEpoch)
-                    .toString()));
+                    .toString(),
+            progressData['documentId']));
       }
     });
     return progressDataList;
   }
 
-  List<ProgressData>? getProgressDataById(
+  // Get the list of progress data by using the id of the user
+  List<ProgressData>? getListProgressDataById(
       List<ProgressData> progressDataList, int userId) {
     Map<int, List<ProgressData>> pDataMap =
         convertListToMapPData(progressDataList);
 
     return pDataMap[userId];
+  }
+
+  // Get the progress data based on the given title
+  ProgressData? getProgressData(
+      String title, List<ProgressData> progressListData) {
+    ProgressData? currentData;
+    for (ProgressData progressData in progressListData) {
+      if (progressData.title == title) {
+        currentData = progressData;
+      }
+    }
+    return currentData;
   }
 
   // Convert the list of progress data to a map
@@ -101,9 +134,28 @@ class ProgressController extends GetxController {
     return pDataMap;
   }
 
+  // Update the current progress level number on the firebase
   void updateProgress(Record record) {
     recordReference.doc(record.documentId).update({
       'data': record.data,
     });
+  }
+
+  Color getColor(ProgressData? progressData) {
+    if (progressData?.estimateDate == 'N/A') {
+      return kColorDarkBlue;
+    } else if (compareDate(
+            DateTime.parse((progressData?.estimateDate).toString())) <=
+        0) {
+      return Color.fromARGB(255, 131, 50, 44);
+    } else if (compareDate(
+                DateTime.parse((progressData?.estimateDate).toString())) <=
+            10 &&
+        compareDate(DateTime.parse((progressData?.estimateDate).toString())) >
+            0) {
+      return Colors.orange;
+    } else {
+      return kColorDarkBlue;
+    }
   }
 }

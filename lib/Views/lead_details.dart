@@ -664,6 +664,7 @@ class LeadDetails extends StatelessWidget {
               const SizedBox(height: 10),
               CompletionBar(
                 recordsList: argumentRecordList,
+                progressDataList: argumentProgressList,
               ),
               const SizedBox(height: 10),
               // This container is where all the details about a lead are and sending an email page
