@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:crm/Widgets/editableCompletionBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -23,6 +24,7 @@ class EditLeads extends StatelessWidget {
 
   // This variable is used to access the argument passed from LeadDetails page.
   var argumentRecordList = Get.arguments['records'];
+  var argumentProgressList = Get.arguments['progressDataList'];
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,11 @@ class EditLeads extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(height: 10),
+              EditableCompletionBar(
+                recordsList: argumentRecordList,
+                progressDataList: argumentProgressList,
+              ),
               const SizedBox(height: 20),
               Center(
                 child: Container(
@@ -847,6 +854,7 @@ class EditLeads extends StatelessWidget {
                               onPressed: () {
                                 Get.offAllNamed(kToLeadDetails, arguments: {
                                   'records': argumentRecordList,
+                                  'progressDataList': argumentProgressList,
                                 });
                               },
                               style: ElevatedButton.styleFrom(

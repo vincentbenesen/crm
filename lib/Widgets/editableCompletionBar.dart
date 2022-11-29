@@ -12,9 +12,12 @@ import 'package:get/get.dart';
 
 import 'package:progress_stepper/progress_stepper.dart';
 
-class CompletionBar extends StatelessWidget {
-  CompletionBar(
-      {super.key, required this.recordsList, required this.progressDataList});
+class EditableCompletionBar extends StatelessWidget {
+  EditableCompletionBar({
+    super.key,
+    required this.recordsList,
+    required this.progressDataList,
+  });
 
   var progressController = Get.find<ProgressController>();
   var tableController = Get.find<TableController>();
@@ -47,6 +50,9 @@ class CompletionBar extends StatelessWidget {
                       .getRecordByFieldType('progress', recordsList)
                       .data);
           for (var i = 0; i < index; i++) {
+            // progressController.currentColor.value = progressController.getColor(
+            //     progressController.getProgressData(
+            //         kProgressList[index - 1], progressDataList));
             // This if statement in here because the first arrow has a different design from the rest of the arrows
             if (index == 1) {
               return Obx(
@@ -88,14 +94,19 @@ class CompletionBar extends StatelessWidget {
                                     // update the estimate time of a progress
                                     progressController.updateProgressRecord(
                                         progressController.getProgressData(
-                                            kProgressList[i], progressDataList),
+                                            kProgressList[index - 1],
+                                            progressDataList),
                                         pickedDate);
+
+                                    Get.offAllNamed(kToLead);
                                   }),
                             ],
                   // This is the first progress bar
                   child: ProgressStepWithArrow(
                     width: widthOfStep,
-                    defaultColor: progressController.currentColor.value,
+                    defaultColor: progressController.getColor(
+                        progressController.getProgressData(
+                            kProgressList[index - 1], progressDataList)),
                     progressColor: kColorLighterBlue,
                     wasCompleted:
                         progressController.progressLevel.value >= index
@@ -145,12 +156,32 @@ class CompletionBar extends StatelessWidget {
                         FocusedMenuItem(
                             title: Text("Set estimate date"),
                             trailingIcon: Icon(Icons.calendar_month),
-                            onPressed: () {}),
+                            onPressed: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: today,
+                                  firstDate: today,
+                                  lastDate: DateTime(2030));
+                              // update the estimate time of a progress
+                              progressController.updateProgressRecord(
+                                  progressController.getProgressData(
+                                      kProgressList[index - 1],
+                                      progressDataList),
+                                  pickedDate);
+
+                              Get.offAllNamed(kToLead);
+                            }),
                       ],
                 // This is the rest of the progress bar
                 child: ProgressStepWithChevron(
                   width: widthOfStep,
-                  defaultColor: kColorDarkBlue,
+                  defaultColor:
+                      // progressController.progressLevel.value == index - 1
+                      //     ? progressController.currentColor.value
+                      //     : kColorDarkBlue,
+                      progressController.getColor(
+                          progressController.getProgressData(
+                              kProgressList[index - 1], progressDataList)),
                   progressColor: kColorLighterBlue,
                   wasCompleted: progressController.progressLevel.value >= index
                       ? true

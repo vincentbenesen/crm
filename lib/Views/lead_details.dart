@@ -1,6 +1,4 @@
-import 'package:crm/Models/log.dart';
-import 'package:crm/Widgets/completionBar.dart';
-import 'package:crm/services/auth_service.dart';
+import 'package:crm/Widgets/completionBarDetail.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +15,10 @@ import 'package:crm/Controllers/mail_controller.dart';
 import '../Controllers/table_controller.dart';
 import 'package:crm/Widgets/navbar.dart';
 import 'package:crm/Widgets/custom_AppBar.dart';
+import 'package:crm/Controllers/progress_controller.dart';
+import 'package:crm/Models/log.dart';
+import 'package:crm/Widgets/editableCompletionBar.dart';
+import 'package:crm/services/auth_service.dart';
 
 class LeadDetails extends StatelessWidget {
   LeadDetails({
@@ -36,7 +38,7 @@ class LeadDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).size.width);
-    print(argumentProgressList);
+    // print(argumentProgressList);
     return Scaffold(
       appBar: CustomAppbar(),
       drawer: Navbar(),
@@ -135,6 +137,8 @@ class LeadDetails extends StatelessWidget {
                                                     arguments: {
                                                       'records':
                                                           argumentRecordList,
+                                                      'progressDataList':
+                                                          argumentProgressList,
                                                     });
                                               },
                                               style: TextButton.styleFrom(
@@ -261,6 +265,8 @@ class LeadDetails extends StatelessWidget {
                                                   arguments: {
                                                     'records':
                                                         argumentRecordList,
+                                                    'progressDataList':
+                                                        argumentProgressList,
                                                   });
                                             },
                                             style: TextButton.styleFrom(
@@ -651,7 +657,8 @@ class LeadDetails extends StatelessWidget {
                                     tableController
                                         .getRecordByFieldType(
                                             kFirstName, argumentRecordList)
-                                        .userId)),
+                                        .userId,
+                                    argumentProgressList)),
                               ],
                             ),
                           )
@@ -662,7 +669,7 @@ class LeadDetails extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              CompletionBar(
+              CompletionBarDetail(
                 recordsList: argumentRecordList,
                 progressDataList: argumentProgressList,
               ),

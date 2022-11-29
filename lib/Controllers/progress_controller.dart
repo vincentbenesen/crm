@@ -5,6 +5,7 @@ import 'package:crm/Models/record.dart';
 import 'package:crm/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ProgressController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -141,6 +142,7 @@ class ProgressController extends GetxController {
     });
   }
 
+  // Get the color based on the number of days until the estimate date
   Color getColor(ProgressData? progressData) {
     if (progressData?.estimateDate == 'N/A') {
       return kColorDarkBlue;
@@ -157,5 +159,12 @@ class ProgressController extends GetxController {
     } else {
       return kColorDarkBlue;
     }
+  }
+
+  String formatDate(String date) {
+    if (date != 'N/A') {
+      return DateFormat('MMM d, yyyy').format(DateTime.parse(date));
+    }
+    return date;
   }
 }

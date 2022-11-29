@@ -146,6 +146,8 @@ const int kRecordIndex = 0;
 const int kLogIndex = 1;
 const int kProgressDataIndex = 1;
 
+const bool kIsCompletionBarEditable = false;
+
 var kStateList = [
   'AL',
   'AK',

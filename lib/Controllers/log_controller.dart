@@ -1,4 +1,5 @@
 import 'package:crm/Models/log.dart';
+import 'package:crm/Models/progressData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,8 +42,8 @@ class LogController extends GetxController {
   }
 
   // Insert the log in the Firebase
-  void addLog(
-      String typeOfData, String data, int userId, List<Record> records) {
+  void addLog(String typeOfData, String data, int userId, List<Record> records,
+      List<ProgressData> progressDataList) {
     DateTime currentDate = DateTime.now();
     Log logToInsert = Log(userId, currentDate, typeOfData, data);
 
@@ -50,7 +51,8 @@ class LogController extends GetxController {
 
     collectionReference.doc(logToInsert.docId).set(logToInsert.toMap());
 
-    Get.offAllNamed('/LeadDetails', arguments: {'records': records});
+    Get.offAllNamed('/LeadDetails',
+        arguments: {'records': records, 'progressDataList': progressDataList});
   }
 
   // Get all the logs depending of the userId
@@ -103,7 +105,8 @@ class LogController extends GetxController {
   }
 
   // Show the form depending on what type of logs (log a call, log a meeting, send an email)
-  Widget showLogContent(List<Record> records, double screenWidth, int userId) {
+  Widget showLogContent(List<Record> records, double screenWidth, int userId,
+      List<ProgressData> progressDataList) {
     switch (currentSection.value) {
       case 'call':
         if (screenWidth >= 1600) {
@@ -140,7 +143,11 @@ class LogController extends GetxController {
                 child: ElevatedButton(
                     onPressed: () {
                       Get.find<LogController>().addLog(
-                          'call', callTextController.text, userId, records);
+                          'call',
+                          callTextController.text,
+                          userId,
+                          records,
+                          progressDataList);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: kColorDarkBlue),
@@ -178,7 +185,11 @@ class LogController extends GetxController {
                 child: ElevatedButton(
                     onPressed: () {
                       Get.find<LogController>().addLog(
-                          'call', callTextController.text, userId, records);
+                          'call',
+                          callTextController.text,
+                          userId,
+                          records,
+                          progressDataList);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: kColorDarkBlue),
@@ -223,8 +234,12 @@ class LogController extends GetxController {
                 height: 35,
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.find<LogController>().addLog('meeting',
-                          meetingTextController.text, userId, records);
+                      Get.find<LogController>().addLog(
+                          'meeting',
+                          meetingTextController.text,
+                          userId,
+                          records,
+                          progressDataList);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: kColorDarkBlue),
@@ -261,8 +276,12 @@ class LogController extends GetxController {
                 height: 35,
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.find<LogController>().addLog('meeting',
-                          meetingTextController.text, userId, records);
+                      Get.find<LogController>().addLog(
+                          'meeting',
+                          meetingTextController.text,
+                          userId,
+                          records,
+                          progressDataList);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: kColorDarkBlue),
@@ -305,8 +324,12 @@ class LogController extends GetxController {
                 height: 35,
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.find<LogController>().addLog('receivedEmail',
-                          emailTextController.text, userId, records);
+                      Get.find<LogController>().addLog(
+                          'receivedEmail',
+                          emailTextController.text,
+                          userId,
+                          records,
+                          progressDataList);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: kColorDarkBlue),
@@ -343,8 +366,12 @@ class LogController extends GetxController {
                 height: 35,
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.find<LogController>().addLog('receivedEmail',
-                          emailTextController.text, userId, records);
+                      Get.find<LogController>().addLog(
+                          'receivedEmail',
+                          emailTextController.text,
+                          userId,
+                          records,
+                          progressDataList);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: kColorDarkBlue),
